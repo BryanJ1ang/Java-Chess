@@ -6,7 +6,9 @@ A Chessboard application able to play games with either a default or custom arra
 functional, able to move/capture pieces and detect conditions for the game to end (check-mate, run out of time etc.) The 
 application will also allow saving the states of the game to allow players to return to specific spots in a game and 
 attempt different moves. This application would naturally be used by Chess players to play with their friends, to
-analyze specific situations or to simply mess around with crazy set ups of pieces. 
+analyze specific situations or to simply mess around with crazy set up of pieces. Growing up, I have always played 
+chess on and off on various apps on my phone. As such, this app is of personal interest as I hope to implement an Chess
+with the features I want.
 
 
 
