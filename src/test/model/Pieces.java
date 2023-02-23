@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Testking {
+class TestKing {
     King x;
     @BeforeEach
     public void setup(){
-        x = new King();
+        x = new King("White");
     }
 
     @Test
@@ -56,12 +56,12 @@ class Testking {
 
 }
 
-class testQueen {
+class TestQueen {
     Queen x;
 
     @BeforeEach
     public void setup(){
-        x = new Queen();
+        x = new Queen("White");
     }
 
     @Test
@@ -81,12 +81,12 @@ class testQueen {
 }
 
 
-class testRook {
+class TestRook {
     Rook x;
 
     @BeforeEach
     public void setup(){
-        x = new Rook();
+        x = new Rook("White");
     }
 
     @Test
@@ -104,7 +104,7 @@ class testRook {
     }
 }
 
-class testPawnWhite {
+class TestPawnWhite {
     Pawn x;
 
     @BeforeEach
@@ -133,3 +133,53 @@ class testPawnWhite {
 
     }
 }
+
+
+
+class testKnight{
+    Knight x;
+
+    @BeforeEach
+
+    public void setup() {
+        x = new Knight("White");
+    }
+
+    @Test
+    public void TestCanMove(){
+        assertTrue(x.canMove(3,3,5, 4));
+        assertTrue(x.canMove(3,3,5, 2));
+        assertTrue(x.canMove(3,3,4, 5));
+        assertTrue(x.canMove(3,3,2, 5));
+        assertTrue(x.canMove(3,3,1, 2));
+        assertTrue(x.canMove(3,3,1, 4));
+
+        assertFalse(x.canMove(3,3,5, 5));
+        assertFalse(x.canMove(3,3,5, 5));
+        assertFalse(x.canMove(3,3,1, 1));
+        assertFalse(x.canMove(3,3,5, 5));
+        assertFalse(x.canMove(3,3,3, 2));
+        assertFalse(x.canMove(3,3,0, 0));
+    }
+}
+
+class testBishop{
+
+    Bishop x;
+
+    @BeforeEach
+    public void setup(){
+         x = new Bishop("White");
+    }
+
+    @Test
+    public void testCanMove() {
+            assertFalse(x.canMove(5, 5, 5, 7));
+            // MOVE UP 2
+            assertFalse(x.canMove(5, 5, 7, 6));
+            assertFalse(x.canMove(5, 5, 3, 5));
+            assertFalse(x.canMove(5, 5, 2, 7));
+            assertTrue(x.canMove(5, 5, 4, 6));
+            assertTrue(x.canMove(5, 5, 6, 6));
+        }
+    }
