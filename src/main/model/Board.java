@@ -4,7 +4,7 @@ package model;
 import static java.lang.Math.abs;
 
 public class Board {
-    private Piece[][] bd = new Piece[7][7];
+    private final Piece[][] bd = new Piece[7][7];
     // FIRST DIMENSION = COLUMNS
     // SECOND DIMENSION = ROWS
 
@@ -19,9 +19,9 @@ public class Board {
 
     // MODIFIES: this, Piece
     // EFFECT: Moves a piece to given location. Captures if position already occupied
-    public movePiece(Piece p, int nextx, int nexty) {
+    public void movePiece(Piece p, int nextx, int nexty) {
         bd[nextx][nexty] = p;
-        this.removePiece(p.xposition,p.yposition);
+        this.removePiece(p.xposition, p.yposition);
         p.setPositions(nextx, nexty);
     }
 
@@ -68,8 +68,8 @@ public class Board {
 
     //EFFECTS: if given bishop can move to next position
     private Boolean canMoveBishop(Piece b, int nextx, int nexty) {
-       return b.canMove(b.xposition, b.yposition, nextx, nexty)
-               && visionDiagonal(b, nextx, nexty);
+        return b.canMove(b.xposition, b.yposition, nextx, nexty)
+                && visionDiagonal(b, nextx, nexty);
     }
 
     //EFFECTS: if given queen can move to next position
@@ -77,7 +77,7 @@ public class Board {
         Boolean b = false;
         if (q.canMove(q.xposition, q.yposition, nextx, nexty)) {
             if ((nextx == q.xposition || nexty == q.yposition)
-            && this.visionStraight(q, nextx, nexty)) {
+                    && this.visionStraight(q, nextx, nexty)) {
                 b = true;
             } else {
                 if (this.visionDiagonal(q, nextx, nexty)) {
@@ -109,14 +109,16 @@ public class Board {
         if (p.white) {
             if (abs(nextx - p.xposition) == 1
                     && nexty == p.yposition - 1
-            && this.getPiece(nextx, nexty) != null)
+                    && this.getPiece(nextx, nexty) != null) {
                 b = true;
+            }
         }
         if (!p.white) {
             if (abs(nextx - p.xposition) == 1
                     && nexty == p.yposition + 1
-                    && this.getPiece(nextx, nexty) != null)
+                    && this.getPiece(nextx, nexty) != null) {
                 b = true;
+            }
         }
         return b;
     }
@@ -129,8 +131,10 @@ public class Board {
         // !x.white
         for (int xcord = 0; xcord < 7; xcord++) {
             for (int ycord = 0; ycord < 7; ycord++) {
-                if (validMove(this.getPiece(xcord,ycord), kx, ky)) {
-                    b = true;
+                if (this.getPiece(xcord, ycord) != null) {
+                    if (validMove(this.getPiece(xcord, ycord), kx, ky)) {
+                        b = true;
+                    }
                 }
             }
         }
@@ -139,6 +143,7 @@ public class Board {
 
     // REQUIRES: x and y is not location of given piece
     // EFFECTS: Returns true if piece can see given square diaganolly
+    @SuppressWarnings("methodlength")
     public Boolean visionDiagonal(Piece p, int x, int y) {
         Boolean b = true;
         if (x > p.getXposition() && y > p.getYposition()) {
@@ -180,6 +185,7 @@ public class Board {
 
 
     //EFFECTS: Returns true if piece can see given square vertically/horizontally
+    @SuppressWarnings("methodlength")
     public Boolean visionStraight(Piece p, int x, int y) {
         Boolean b = true;
         if (x == p.getXposition() && y > p.getYposition()) {

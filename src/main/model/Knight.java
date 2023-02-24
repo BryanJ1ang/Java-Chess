@@ -16,8 +16,8 @@ public class Knight extends Piece {
             moved = false;
         }
     }
-    public Boolean canMove(int x, int y, int nextx, int nexty) {
 
+    public Boolean canMove(int x, int y, int nextx, int nexty) {
         return (((nexty == y + 2) || (nexty == y - 2)) && ((nextx == x + 1) || (nextx == x - 1)))
                 || (((nexty == y + 1) || (nexty == y - 1)) && ((nextx == x + 2) || (nextx == x - 2)));
     }

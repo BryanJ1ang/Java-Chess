@@ -6,11 +6,11 @@ public class Bishop extends Piece {
 
     //REQUIRES: Colour is one of: "White" "Black"
     // EFFECT: Constructor for bishop
-    public Bishop(String colour){
-        if (colour == "White"){
+    public Bishop(String colour) {
+        if (colour == "White") {
             white = true;
         }
-        if (colour == "Black"){
+        if (colour == "Black") {
             white = false;
         }
     }
