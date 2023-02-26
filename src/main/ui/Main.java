@@ -1,5 +1,6 @@
 package ui;
 
+import model.Custom;
 import model.Game;
 import model.Piece;
 
@@ -24,25 +25,107 @@ public class Main {
         while (keepgoing) {
             displayMenu();
             command = input.nextLine();
-            if (command.equals("New Game")) {
-                gameDefault();
+            if (command.equals("NEW GAME")) {
+                Game g1 = new Game("default");
+                runGame(g1);
             }
-
-            if (command.equals("Custom Game")) {
-                Game g1 = new Game("custom");
+            if (command.equals("CUSTOM GAME")) {
+                customGameSetup();
             }
-            if (command.equals("Quit")) {
+            if (command.equals("QUIT")) {
                 keepgoing = false;
             }
         }
         System.out.println("Thank you for playing!");
+    }
+
+    private void customGameSetup() {
+        Game g1 = new Game("custom");
+        String command = null;
+        input = new Scanner(System.in);
+
+        Boolean setup = true;
+        while (setup) {
+            customSetUpCommandsDisplay();
+            command = input.nextLine();
+            if (command.equals("START GAME")) {
+                setup = false;
+                runGame(g1);
+            }
+
+            if (command.equals("ADD PIECE")) {
+                customAddPiece(g1);
+            }
+
+            if (command.equals("MAIN MENU")) {
+                setup = false;
+            }
+        }
+    }
+
+
+    private void customAddPiece(Game g) {
+        String command;
+        Custom c1 = new Custom();
+        input = new Scanner(System.in);
+        System.out.println("SELECT COLOUR");
+        System.out.println("    WHITE");
+        System.out.println("    BLACK");
+        command = input.nextLine();
+
+        if (command.equals("WHITE")) {
+            Piece p = customChooseWhichPieceToAdd("WHITE", c1);
+            addToWhere(p, g, "TYPE", "WHITE" );
         }
 
+        if (command.equals("BLACK")) {
+            Piece p = customChooseWhichPieceToAdd("BLACK", c1);
+            addToWhere(p, g, "TYPE", "BLACK" );
+        }
+    }
 
 
 
-    private void gameDefault() {
-        Game g1 = new Game("default");
+    private Piece customChooseWhichPieceToAdd(String colour, Custom c) {
+        String command;
+        input = new Scanner(System.in);
+        piecesMenu();
+        command = input.nextLine();
+
+        return c.retrievePieceFromLibrary(command, colour);
+    }
+
+    private void addToWhere(Piece p, Game g, String type, String colour) {
+        System.out.print("SELECT SQUARE");
+        String command;
+        input = new Scanner(System.in);
+        command = input.nextLine();
+        int xcord = lettersToNumbers(command.substring(0,1));
+        int ycord = numbersToJavaIndexes(command.substring(1,2));
+
+        g.addPiece(p, xcord, ycord );
+        System.out.print(colour + " " + type + " added to " + command);
+    }
+
+
+    private void piecesMenu() {
+        System.out.println("KING");
+        System.out.println("QUEEN");
+        System.out.println("ROOK");
+        System.out.println("BISHOP");
+        System.out.println("KNIGHT");
+        System.out.println("PAWN");
+    }
+
+    private void customSetUpCommandsDisplay() {
+        System.out.println("CUSTOM SETUP");
+        System.out.println("    START GAME");
+        System.out.println("    ADD PIECE");
+        System.out.println("    MAIN MENU");
+    }
+
+
+    private void runGame(Game g1) {
         while (g1.getGamestatus()) {
             if (g1.getPlayer1turn()) {
                 System.out.println("Whites Turn:");
@@ -86,64 +169,67 @@ public class Main {
             g.movePiece(movingpiece, lettersToNumbers(command.substring(0,1)),
                     numbersToJavaIndexes(command.substring(1, 2)));
             to = command;
-            System.out.println(movingpiece.getType() + " moved from " + to + " " + from);
+            System.out.println(movingpiece.getType() + " moved from " + from + " to " + to);
         } else {
             System.out.println("Piece cannot be moved there");
         }
     }
 
+
     private void gameCommands(Game g) {
         String command = input.nextLine();
-        String from;
-        String to;
-        if (command.equals("Move Piece")) {
+        if (command.equals("MOVE")) {
             gameCommandMovePiece(g);
         }
-
-        if (command.equals("Forfeit") && g.getPlayer1turn()) {
+        if (command.equals("FORFEIT") && g.getPlayer1turn()) {
             System.out.println("Game Over: White Surrenders!");
             g.gameOver();
         }
-
-        if (command.equals("Forfeit") && g.getPlayer2turn()) {
+        if (command.equals("FORFEIT") && g.getPlayer2turn()) {
             System.out.println("Game Over: Black Surrenders!");
             g.gameOver();
         }
+        if (command.equals("DRAW")) {
+            drawRequest(g);
+        }
+        if (command.equals("QUIT")) {
+            g.gameOver();
+        }
+    }
 
-        if (command.equals("Draw") && g.getPlayer1turn()) {
+    private void drawRequest(Game g) {
+        if (g.getPlayer1turn()) {
             System.out.println("White wants to draw. Accept?");
             yesOrNo();
             isDrawAccepted(g);
         }
-        if (command.equals("Draw") && g.getPlayer2turn()) {
+        if ( g.getPlayer2turn()) {
             System.out.println("Black wants to draw. Accept?");
             yesOrNo();
             isDrawAccepted(g);
         }
-
     }
-
     private void yesOrNo() {
-        System.out.println("Yes");
-        System.out.println("No");
+        System.out.println("YES");
+        System.out.println("NO");
     }
 
     private void isDrawAccepted(Game g) {
         String command = input.nextLine();
-        if (command.equals("Yes")) {
+        if (command.equals("YES")) {
             System.out.println("Game over: Draw!");
             g.gameOver();
         }
-        if (command.equals("No")) {
+        if (command.equals("NO")) {
             System.out.println("Draw declined!");
         }
     }
 
     private void gameMenuCommands() {
-        System.out.println("Move Piece");
-        System.out.println("Forfeit");
-        System.out.println("Draw");
-        System.out.println("Quit");
+        System.out.println("MOVE");
+        System.out.println("FORFEIT");
+        System.out.println("DRAW");
+        System.out.println("RETURN TO MAIN MENU");
     }
 
 
@@ -216,9 +302,9 @@ public class Main {
     // EFFECTS: displays main menu to user
     private void displayMenu() {
         System.out.println("MAIN MENU:");
-        System.out.println("  New Game");
-        System.out.println("  Custom Game");
-        System.out.println("  Quit");
+        System.out.println("  NEW GAME");
+        System.out.println("  CUSTOM GAME");
+        System.out.println("  QUIT");
     }
 
 }

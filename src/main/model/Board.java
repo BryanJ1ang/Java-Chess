@@ -143,7 +143,6 @@ public class Board {
 
     // REQUIRES: x and y is not location of given piece
     // EFFECTS: Returns true if piece can see given square diaganolly
-    @SuppressWarnings("methodlength")
     public Boolean visionDiagonal(Piece p, int x, int y) {
         Boolean b = true;
         if (x > p.getXposition() && y > p.getYposition()) {
@@ -185,7 +184,6 @@ public class Board {
 
 
     //EFFECTS: Returns true if piece can see given square vertically/horizontally
-    @SuppressWarnings("methodlength")
     public Boolean visionStraight(Piece p, int x, int y) {
         Boolean b = true;
         if (x == p.getXposition() && y > p.getYposition()) {

@@ -13,9 +13,17 @@ with the features I want.
 
 
 *User Stories*
-- As a user, I would like to create saves of different game states and resume them at any time.
+- As a user, I would like to be able to move my pieces.
+- As a user, I would like to know if a move I am trying to make is invalid
+- As a user, I would like to be able to forfeit a match.
 - As a user, I would like to be able to customize my setup of a board to create different in game situations.
 - As a user, I want an adjustable time limit for each game.
-- As a user, I want to be able to know the legal moves for a given piece.
-- As a user, I would want to be able to choose which color to play as (black or white)
 
+
+
+*TO DO LIST*
+- Pawn promotion
+- checkmate
+- enpassent
+- castling
+- gui
