@@ -4,7 +4,7 @@ package model;
 import static java.lang.Math.abs;
 
 public class Board {
-    private final Piece[][] bd = new Piece[7][7];
+    private final Piece[][] bd = new Piece[8][8];
     // FIRST DIMENSION = COLUMNS
     // SECOND DIMENSION = ROWS
 
@@ -20,8 +20,8 @@ public class Board {
     // MODIFIES: this, Piece
     // EFFECT: Moves a piece to given location. Captures if position already occupied
     public void movePiece(Piece p, int nextx, int nexty) {
-        bd[nextx][nexty] = p;
         this.removePiece(p.xposition, p.yposition);
+        bd[nextx][nexty] = p;
         p.setPositions(nextx, nexty);
     }
 

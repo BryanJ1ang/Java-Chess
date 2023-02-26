@@ -28,4 +28,7 @@ public abstract class Piece {
         xposition = x;
         yposition = y;
     }
+
+    public abstract String getType();
 }
+

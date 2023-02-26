@@ -1,6 +1,7 @@
 package model;
 
 public class Rook extends Piece {
+    private final String type = "Rook";
 
     // REQUIRES: Colour is one of: "White" "Black"
     // EFFECTS: Constructor for Rook
@@ -15,5 +16,8 @@ public class Rook extends Piece {
 
     public Boolean canMove(int currentx, int currenty, int nextx, int nexty) {
         return ((currentx == nextx) || (currenty == nexty));
+    }
+    public String getType() {
+        return type;
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 public class Pawn extends Piece {
+    private final String type = "Pawn";
 
     public Pawn(String x) {
         moved = false;
@@ -30,5 +31,8 @@ public class Pawn extends Piece {
                 return (currentx == nextx) && ((nexty == currenty - 1));
             }
         }
+    }
+    public String getType() {
+        return type;
     }
 }
