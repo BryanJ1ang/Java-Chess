@@ -7,18 +7,18 @@ import java.util.List;
 public class Player {
 
     private Boolean white;
-    private List<Piece> pieces = new ArrayList<Piece>();
 
+    private final List<Piece> pieces = new ArrayList<Piece>();
+
+    // EFFECTS: Constructor for Player
     public Player(Boolean color) {
         white = color;
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds piece to list of pieces belonging to player
     public void addPiece(Piece p) {
         pieces.add(p);
-    }
-
-    public Boolean getWhite() {
-        return white;
     }
 
 }

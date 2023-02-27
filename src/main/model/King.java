@@ -1,6 +1,6 @@
 package model;
 
-// represents king piece
+// Represents king piece
 public class King extends Piece {
     private final String type = "King";
 

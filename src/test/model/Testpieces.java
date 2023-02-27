@@ -13,6 +13,16 @@ class TestKing {
     }
 
     @Test
+    public void testGetType() {
+        assertEquals("King", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
+    }
+
+    @Test
     public void testcanMove1(){
         assertTrue(x.canMove(5, 5, 4, 4));
         // MOVE 1 BOTTOM LEFT
@@ -64,6 +74,17 @@ class TestQueen {
         x = new Queen("White");
     }
 
+
+    @Test
+    public void testGetType() {
+        assertEquals("Queen", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
+    }
+
     @Test
     public void testcanMove1(){
         assertTrue(x.canMove(5,5, 7, 7));
@@ -90,6 +111,16 @@ class TestRook {
     }
 
     @Test
+    public void testGetType() {
+        assertEquals("Rook", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
+    }
+
+    @Test
     public void testcanMove(){
         assertTrue(x.canMove(5,5,5,7));
         assertTrue(x.canMove(5,5,4,5));
@@ -110,6 +141,16 @@ class TestPawnWhite {
     @BeforeEach
     public void setup(){
         x = new Pawn("Black");
+    }
+
+    @Test
+    public void testGetType() {
+        assertEquals("Pawn", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
     }
 
     @Test
@@ -146,6 +187,16 @@ class testKnight{
     }
 
     @Test
+    public void testGetType() {
+        assertEquals("Knight", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
+    }
+
+    @Test
     public void TestCanMove(){
         assertTrue(x.canMove(3,3,5, 4));
         assertTrue(x.canMove(3,3,5, 2));
@@ -173,6 +224,16 @@ class testBishop{
     }
 
     @Test
+    public void testGetType() {
+        assertEquals("Bishop", x.getType());
+    }
+
+    @Test
+    public void testGetMoved() {
+        assertFalse(x.getMoved());
+    }
+
+    @Test
     public void testCanMove() {
             assertFalse(x.canMove(5, 5, 5, 7));
             // MOVE UP 2
@@ -180,6 +241,9 @@ class testBishop{
             assertFalse(x.canMove(5, 5, 3, 5));
             assertFalse(x.canMove(5, 5, 2, 7));
             assertTrue(x.canMove(5, 5, 4, 6));
+            assertTrue(x.canMove(5, 5, 6, 4));
+
             assertTrue(x.canMove(5, 5, 6, 6));
+            assertTrue(x.canMove(5, 5, 4, 4));
         }
     }

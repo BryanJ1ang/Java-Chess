@@ -1,23 +1,25 @@
 package ui;
 
-import model.Custom;
+import model.Piecelibrary;
 import model.Game;
 import model.Piece;
 
 import java.util.Scanner;
 
+// Chess application
 public class Main {
     private Scanner input;
-
 
     public static void main(String[] args) {
         new Main();
     }
 
-    public Main() {
+    // EFFECT: runs chess application
+    private Main() {
         runChess();
     }
 
+    // EFFECT: Processes user input for main menu
     private void runChess() {
         boolean keepgoing = true;
         String command;
@@ -40,6 +42,7 @@ public class Main {
         System.out.println("Thank you for playing!");
     }
 
+    // EFFECTS: PRocesses the setup of a custom board
     private void customGameSetup() {
         Game g1 = new Game("custom");
         String command;
@@ -65,9 +68,10 @@ public class Main {
     }
 
 
+    // EFFECTS: Processes adding a piece to the board
     private void customAddPiece(Game g) {
         String command;
-        Custom c1 = new Custom();
+        Piecelibrary c1 = new Piecelibrary();
         input = new Scanner(System.in);
         System.out.println("SELECT COLOUR");
         System.out.println("    WHITE");
@@ -76,17 +80,19 @@ public class Main {
 
         if (command.equals("WHITE")) {
             Piece p = customChooseWhichPieceToAdd("WHITE", c1);
-            addToWhere(p, g, "TYPE", "WHITE");
+            customAddToWhere(p, g, "TYPE", "WHITE");
         }
 
         if (command.equals("BLACK")) {
             Piece p = customChooseWhichPieceToAdd("BLACK", c1);
-            addToWhere(p, g, "TYPE", "BLACK");
+            customAddToWhere(p, g, "TYPE", "BLACK");
         }
     }
 
 
-    private Piece customChooseWhichPieceToAdd(String colour, Custom c) {
+    // MODIFIES: this
+    // EFFECTS: prompts and handles type of piece to add to board
+    private Piece customChooseWhichPieceToAdd(String colour, Piecelibrary c) {
         String command;
         input = new Scanner(System.in);
         piecesMenu();
@@ -95,8 +101,9 @@ public class Main {
         return c.retrievePieceFromLibrary(command, colour);
     }
 
-    // EFFECTS:
-    private void addToWhere(Piece p, Game g, String type, String colour) {
+    // MODIFIES: this
+    // EFFECTS: prompts and processes where to add piece onto the board
+    private void customAddToWhere(Piece p, Game g, String type, String colour) {
         System.out.print("SELECT SQUARE");
         String command;
         input = new Scanner(System.in);

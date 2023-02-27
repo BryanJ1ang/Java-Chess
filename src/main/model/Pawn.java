@@ -1,9 +1,11 @@
 package model;
 
-// represents pawns
+// Represents pawn piece
 public class Pawn extends Piece {
     private final String type = "Pawn";
 
+    // REQUIRES: Colour is one of: "White" "Black"
+    // EFFECTS: Constructor for pawn
     public Pawn(String x) {
         moved = false;
         white = (x.equals("White"));

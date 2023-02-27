@@ -2,19 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-// represents library of pieces to add to chess board
-public class Custom {
+// represents library of pieces available to add to chess board
+public class Piecelibrary {
 
-    private ArrayList<Piece> whitepawns = customWhitePawns();
-    private ArrayList<Piece> blackpawns = customBlackPawns();
-    private ArrayList<Piece> whitequeens = customWhiteQueens();
-    private ArrayList<Piece> blackqueens = customBlackQueens();
-    private ArrayList<Piece> whitebishops = customWhiteBishops();
-    private ArrayList<Piece> blackbishops = customBlackBishops();
-    private ArrayList<Piece> whiterooks = customWhiteRooks();
-    private ArrayList<Piece> blackrooks = customBlackRooks();
-    private ArrayList<Piece> whiteknights = customWhiteKnights();
-    private ArrayList<Piece> blackknights = customBlackKnights();
+    private final ArrayList<Piece> whitepawns = customWhitePawns();
+    private final ArrayList<Piece> blackpawns = customBlackPawns();
+    private final ArrayList<Piece> whitequeens = customWhiteQueens();
+    private final ArrayList<Piece> blackqueens = customBlackQueens();
+    private final ArrayList<Piece> whitebishops = customWhiteBishops();
+    private final ArrayList<Piece> blackbishops = customBlackBishops();
+    private final ArrayList<Piece> whiterooks = customWhiteRooks();
+    private final ArrayList<Piece> blackrooks = customBlackRooks();
+    private final ArrayList<Piece> whiteknights = customWhiteKnights();
+    private final ArrayList<Piece> blackknights = customBlackKnights();
 
 
     private Piece whiteking = new King("White");
@@ -23,6 +23,10 @@ public class Custom {
     private Piece piece = null;
 
 
+    // REQUIRES: colour is one of ("WHITE" "BLACK")
+    //           type is one of ("KING" "QUEEN" "ROOK" "BISHOP" "PAWN" "KNIGHT")
+    // MODIFIES: this
+    // EFFECTS: returns a specified piece from library
     public Piece retrievePieceFromLibrary(String type, String colour) {
         if (colour == "WHITE") {
             retrieveWhitePieceFromList(type);
@@ -33,6 +37,9 @@ public class Custom {
         return piece;
     }
 
+    // REQUIRES: type is one of ("KING" "QUEEN" "ROOK" "BISHOP" "PAWN" "KNIGHT")
+    // MODIFIES: this
+    //EFFECTS: returns a specified white piece from library
     private void retrieveWhitePieceFromList(String type) {
         if (type.equals("KING")) {
             piece = whiteking;
@@ -59,6 +66,9 @@ public class Custom {
         }
     }
 
+    // REQUIRES: type is one of ("KING" "QUEEN" "ROOK" "BISHOP" "PAWN" "KNIGHT")
+    // MODIFIES: this
+    //EFFECTS: returns a specified black piece from library
     private void retrieveBlackPieceFromList(String type) {
         if (type.equals("KING")) {
             piece = blackking;
@@ -86,6 +96,7 @@ public class Custom {
     }
 
 
+    // EFFECT: returns list of 8 distinct white pawns
     private ArrayList<Piece> customWhitePawns() {
         ArrayList<Piece> pawns = new ArrayList<Piece>();
         Pawn p1 = new Pawn("White");
@@ -107,6 +118,7 @@ public class Custom {
         return pawns;
     }
 
+    // EFFECT: returns list of 8 distinct black pawns
     private ArrayList<Piece> customBlackPawns() {
         ArrayList<Piece> pawns = new ArrayList<Piece>();
         Pawn p9 = new Pawn("Black");
@@ -128,6 +140,7 @@ public class Custom {
         return pawns;
     }
 
+    // EFFECT: returns list of 8 distinct white queens
     private ArrayList<Piece> customWhiteQueens() {
         ArrayList<Piece> queens = new ArrayList<Piece>();
         Queen q1 = new Queen("White");
@@ -149,6 +162,7 @@ public class Custom {
         return queens;
     }
 
+    // EFFECT: returns list of 8 distinct black queens
     private ArrayList<Piece> customBlackQueens() {
         ArrayList<Piece> queens = new ArrayList<Piece>();
         Queen q9 = new Queen("Black");
@@ -170,6 +184,7 @@ public class Custom {
         return queens;
     }
 
+    // EFFECT: returns list of 8 distinct white rooks
     private ArrayList<Piece> customWhiteRooks() {
         ArrayList<Piece> rooks = new ArrayList<Piece>();
         Rook r1 = new Rook("White");
@@ -191,6 +206,7 @@ public class Custom {
         return rooks;
     }
 
+    // EFFECT: returns list of 8 distinct black rooks
     private ArrayList<Piece> customBlackRooks() {
         ArrayList<Piece> rooks = new ArrayList<Piece>();
         Rook r9 = new Rook("Black");
@@ -212,6 +228,7 @@ public class Custom {
         return rooks;
     }
 
+    // EFFECT: returns list of 8 distinct white bishops
     private ArrayList<Piece> customWhiteBishops() {
         ArrayList<Piece> bishops = new ArrayList<Piece>();
         Bishop b1 = new Bishop("White");
@@ -233,6 +250,7 @@ public class Custom {
         return bishops;
     }
 
+    // EFFECT: returns list of 8 distinct black bishops
     private ArrayList<Piece> customBlackBishops() {
         ArrayList<Piece> bishops = new ArrayList<Piece>();
         Bishop b9 = new Bishop("Black");
@@ -255,6 +273,7 @@ public class Custom {
     }
 
 
+    // EFFECT: returns list of 8 distinct white knights
     private ArrayList<Piece> customWhiteKnights() {
         ArrayList<Piece> knights = new ArrayList<Piece>();
         Knight kn1 = new Knight("White");
@@ -276,6 +295,7 @@ public class Custom {
         return knights;
     }
 
+    // EFFECT: returns list of 8 distinct black knights
     private ArrayList<Piece> customBlackKnights() {
         ArrayList<Piece> knights = new ArrayList<Piece>();
         Knight kn9 = new Knight("Black");
