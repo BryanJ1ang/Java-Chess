@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a player in a game of chess
 public class Player {
 
     private Boolean white;

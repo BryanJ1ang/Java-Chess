@@ -1,5 +1,6 @@
 package model;
 
+// Abstract class for the pieces in chess
 public abstract class Piece {
     int xposition;
     int yposition;

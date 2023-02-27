@@ -1,5 +1,6 @@
 package model;
 
+// Represents rook piece
 public class Rook extends Piece {
     private final String type = "Rook";
 
@@ -14,9 +15,12 @@ public class Rook extends Piece {
         }
     }
 
+    // REQUIRES: parameters are all values between [0,7] inclusive
+    // EFFECT: return true if piece can move to specified position
     public Boolean canMove(int currentx, int currenty, int nextx, int nexty) {
         return ((currentx == nextx) || (currenty == nexty));
     }
+
     public String getType() {
         return type;
     }

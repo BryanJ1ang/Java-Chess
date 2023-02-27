@@ -2,10 +2,11 @@ package model;
 
 import static java.lang.Math.abs;
 
+// represents bishop piece
 public class Bishop extends Piece {
     private final String type = "Bishop";
 
-    //REQUIRES: Colour is one of: "White" "Black"
+    // REQUIRES: Colour is one of: "White" "Black"
     // EFFECT: Constructor for bishop
     public Bishop(String colour) {
         if (colour == "White") {
@@ -16,6 +17,8 @@ public class Bishop extends Piece {
         }
     }
 
+    // REQUIRES: parameters are all values between [0,7] inclusive
+    // EFFECT: return true if piece can move to specified position
     public Boolean canMove(int currentx, int currenty, int nextx, int nexty) {
 
         return (abs(currentx - nextx) == abs(currenty - nexty));

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// represents library of pieces to add to chess board
 public class Custom {
 
     private ArrayList<Piece> whitepawns = customWhitePawns();
@@ -19,72 +20,70 @@ public class Custom {
     private Piece whiteking = new King("White");
     private Piece blackking = new King("Black");
 
-    private Piece p = null;
+    private Piece piece = null;
 
 
     public Piece retrievePieceFromLibrary(String type, String colour) {
         if (colour == "WHITE") {
-             retrieveWhitePieceFromList(type);
+            retrieveWhitePieceFromList(type);
         }
         if (colour == "BLACK") {
-             retrieveBlackPieceFromList(type);
+            retrieveBlackPieceFromList(type);
         }
-        return p;
+        return piece;
     }
 
     private void retrieveWhitePieceFromList(String type) {
         if (type.equals("KING")) {
-            p = whiteking;
+            piece = whiteking;
         }
         if (type.equals("QUEEN")) {
-             p = whitequeens.get(0);
+            piece = whitequeens.get(0);
             whitequeens.remove(0);
         }
         if (type.equals("ROOK")) {
-             p = whiterooks.get(0);
+            piece = whiterooks.get(0);
             whiterooks.remove(0);
         }
         if (type.equals("KNIGHT")) {
-             p = whiteknights.get(0);
+            piece = whiteknights.get(0);
             whiteknights.remove(0);
         }
         if (type.equals("BISHOP")) {
-             p = whitebishops.get(0);
+            piece = whitebishops.get(0);
             whitebishops.remove(0);
         }
         if (type.equals("PAWN")) {
-             p = whitepawns.get(0);
+            piece = whitepawns.get(0);
             whitepawns.remove(0);
         }
     }
 
     private void retrieveBlackPieceFromList(String type) {
         if (type.equals("KING")) {
-            p = blackking;
+            piece = blackking;
         }
         if (type.equals("QUEEN")) {
-            p = blackqueens.get(0);
+            piece = blackqueens.get(0);
             blackqueens.remove(0);
         }
         if (type.equals("ROOK")) {
-            p = blackrooks.get(0);
+            piece = blackrooks.get(0);
             blackrooks.remove(0);
         }
         if (type.equals("KNIGHT")) {
-             p = blackknights.get(0);
+            piece = blackknights.get(0);
             blackknights.remove(0);
         }
         if (type.equals("BISHOP")) {
-            p = blackbishops.get(0);
+            piece = blackbishops.get(0);
             blackbishops.remove(0);
         }
         if (type.equals("PAWN")) {
-            p = blackpawns.get(0);
+            piece = blackpawns.get(0);
             blackpawns.remove(0);
         }
     }
-
-
 
 
     private ArrayList<Piece> customWhitePawns() {

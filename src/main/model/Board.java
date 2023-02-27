@@ -3,6 +3,7 @@ package model;
 
 import static java.lang.Math.abs;
 
+// represents chess board with squares and pieces
 public class Board {
     private final Piece[][] bd = new Piece[8][8];
     // FIRST DIMENSION = COLUMNS
@@ -79,12 +80,13 @@ public class Board {
             if ((nextx == q.xposition || nexty == q.yposition)
                     && this.visionStraight(q, nextx, nexty)) {
                 b = true;
-            } else {
-                if (this.visionDiagonal(q, nextx, nexty)) {
-                    b = true;
-                }
+            }
+            if (this.visionDiagonal(q, nextx, nexty)
+                    && (abs(nextx - q.xposition) == abs((nexty - q.yposition)))) {
+                b = true;
             }
         }
+
         return b;
     }
 
@@ -141,40 +143,34 @@ public class Board {
         return b;
     }
 
-    // REQUIRES: x and y is not location of given piece
-    // EFFECTS: Returns true if piece can see given square diaganolly
+
+    // REQUIRES: x and y is not location of given piece and is diagonal to it
+    // EFFECTS: Returns true if piece can see given square diagonally
     public Boolean visionDiagonal(Piece p, int x, int y) {
         Boolean b = true;
         if (x > p.getXposition() && y > p.getYposition()) {
-            for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
-                for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
-                    if ((x - xcord == y - ycord) && (this.getPiece(xcord, ycord) != null)) {
-                        b = false;
-                    }
-                }
-            }
+            b = diagonalXGreaterYGreater(p, x, y);
         }
         if (x > p.getXposition() && y < p.getYposition()) {
-            for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
-                for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
-                    if ((x - xcord == ycord - y && (this.getPiece(xcord, ycord) != null))) {
-                        b = false;
-                    }
-                }
-            }
+            b = diagonalXGreaterYLesser(p,x,y);
         }
+
         if (x < p.getXposition() && y > p.getYposition()) {
-            for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
-                for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
-                    if ((xcord - x == y - ycord && (this.getPiece(xcord, ycord) != null))) {
-                        b = false;
-                    }
-                }
-            }
+            b = diagonalXLesserYGreater(p,x,y);
         }
+
         if (x < p.getXposition() && y < p.getYposition()) {
-            for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
-                for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
+            b = diagonalXLesserYLesser(p, x, y);
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean diagonalXGreaterYGreater(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
+            for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
+                if ((x - xcord == y - ycord) && (this.getPiece(xcord, ycord) != null)) {
                     b = false;
                 }
             }
@@ -182,36 +178,102 @@ public class Board {
         return b;
     }
 
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean diagonalXLesserYGreater(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
+            for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
+                if ((xcord - x == y - ycord && (this.getPiece(xcord, ycord) != null))) {
+                    b = false;
+                }
+            }
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean diagonalXGreaterYLesser(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
+            for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
+                if ((x - xcord == ycord - y && (this.getPiece(xcord, ycord) != null))) {
+                    b = false;
+                }
+            }
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean diagonalXLesserYLesser(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
+            for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
+                b = false;
+            }
+        }
+        return b;
+    }
+
+
 
     //EFFECTS: Returns true if piece can see given square vertically/horizontally
     public Boolean visionStraight(Piece p, int x, int y) {
         Boolean b = true;
         if (x == p.getXposition() && y > p.getYposition()) {
-            for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
-                if (this.getPiece(x, ycord) != null) {
-                    b = false;
-                }
-            }
+            b = straightYGreater(p, x, y);
         }
         if (x == p.getXposition() && y < p.getYposition()) {
-            for (int ycord = p.getYposition() - 1; y < ycord; ycord--) {
-                if (this.getPiece(x, ycord) != null) {
-                    b = false;
-                }
-            }
+            b = straightYLesser(p, x, y);
         }
         if (y == p.getYposition() && x > p.getXposition()) {
-            for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
-                if (this.getPiece(xcord, y) != null) {
-                    b = false;
-                }
-            }
+            b = straightXGreater(p, x, y);
         }
         if (y == p.getYposition() && x < p.getXposition()) {
-            for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
-                if (this.getPiece(xcord, y) != null) {
-                    b = false;
-                }
+            b = straightXLesser(p, x, y);
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean straightXLesser(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
+            if (this.getPiece(xcord, y) != null) {
+                b = false;
+            }
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean straightXGreater(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int xcord = p.getXposition() + 1; xcord < x; xcord++) {
+            if (this.getPiece(xcord, y) != null) {
+                b = false;
+            }
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean straightYGreater(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int ycord = p.getYposition() + 1; ycord < y; ycord++) {
+            if (this.getPiece(x, ycord) != null) {
+                b = false;
+            }
+        }
+        return b;
+    }
+
+    // EFFECTS: Returns true if piece can see given square
+    private Boolean straightYLesser(Piece p, int x, int y) {
+        Boolean b = true;
+        for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
+            if (this.getPiece(x, ycord) != null) {
+                b = false;
             }
         }
         return b;

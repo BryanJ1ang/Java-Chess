@@ -102,6 +102,18 @@ class TestBoard {
     }
 
     @Test
+    public void testVisionStraight2(){
+        Rook r = new Rook("White");
+        Pawn p1 = new Pawn("White");
+        Pawn p2 = new Pawn("White");
+        Pawn p3 = new Pawn("White");
+        Pawn p4 = new Pawn("Black");
+        bd.addPiece(r, 3, 7);
+        assertTrue(bd.visionStraight(r, 3, 0));
+        bd.addPiece(p4, 3,1);
+        assertFalse(bd.visionStraight(r, 3, 0));
+    }
+    @Test
     public void testCheck1(){
         Rook r1 = new Rook("White");
         Rook r2 = new Rook("Black");

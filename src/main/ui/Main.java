@@ -13,13 +13,14 @@ public class Main {
     public static void main(String[] args) {
         new Main();
     }
+
     public Main() {
         runChess();
     }
 
     private void runChess() {
         boolean keepgoing = true;
-        String command = null;
+        String command;
         input = new Scanner(System.in);
 
         while (keepgoing) {
@@ -41,7 +42,7 @@ public class Main {
 
     private void customGameSetup() {
         Game g1 = new Game("custom");
-        String command = null;
+        String command;
         input = new Scanner(System.in);
 
         Boolean setup = true;
@@ -75,15 +76,14 @@ public class Main {
 
         if (command.equals("WHITE")) {
             Piece p = customChooseWhichPieceToAdd("WHITE", c1);
-            addToWhere(p, g, "TYPE", "WHITE" );
+            addToWhere(p, g, "TYPE", "WHITE");
         }
 
         if (command.equals("BLACK")) {
             Piece p = customChooseWhichPieceToAdd("BLACK", c1);
-            addToWhere(p, g, "TYPE", "BLACK" );
+            addToWhere(p, g, "TYPE", "BLACK");
         }
     }
-
 
 
     private Piece customChooseWhichPieceToAdd(String colour, Custom c) {
@@ -95,19 +95,29 @@ public class Main {
         return c.retrievePieceFromLibrary(command, colour);
     }
 
+    // EFFECTS:
     private void addToWhere(Piece p, Game g, String type, String colour) {
         System.out.print("SELECT SQUARE");
         String command;
         input = new Scanner(System.in);
         command = input.nextLine();
-        int xcord = lettersToNumbers(command.substring(0,1));
-        int ycord = numbersToJavaIndexes(command.substring(1,2));
+        int xcord = lettersToNumbers(command.substring(0, 1));
+        int ycord = numbersToJavaIndexes(command.substring(1, 2));
 
-        g.addPiece(p, xcord, ycord );
+        g.addPiece(p, xcord, ycord);
         System.out.print(colour + " " + type + " added to " + command);
     }
 
 
+    // EFFECTS: displays menu for setting up a custom board
+    private void customSetUpCommandsDisplay() {
+        System.out.println("CUSTOM SETUP");
+        System.out.println("    START GAME");
+        System.out.println("    ADD PIECE");
+        System.out.println("    MAIN MENU");
+    }
+
+    // EFFECTS: displays options for pieces to place on board
     private void piecesMenu() {
         System.out.println("KING");
         System.out.println("QUEEN");
@@ -117,14 +127,8 @@ public class Main {
         System.out.println("PAWN");
     }
 
-    private void customSetUpCommandsDisplay() {
-        System.out.println("CUSTOM SETUP");
-        System.out.println("    START GAME");
-        System.out.println("    ADD PIECE");
-        System.out.println("    MAIN MENU");
-    }
-
-
+    // MODIFIES: this
+    // EFFECTS: runs a chess game
     private void runGame(Game g1) {
         while (g1.getGamestatus()) {
             if (g1.getPlayer1turn()) {
@@ -140,14 +144,16 @@ public class Main {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user and processes which piece to move
     private void gameCommandMovePiece(Game g) {
         String command;
         String from;
 
         System.out.println("Select piece to move");
         command = input.nextLine();
-        Piece movingpiece = g.getBd().getPiece(lettersToNumbers(command.substring(0,1)),
-                numbersToJavaIndexes(command.substring(1,2)));
+        Piece movingpiece = g.getBd().getPiece(lettersToNumbers(command.substring(0, 1)),
+                numbersToJavaIndexes(command.substring(1, 2)));
         if (movingpiece != null) {
             from = command;
             if (g.isPieceTurnToMove(movingpiece)) {
@@ -158,15 +164,17 @@ public class Main {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user and processes where to move piece to
     private void squareToMoveTo(Game g, Piece movingpiece, String from) {
         String command;
         String to;
 
         System.out.println("Select square to move to");
         command = input.nextLine();
-        if (g.canBeMovedThere(movingpiece, lettersToNumbers(command.substring(0,1)),
+        if (g.canBeMovedThere(movingpiece, lettersToNumbers(command.substring(0, 1)),
                 numbersToJavaIndexes(command.substring(1, 2)))) {
-            g.movePiece(movingpiece, lettersToNumbers(command.substring(0,1)),
+            g.movePiece(movingpiece, lettersToNumbers(command.substring(0, 1)),
                     numbersToJavaIndexes(command.substring(1, 2)));
             to = command;
             System.out.println(movingpiece.getType() + " moved from " + from + " to " + to);
@@ -175,49 +183,56 @@ public class Main {
         }
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: Processes in game commands
     private void gameCommands(Game g) {
         String command = input.nextLine();
         if (command.equals("MOVE")) {
             gameCommandMovePiece(g);
         }
         if (command.equals("FORFEIT") && g.getPlayer1turn()) {
-            System.out.println("Game Over: White Surrenders!");
+            System.out.println("GAME OVER: WHITE FORFEITS!");
             g.gameOver();
         }
         if (command.equals("FORFEIT") && g.getPlayer2turn()) {
-            System.out.println("Game Over: Black Surrenders!");
+            System.out.println("GAME OVER: BLACK FORFEITS!");
             g.gameOver();
         }
         if (command.equals("DRAW")) {
             drawRequest(g);
         }
-        if (command.equals("QUIT")) {
+        if (command.equals("MAIN MENU")) {
             g.gameOver();
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts player to accept or decline draw offer
     private void drawRequest(Game g) {
         if (g.getPlayer1turn()) {
             System.out.println("White wants to draw. Accept?");
             yesOrNo();
             isDrawAccepted(g);
         }
-        if ( g.getPlayer2turn()) {
+        if (g.getPlayer2turn()) {
             System.out.println("Black wants to draw. Accept?");
             yesOrNo();
             isDrawAccepted(g);
         }
     }
+
+    // EFFECTS: Displays a yes or no option
     private void yesOrNo() {
         System.out.println("YES");
         System.out.println("NO");
     }
 
+    // MODIFIES: this
+    // EFFECTS: Evaluates if draw is accepted
     private void isDrawAccepted(Game g) {
         String command = input.nextLine();
         if (command.equals("YES")) {
-            System.out.println("Game over: Draw!");
+            System.out.println("GAME OVER: Draw!");
             g.gameOver();
         }
         if (command.equals("NO")) {
@@ -225,14 +240,8 @@ public class Main {
         }
     }
 
-    private void gameMenuCommands() {
-        System.out.println("MOVE");
-        System.out.println("FORFEIT");
-        System.out.println("DRAW");
-        System.out.println("RETURN TO MAIN MENU");
-    }
-
-
+    // REQUIRES: coordinate is a number from 1-8
+    //EFFECTS: Maps chess coordinate to array indexing
     private int numbersToJavaIndexes(String n) {
         if (n.equals("8")) {
             return 0;
@@ -255,49 +264,44 @@ public class Main {
         if (n.equals("2")) {
             return 6;
         }
-        if (n.equals("1")) {
-            return 7;
-        } else {
-            return -1;
-        }
+        return 7;
     }
 
-    private int lettersToNumbers(String str) {
-        if (str.equals("A")) {
+    // REQUIRES: coordinate is a letter from A-H
+    // EFFECTS: Maps chess coordinate to array indexing
+    private int lettersToNumbers(String coordinate) {
+        if (coordinate.equals("A")) {
             return 0;
         }
-        if (str.equals("B")) {
+        if (coordinate.equals("B")) {
             return 1;
         }
-        if (str.equals("C")) {
+        if (coordinate.equals("C")) {
             return 2;
         }
-        if (str.equals("D")) {
+        if (coordinate.equals("D")) {
             return 3;
         }
-        if (str.equals("E")) {
+        if (coordinate.equals("E")) {
             return 4;
         }
-        if (str.equals("F")) {
+        if (coordinate.equals("F")) {
             return 5;
         }
-        if (str.equals("G")) {
+        if (coordinate.equals("G")) {
             return 6;
         }
-        if (str.equals("H")) {
-            return 7;
-        } else {
-            return -1;
-        }
+        return 7;
     }
 
-    private void runGame() {
-        gameMenuCommands();
+    //EFFECTS: displays command options in a match
+    private void gameMenuCommands() {
+        System.out.println("MOVE");
+        System.out.println("FORFEIT");
+        System.out.println("DRAW");
+        System.out.println("MAIN MENU");
     }
 
-    private void newDefaultGame() {
-        Game g1 = new Game("default");
-    }
 
     // EFFECTS: displays main menu to user
     private void displayMenu() {
