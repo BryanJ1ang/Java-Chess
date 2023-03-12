@@ -93,11 +93,12 @@ public class Saves {
 
     // MODIFIES: this
     // EFFECTS: removes file from saves
-    public void removeFile(String file) throws IOException {
+    public void removeFile(String filename) throws IOException {
         writer = new PrintWriter(new File(destination));
-        json.remove(file);
+        json.remove(filename);
         saveToFile(json.toString(TAB));
-        Files.delete(Path.of(file));
+        File file = new File("./data/" + filename + ".json");
+        file.delete();
     }
 
     // MODIFIES: this
