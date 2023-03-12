@@ -12,7 +12,7 @@ public class TestGame {
 
     @BeforeEach
     public void setup(){
-         g = new Game("default");
+         g = new Game("default", null, true);
          r1 = new Rook("White");
          r2 = new Rook("Black");
     }
@@ -178,4 +178,5 @@ public class TestGame {
         assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 5, 4));
 
     }
+
 }

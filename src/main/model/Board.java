@@ -15,7 +15,9 @@ public class Board {
     // EFFECT: Adds piece to location on board
     public void addPiece(Piece piece, int x, int y) {
         bd[x][y] = piece;
-        piece.setPositions(x, y);
+        if (piece != null) {
+            piece.setPositions(x, y);
+        }
     }
 
     // MODIFIES: this, Piece

@@ -28,10 +28,10 @@ public class Piecelibrary {
     // MODIFIES: this
     // EFFECTS: returns a specified piece from library
     public Piece retrievePieceFromLibrary(String type, String colour) {
-        if (colour == "WHITE") {
+        if (colour.equals("WHITE")) {
             retrieveWhitePieceFromList(type);
         }
-        if (colour == "BLACK") {
+        if (colour.equals("BLACK")) {
             retrieveBlackPieceFromList(type);
         }
         return piece;

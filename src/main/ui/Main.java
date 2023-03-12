@@ -3,12 +3,22 @@ package ui;
 import model.Piecelibrary;
 import model.Game;
 import model.Piece;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import persistence.Saves;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.io.File;
 
 // Chess application
 public class Main {
     private Scanner input;
+    private HashMap<String, Game> saves = new HashMap<>();
 
     public static void main(String[] args) {
         new Main();
@@ -29,11 +39,14 @@ public class Main {
             displayMenu();
             command = input.nextLine();
             if (command.equals("NEW GAME")) {
-                Game g1 = new Game("default");
+                Game g1 = new Game("default", null, true);
                 runGame(g1);
             }
             if (command.equals("CUSTOM GAME")) {
                 customGameSetup();
+            }
+            if (command.equals("SAVED GAMES")) {
+                loadGame();
             }
             if (command.equals("QUIT")) {
                 keepgoing = false;
@@ -42,9 +55,97 @@ public class Main {
         System.out.println("Thank you for playing!");
     }
 
-    // EFFECTS: PRocesses the setup of a custom board
+
+    // EFFECTS: loads a saved game
+    private void loadGame() {
+        System.out.println("SELECT FILE TO LOAD:");
+        displaySaves();
+        input = new Scanner(System.in);
+        String select = input.nextLine();
+        loadSave(select);
+    }
+
+
+    //EFFECTS: displays saved games
+    private void displaySaves() {
+        Saves saves = new Saves();
+        for (Object o: saves.listOfSaves()) {
+            String s = (String) o;
+            if (s != null && saves.doesSaveExist(s)) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    // EFFECTS: Deletes selected save file
+    private void deleteSave(String select) {
+        Saves saves = new Saves();
+        try {
+            saves.open();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unexpected error has occurred!");
+        }
+        try {
+            saves.removeFile(select);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unexpected error has occurred!");
+        }
+        saves.close();
+
+        try {
+            Files.delete(Path.of("./data/" + select + ".json"));
+        } catch (IOException e) {
+            System.out.println("Unexpected error has occurred!");
+        }
+        System.out.println(select + " has been deleted!");
+    }
+
+    // EFFECTS: fetches and runs/deletes a saved game
+    private void loadSave(String file) {
+        System.out.println("LOAD OR DELETE SELECTED FILE?");
+        input = new Scanner(System.in);
+        String command = input.nextLine();
+        if (command.equals("LOAD")) {
+            try  {
+                JsonReader jreader = new JsonReader("./data/" + file + ".json");
+                Game g = jreader.read();
+                runGame(g);
+            } catch (IOException e) {
+                System.out.println("Unexpected error has occurred!");
+            }
+        }
+        if (command.equals("DELETE")) {
+            deleteSave(file);
+        }
+    }
+
+
+    // EFFECTS: adds new save
+    private void newSave(Game g, String destination) {
+
+        JsonWriter jwriter = new JsonWriter("./data/" + destination + ".json");
+        Saves saves = new Saves();
+        try {
+            jwriter.open();
+            jwriter.write(g);
+            jwriter.close();
+        } catch (Exception error) {
+            System.out.println("Unexpected Error Has Occurred");
+        }
+
+        try {
+            saves.open();
+            saves.addFile(destination);
+            saves.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unexpected Error Has Occurred");
+        }
+    }
+
+
+    // EFFECTS: Processes the setup of a custom board
     private void customGameSetup() {
-        Game g1 = new Game("custom");
+        Game g1 = new Game("custom", null, true);
         String command;
         input = new Scanner(System.in);
 
@@ -56,15 +157,26 @@ public class Main {
                 setup = false;
                 runGame(g1);
             }
-
             if (command.equals("ADD PIECE")) {
                 customAddPiece(g1);
             }
-
+            if (command.equals("SAVE BOARD")) {
+                customSave(g1);
+            }
             if (command.equals("MAIN MENU")) {
                 setup = false;
             }
         }
+    }
+
+    // creates a custom save
+    private void customSave(Game g) {
+        System.out.println("Please enter name of save!");
+        String command;
+        input = new Scanner(System.in);
+        command = input.nextLine();
+        newSave(g, command);
+        System.out.println("Game has been saved to" + command);
     }
 
 
@@ -121,6 +233,7 @@ public class Main {
         System.out.println("CUSTOM SETUP");
         System.out.println("    START GAME");
         System.out.println("    ADD PIECE");
+        System.out.println("    SAVE BOARD");
         System.out.println("    MAIN MENU");
     }
 
@@ -186,7 +299,7 @@ public class Main {
             to = command;
             System.out.println(movingpiece.getType() + " moved from " + from + " to " + to);
         } else {
-            System.out.println("Piece cannot be moved there");
+            System.out.println(movingpiece.getType() + " cannot be moved there");
         }
     }
 
@@ -207,6 +320,9 @@ public class Main {
         }
         if (command.equals("DRAW")) {
             drawRequest(g);
+        }
+        if (command.equals("SAVE")) {
+            customSave(g);
         }
         if (command.equals("MAIN MENU")) {
             g.gameOver();
@@ -306,6 +422,7 @@ public class Main {
         System.out.println("MOVE");
         System.out.println("FORFEIT");
         System.out.println("DRAW");
+        System.out.println("SAVE");
         System.out.println("MAIN MENU");
     }
 
@@ -315,6 +432,7 @@ public class Main {
         System.out.println("MAIN MENU:");
         System.out.println("  NEW GAME");
         System.out.println("  CUSTOM GAME");
+        System.out.println("  SAVED GAMES");
         System.out.println("  QUIT");
     }
 

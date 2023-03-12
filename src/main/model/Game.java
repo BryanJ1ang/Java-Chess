@@ -1,22 +1,42 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a game with players and a board
-public class Game {
-    private final Board bd = new Board();
-    private final Player player1 = new Player(true); //white
-    private final Player player2 = new Player(false); //black
+public class Game implements Writable {
+    private Board bd = new Board();
+    private Player player1 = new Player(true); //white
+    private Player player2 = new Player(false); //black
     private Boolean player1turn = true;
     private Boolean player2turn = false;
     private Boolean gamestatus = true;
 
 
     //EFFECTS: Constructor for game
-    public Game(String str) {
+    public Game(String str, Board b, Boolean turn) {
         if (str.equals("default")) {
             defaultSetUp();
-        } else {
-            player1turn = true;
         }
+
+        if (b != null) {
+            bd = b;
+        }
+        if (turn) {
+            player1turn = true;
+            player2turn = false;
+        } else {
+            player1turn = false;
+            player2turn = true;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes turns
+    public void changeTurn() {
+        player1turn = !player1turn;
+        player2turn = !player2turn;
     }
 
     // MODIFIES: THIS
@@ -31,7 +51,6 @@ public class Game {
    //EFFECTS: returns true if given piece can be moved on current player's turn
     public Boolean isPieceTurnToMove(Piece p) {
         return (!p.white && player2turn) || (p.white && player1turn);
-
     }
 
     // EFFECTS: returns true if piece can be moved specified location
@@ -145,6 +164,53 @@ public class Game {
         addPiece(k2, 4, 0);
     }
 
+
+    private JSONArray piecesToJson() {
+        JSONArray jsonarray = new JSONArray();
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (null == bd.getPiece(x, y)) {
+                    jsonarray.put("null");
+                } else {
+                    jsonarray.put(bd.getPiece(x, y).getType().toUpperCase());
+                }
+            }
+        }
+        return jsonarray;
+    }
+
+    private JSONArray coloursToJson() {
+        JSONArray jsonarray = new JSONArray();
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (null == bd.getPiece(x,y)) {
+                    jsonarray.put("null");
+                } else {
+                    if (bd.getPiece(x,y).getWhite()) {
+                        jsonarray.put("WHITE");
+                    } else {
+                        jsonarray.put("BLACK");
+                    }
+                }
+            }
+        }
+        return jsonarray;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray pieces = piecesToJson();
+        JSONArray colours = coloursToJson();
+
+        json.put("player1", player1);
+        json.put("player2", player2);
+        json.put("player1turn", player1turn);
+        json.put("pieces", pieces);
+        json.put("colours", colours);
+        return json;
+    }
+
     // EFFECTS: Changes the game state to be over
     public void gameOver() {
         gamestatus = false;
@@ -168,3 +234,4 @@ public class Game {
 }
 
 
+;
