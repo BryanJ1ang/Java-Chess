@@ -1,6 +1,5 @@
 package persistence;
 
-import model.Game;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,7 +9,7 @@ import java.io.PrintWriter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
@@ -43,9 +42,7 @@ public class Saves {
 
     // EFFECTS: returns a list of saves
     public List listOfSaves() {
-        List x = jarray.toList();
-        List<String> y = x;
-        return y;
+        return (List<String>) (List) jarray.toList();
     }
 
     // EFFECTS: reads workroom from file and returns it;
@@ -99,6 +96,16 @@ public class Saves {
         saveToFile(json.toString(TAB));
         File file = new File("./data/" + filename + ".json");
         file.delete();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clears the saves json
+    public void clearSaves() throws FileNotFoundException {
+        writer = new PrintWriter(new File(destination));
+        json = new JSONObject();
+        jarray = new JSONArray();
+        json.put("list", jarray);
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testJsonWriter {
+public class TestJsonWriter {
     Game g;
     JsonWriter jwriter;
     @BeforeEach

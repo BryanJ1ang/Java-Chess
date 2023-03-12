@@ -1,19 +1,17 @@
 package persistence;
 
 import model.Game;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 
 // Represents a writer that writes JSON representation of game to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
-    private String destination;
+    private final String destination;
 
     // EFFECTS: constructs writer to write to destination file
     public JsonWriter(String destination) {
