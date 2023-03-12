@@ -93,9 +93,9 @@ public class Main {
         saves.close();
 
         try {
-            Files.delete(Path.of("./data/" + select + ".json"));
+            Files.deleteIfExists(Path.of("./data/" + select + ".json"));
         } catch (IOException e) {
-            System.out.println("Unexpected error has occurred!");
+            throw new RuntimeException(e);
         }
         System.out.println(select + " has been deleted!");
     }
