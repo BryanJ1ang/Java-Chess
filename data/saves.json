@@ -1,0 +1,15 @@
+{
+    "TEST2": "TEST2",
+    "BALLER": "BALLER",
+    "HELLOOOO": "HELLOOOO",
+    "list": [
+        "TEST1",
+        "TEST2",
+        "BALLER",
+        "HELLOOOO",
+        "Test2",
+        "Test1",
+        "kenya"
+    ],
+    "kenya": "kenya"
+}

@@ -11,14 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.io.File;
 
 // Chess application
 public class Main {
     private Scanner input;
-    private HashMap<String, Game> saves = new HashMap<>();
 
     public static void main(String[] args) {
         new Main();
@@ -87,16 +84,11 @@ public class Main {
         }
         try {
             saves.removeFile(select);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Unexpected error has occurred!");
         }
         saves.close();
 
-        try {
-            Files.deleteIfExists(Path.of("./data/" + select + ".json"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         System.out.println(select + " has been deleted!");
     }
 
@@ -118,7 +110,6 @@ public class Main {
             deleteSave(file);
         }
     }
-
 
     // EFFECTS: adds new save
     private void newSave(Game g, String destination) {

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
@@ -92,10 +93,11 @@ public class Saves {
 
     // MODIFIES: this
     // EFFECTS: removes file from saves
-    public void removeFile(String file) throws FileNotFoundException {
+    public void removeFile(String file) throws IOException {
         writer = new PrintWriter(new File(destination));
         json.remove(file);
         saveToFile(json.toString(TAB));
+        Files.delete(Path.of(file));
     }
 
     // MODIFIES: this
