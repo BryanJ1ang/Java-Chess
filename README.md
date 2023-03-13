@@ -18,4 +18,5 @@ with the features I want.
 - As a user, I would like to be able to forfeit a match.
 - As a user, I would like to be able to offer to draw the match.
 - As a user, I would like to be able to add pieces to the board to create a custom setup of the board.
-
+- As a user, I would like to be able to save my game in the middle of a match and resume it later on
+- As a user, I would like to be able to save my custom setups of a board and play it later
