@@ -32,6 +32,7 @@ public class TestSaves {
         assertTrue(saves.doesSaveExist("HELLOOOO"));
         assertEquals(saves.listOfSaves().size(), 2);
     }
+
     @Test
     public void testSaves2() {
         try {
@@ -57,17 +58,16 @@ public class TestSaves {
         assertFalse(saves.doesSaveExist("Test1"));
         assertFalse(saves.doesSaveExist("Test2"));
         assertEquals(saves.listOfSaves().size(), 4);
-    }
 
-    @Test
-    public void testSave3() {
-        assertEquals(4, saves.listOfSaves().size());
         try {
+            saves.open();
             saves.clearSaves();
+            saves.close();
         } catch (FileNotFoundException e) {
             fail("Unexpected failure");
         }
         assertEquals(0, saves.listOfSaves().size());
+
     }
 }
 
