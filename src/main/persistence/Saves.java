@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Saves class that keeps track of saved games
+// Represents saves class that keeps track of saved games in data
 public class Saves {
     private JSONObject json;
     private JSONArray jarray;
@@ -54,6 +54,7 @@ public class Saves {
     }
 
     // EFFECTS: reads source file as string and returns it
+    // CITATION: JsonSerializationDemo
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 

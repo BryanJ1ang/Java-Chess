@@ -133,6 +133,15 @@ public class TestGame {
     }
 
     @Test
+    public void testChangeTurn() {
+        assertTrue(g.getPlayer1turn());
+        assertFalse(g.getPlayer2turn());
+        g.changeTurn();
+        assertTrue(g.getPlayer2turn());
+        assertFalse(g.getPlayer1turn());
+    }
+
+    @Test
     public void testKnightCanBeMovedThere() {
         Piece pawn = new Pawn("White");
         assertTrue(g.canBeMovedThere(g.getBd().getPiece(1, 7), 2, 5));
@@ -177,6 +186,13 @@ public class TestGame {
         assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 4, 4));
         assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 5, 4));
 
+    }
+
+    @Test
+    public void testGameFalse() {
+        g = new Game("default", null, false);
+        assertFalse(g.getPlayer1turn());
+        assertTrue(g.getPlayer2turn());
     }
 
 }

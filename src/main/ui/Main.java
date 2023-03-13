@@ -160,7 +160,7 @@ public class Main {
         }
     }
 
-    // creates a custom save
+    //EFFECTS: creates a custom save
     private void customSave(Game g) {
         System.out.println("Please enter name of save!");
         String command;
