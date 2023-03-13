@@ -52,7 +52,7 @@ public class JsonReader {
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                if (!pieces.get(0).equals("null") && !colours.get(0).equals("null")) {
+                if (!pieces.get(0).equals("null")) {
                     String type = (String) pieces.get(0);
 
                     String colour = (String) colours.get(0);

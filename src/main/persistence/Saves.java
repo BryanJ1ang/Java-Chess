@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Manages Json file that keeps track of saved files
+// Saves class that keeps track of saved games
 public class Saves {
     private JSONObject json;
     private JSONArray jarray;
@@ -71,11 +71,6 @@ public class Saves {
         writer = new PrintWriter(new File(destination));
     }
 
-    // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
-    public void write(String name) {
-        saveToFile(json.toString(TAB));
-    }
 
     // MODIFIES: this
     // EFFECTS: saves destination name

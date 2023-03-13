@@ -22,6 +22,7 @@ public class TestSaves {
             saves.open();
             saves.addFile("BALLER");
             saves.addFile("HELLOOOO");
+            saves.addFile("HELLOOOO");
             saves.close();
         } catch (Exception except) {
             fail("Unexpected failure");
