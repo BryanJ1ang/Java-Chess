@@ -1,5 +1,7 @@
 package ui;
 
+import model.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,8 @@ import java.awt.event.ActionListener;
 
 // main menu component of gui
 public class MainGooey implements ActionListener {
+
+    JFrame jframe;
 
     public static void main(String[] args) {
         new MainGooey();
@@ -37,25 +41,23 @@ public class MainGooey implements ActionListener {
 
     // EFFECTS: Constructor for MainGooey
     public MainGooey() {
-        JFrame jframe = new JFrame();
+        jframe = new JFrame();
 
         jframe.add(mainMenuPanel(), BorderLayout.CENTER);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setTitle("Chess");
         jframe.pack();
         jframe.setVisible(true);
-
     }
 
-    JButton newGame = new JButton("New Game");
-    JButton savedGame = new JButton("Saved Games");
-    JButton customGame = new JButton("Custom Game");
-    JButton quit = new JButton("Quit");
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("New Game")) {
-
+            jframe.setVisible(false);
+            Game g = new Game("default", null, true);
+            GameGooey gg = new GameGooey(g);
+            jframe = gg.returnGameGooeyFrame();
         }
         if (e.getActionCommand().equals("Saved Games")) {
 
