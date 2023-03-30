@@ -165,6 +165,7 @@ public class Game implements Writable {
     }
 
 
+    // EFFECTS: Parses pieces on the board to Json
     private JSONArray piecesToJson() {
         JSONArray jsonarray = new JSONArray();
         for (int x = 0; x < 8; x++) {
@@ -179,6 +180,7 @@ public class Game implements Writable {
         return jsonarray;
     }
 
+    // EFFECTS: Parses colors of the pieces on the board to Json
     private JSONArray coloursToJson() {
         JSONArray jsonarray = new JSONArray();
         for (int x = 0; x < 8; x++) {
@@ -197,6 +199,7 @@ public class Game implements Writable {
         return jsonarray;
     }
 
+    // EFFECTS: Parses game into Json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

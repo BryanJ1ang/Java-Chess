@@ -16,6 +16,7 @@ public class MainGooey implements ActionListener {
         new MainGooey();
     }
 
+    // EFFECTS: setups main menu panel of game
     private JPanel mainMenuPanel() {
         JFrame jframe = new JFrame();
         JPanel panel = new JPanel();
@@ -51,15 +52,23 @@ public class MainGooey implements ActionListener {
     }
 
 
+
+    // EFFECTS: makes frame visible
+    public void makeVisible() {
+        jframe.setVisible(true);
+    }
+
+    // EFFECTS: Processes handling of buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("New Game")) {
             jframe.setVisible(false);
             Game g = new Game("default", null, true);
             new GameGooey(g);
+            jframe.setVisible(true);
         }
         if (e.getActionCommand().equals("Saved Games")) {
-
+            new SavesGooey();
         }
         if (e.getActionCommand().equals("Custom Game")) {
 
