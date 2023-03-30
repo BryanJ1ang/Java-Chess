@@ -1,8 +1,6 @@
 package ui;
 
 import model.Game;
-import model.Board;
-import model.Piece;
 
 import javax.swing.*;
 
@@ -14,13 +12,21 @@ import static java.awt.BorderLayout.CENTER;
 
 public class GameGooey implements ActionListener {
 
+    private JFrame frame = new JFrame();
     private static Game g;
-    private ImageIcon[][] squares = new ImageIcon[8][8];
     private MovePieceListener pieceListener = new MovePieceListener();
+    private JPanel[][] squares = new JPanel[8][8];
+    private JButton[][] buttons = new JButton[8][8];
 
     // EFFECTS: Constructor for GameGooey
     public GameGooey(Game g) {
         this.g = g;
+        createSquareImages();
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Chess");
+        frame.pack();
+        frame.setVisible(true);
     }
 
 
@@ -42,40 +48,47 @@ public class GameGooey implements ActionListener {
     }
 
     private void createSquareImages() {
+        frame.setLayout(new GridLayout(8, 8));
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 ImageIcon b = new ImageIcon(whiteOrBlackImages(x, y) + PieceType(x,y) + ".png");
-                squares[x][y] = b;
+                JButton button = new JButton();
+                button.setIcon(b);
+
+                buttons[x][y] = button;
+                frame.add(button);
             }
         }
     }
 
-    public JFrame returnGameGooeyFrame() {
-        JFrame jframe = new JFrame();
+    private void createBoard() {
+        frame.setLayout(new GridLayout(8,8));
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+            }
+        }
+    }
+
+    // EFFECTS: Adds pieces to the frame
+    public void framePieces() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(8,8));
+        panel.setLayout(new GridLayout(8, 8));
 
         createSquareImages();
 
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                JLabel label = new JLabel(squares[x][y]);
-                label.addMouseListener(pieceListener);
-                label.addMouseMotionListener(pieceListener);
-                panel.add(label);
-            }
-        }
+        frame.add(panel, CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Chess");
+        frame.pack();
+        frame.setVisible(true);
 
-        jframe.add(panel, CENTER);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setTitle("Chess");
-        jframe.pack();
-        jframe.setVisible(true);
-        return jframe;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public JPanel[][] getSquares() {
+        return squares;
     }
 }

@@ -8,7 +8,6 @@ public class MovePieceListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        e.getComponent().setLocation(e.getX(),e.getY());
     }
 
     @Override
@@ -18,6 +17,7 @@ public class MovePieceListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+
 
     }
 
@@ -33,8 +33,6 @@ public class MovePieceListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
-        e.getComponent().setLocation(e.getX(),e.getY());
     }
 
     @Override

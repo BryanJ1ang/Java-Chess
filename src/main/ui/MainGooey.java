@@ -56,8 +56,7 @@ public class MainGooey implements ActionListener {
         if (e.getActionCommand().equals("New Game")) {
             jframe.setVisible(false);
             Game g = new Game("default", null, true);
-            GameGooey gg = new GameGooey(g);
-            jframe = gg.returnGameGooeyFrame();
+            new GameGooey(g);
         }
         if (e.getActionCommand().equals("Saved Games")) {
 
