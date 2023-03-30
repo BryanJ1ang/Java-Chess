@@ -20,3 +20,18 @@ with the features I want.
 - As a user, I would like to be able to add pieces to the board to create a custom setup of the board.
 - As a user, I would like to be able to save my game in the middle of a match and resume it later on
 - As a user, I would like to be able to save my custom setups of a board and play it later
+
+
+## INSTRUCTIONS FOR GRADER:
+- Run MainGooey under UI 
+- Start new game and move pieces around.
+- Press save game on the right, type name of save into textbox and hit enter to save current game.
+- Continue playing or return to main menu
+- To load a saved game, go to main menu and press "Saved Games"
+- Choose from the list of saved games and you will be prompted to either load/delete the selected save
+- Visual component consists of the chess board
+
+
+## Citation:
+All chess piece images are the work of Cburnett.
+Retrieved from https://commons.wikimedia.org/wiki/File:Chess_klt45.svg

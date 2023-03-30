@@ -2,10 +2,9 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.Writable;
 
 // represents a game with players and a board
-public class Game implements Writable {
+public class Game {
     private Board bd = new Board();
     private Player player1 = new Player(true); //white
     private Player player2 = new Player(false); //black
@@ -200,7 +199,6 @@ public class Game implements Writable {
     }
 
     // EFFECTS: Parses game into Json
-    @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         JSONArray pieces = piecesToJson();

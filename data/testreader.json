@@ -66,8 +66,8 @@
         "PAWN",
         "ROOK"
     ],
-    "player1": "model.Player@28eaa59a",
-    "player2": "model.Player@3427b02d",
+    "player1": "model.Player@49ec71f8",
+    "player2": "model.Player@1d2adfbe",
     "colours": [
         "BLACK",
         "BLACK",

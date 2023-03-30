@@ -56,7 +56,7 @@ public class GameGooey implements MouseListener, ActionListener {
     }
 
     // EFFECTS: Returns type of piece is on square or empty if empty
-    private String PieceType(int x, int y) {
+    private String pieceType(int x, int y) {
         if (g.getBd().getPiece(x, y) != null) {
             return g.getBd().getPiece(x, y).getType();
         } else {
@@ -108,7 +108,7 @@ public class GameGooey implements MouseListener, ActionListener {
         Boolean color = true;
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                ImageIcon b = new ImageIcon(whiteOrBlackImages(x, y) + PieceType(x, y) + ".png");
+                ImageIcon b = new ImageIcon(whiteOrBlackImages(x, y) + pieceType(x, y) + ".png");
                 JButton button = new JButton();
                 button.setIcon(b);
                 button.setSize(500, 500);
@@ -188,8 +188,8 @@ public class GameGooey implements MouseListener, ActionListener {
         }
     }
 
+    // EFFECTS: Displays a type bar
     private void typeBar() {
-        Typebar tb = new Typebar();
 
         sidebar.removeAll();
         typebar = new JTextField("New Save");
@@ -200,6 +200,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
     }
 
+    // EFFECTS: Saves current game state
     private void saveGame(String str) throws FileNotFoundException {
 
         JsonWriter writer = new JsonWriter("./data/" + str + ".json");
@@ -248,6 +249,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
     }
 
+    // EFFECTS: Handles sidebar buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Quit")) {
@@ -255,8 +257,7 @@ public class GameGooey implements MouseListener, ActionListener {
         }
         if (e.getActionCommand().equals("Save Game")) {
             typeBar();
-
-            } else {
+        } else {
             try {
                 saveGame(typebar.getText());
                 setupBarPanel();

@@ -71,7 +71,7 @@ public class MainGooey implements ActionListener {
             new SavesGooey();
         }
         if (e.getActionCommand().equals("Custom Game")) {
-
+            System.exit(1);
         }
         if (e.getActionCommand().equals("Quit")) {
             System.exit(1);

@@ -18,16 +18,9 @@ public class SavesGooey implements ActionListener {
     Saves saves = new Saves();
     int status = -1;
 
+    // EFFECTS: Constructor for SavesGooey
     public SavesGooey() {
         displaySaves();
-        for (Object o: saves.listOfSaves()) {
-            String s = (String) o;
-            if (s != null && saves.doesSaveExist(s)) {
-                JButton button = new JButton(s);
-                button.addActionListener(this);
-                panel.add(button);
-            }
-        }
 
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,9 +29,10 @@ public class SavesGooey implements ActionListener {
         frame.setVisible(true);
     }
 
+    // EFFECTS: Displays list of saved files
     private void displaySaves() {
         panel.removeAll();
-        for (Object o: saves.listOfSaves()) {
+        for (Object o : saves.listOfSaves()) {
             String s = (String) o;
             if (s != null && saves.doesSaveExist(s)) {
                 JButton button = new JButton(s);
@@ -50,12 +44,13 @@ public class SavesGooey implements ActionListener {
         panel.repaint();
     }
 
+    // EFFECTS: Displays load/delete buttons
     private void displayLoadOrSave() {
         panel.removeAll();
         JButton button = new JButton("Load");
         button.addActionListener(this);
         panel.add(button);
-         button = new JButton("Delete");
+        button = new JButton("Delete");
         button.addActionListener(this);
         panel.add(button);
 
@@ -63,16 +58,18 @@ public class SavesGooey implements ActionListener {
         panel.repaint();
     }
 
+    // EFFECTS: Deletes selected save
     private void loadSave() {
         JsonReader reader = new JsonReader("./data/" + file + ".json");
         try {
-           new GameGooey(reader.read());
+            new GameGooey(reader.read());
             frame.dispose();
         } catch (IOException e) {
             System.exit(5);
         }
     }
 
+    // EFFECTS: Deletes selected save
     private void deleteSave() {
         try {
             saves.removeFile(file);
@@ -82,10 +79,7 @@ public class SavesGooey implements ActionListener {
         displaySaves();
     }
 
-    private void loadordelete() {
-        displayLoadOrSave();
-    }
-
+    // EFFECTS: Handles selection and whether to load/delete save
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Load")) {
