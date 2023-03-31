@@ -25,6 +25,7 @@ public class GameGooey implements MouseListener, ActionListener {
     private JPanel panel = new JPanel();
     private JButton[][] sq = new JButton[8][8];
     private int status = 0;
+    private JLabel turn = new JLabel("White player's turn");
 
     private JPanel sidebar = new JPanel();
 
@@ -38,22 +39,38 @@ public class GameGooey implements MouseListener, ActionListener {
         panel.setLayout(new GridLayout(8, 8));
         frame.setLayout(new GridLayout(0, 2));
         setupBarPanel();
+        sidebar.setLayout(new GridLayout(0,1));
         frame.add(sidebar);
         framePieces();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up sidebar panel
     private void setupBarPanel() {
         sidebar.removeAll();
+        sidebar.add(turn, CENTER);
         JButton button = new JButton("Save Game");
         button.addActionListener(this);
         sidebar.add(button);
         button = new JButton("Quit");
         button.addActionListener(this);
         sidebar.add(button);
+
         sidebar.validate();
         sidebar.repaint();
-
     }
+
+    // MODIFIES: this
+    // EFFECTS: refreshes label with current players turn:
+    private void playerTurn() {
+        if (g.getPlayer1turn()) {
+            turn = new JLabel("White player's turn!");
+        } else {
+            turn = new JLabel("Black player's turn!");
+        }
+        setupBarPanel();
+    }
+
 
     // EFFECTS: Returns type of piece is on square or empty if empty
     private String pieceType(int x, int y) {
@@ -73,7 +90,6 @@ public class GameGooey implements MouseListener, ActionListener {
             return "./data/BlackPieceImages/";
         }
     }
-
 
     // EFFECTS: returns x position of square
     private int returnButtonXValue(JButton b) {
@@ -101,7 +117,7 @@ public class GameGooey implements MouseListener, ActionListener {
         return coordinate;
     }
 
-
+    // MODIFIES: this
     // EFFECTS: creates buttons for the pieces on the board
     private void createButtons() {
         sq = new JButton[8][8];
@@ -126,8 +142,40 @@ public class GameGooey implements MouseListener, ActionListener {
                 sq[x][y] = button;
             }
         }
+        addColorToButtons();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the background color of pieces
+    private void addColorToButtons() {
+        Boolean color = true;
+        for (int x = 0; x < 8; x = x + 2) {
+            for (int y = 0; y < 8; y++) {
+                JButton button = sq[x][y];
+                if (color) {
+                    button.setBackground(new java.awt.Color(252, 204, 116));
+                } else {
+                    button.setBackground(new java.awt.Color(138, 120, 93));
+                }
+                color = ! color;
+            }
+        }
+        for (int x = 1; x < 8; x = x + 2) {
+            for (int y = 0; y < 8; y++) {
+                JButton button = sq[x][y];
+                if (!color) {
+                    button.setBackground(new java.awt.Color(252, 204, 116));
+                } else {
+                    button.setBackground(new java.awt.Color(138, 120, 93));
+                }
+                color = ! color;
+            }
+        }
+
+    }
+
+
+    // MODIFIES: this
     // EFFECTS: Adds buttons to panel
     private void addButtonsToPanel() {
 
@@ -139,6 +187,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: Updates board reflecting current game state
     private void updateBoard() {
         panel.removeAll();
@@ -150,6 +199,7 @@ public class GameGooey implements MouseListener, ActionListener {
         panel.repaint();
     }
 
+    // MODIFIES: this
     // EFFECTS: Adds pieces to the frame
     public void framePieces() {
 
@@ -164,6 +214,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: Processes the movement of pieces
     //          No effect if invalid move
     private void movePiece(JButton b) {
@@ -183,6 +234,7 @@ public class GameGooey implements MouseListener, ActionListener {
             if (g.canBeMovedThere(movingpiece, x, y)) {
                 g.movePiece(movingpiece, x, y);
                 updateBoard();
+                playerTurn();
             }
             status = 0;
         }
@@ -221,7 +273,7 @@ public class GameGooey implements MouseListener, ActionListener {
     }
 
 
-    // EFFECTS: Processes the buttons on the frame
+    // EFFECTS: Processes movement of pieces
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getComponent() != null) {

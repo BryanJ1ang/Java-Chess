@@ -1,4 +1,8 @@
 {
-    "list": ["save game"],
-    "save game": "save game"
+    "New Save": "New Save",
+    "lol": "lol",
+    "list": [
+        "New Save",
+        "lol"
+    ]
 }

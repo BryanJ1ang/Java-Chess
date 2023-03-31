@@ -132,7 +132,7 @@ public class Board {
         Boolean b = false;
         int kx = x.getXposition();
         int ky = x.getYposition();
-        // !x.white
+
         for (int xcord = 0; xcord < 7; xcord++) {
             for (int ycord = 0; ycord < 7; ycord++) {
                 if (this.getPiece(xcord, ycord) != null) {
@@ -211,7 +211,9 @@ public class Board {
         Boolean b = true;
         for (int xcord = p.getXposition() - 1; xcord > x; xcord--) {
             for (int ycord = p.getYposition() - 1; ycord > y; ycord--) {
-                b = false;
+                if ((xcord - x == ycord - y && this.getPiece(xcord,ycord) != null)) {
+                    b = false;
+                }
             }
         }
         return b;

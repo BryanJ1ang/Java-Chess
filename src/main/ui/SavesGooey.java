@@ -5,6 +5,7 @@ import persistence.JsonWriter;
 import persistence.Saves;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class SavesGooey implements ActionListener {
 
     // EFFECTS: Constructor for SavesGooey
     public SavesGooey() {
+        panel.setLayout(new GridLayout(0,1));
+        frame.setBackground(Color.black);
         displaySaves();
 
         frame.add(panel);
@@ -40,6 +43,10 @@ public class SavesGooey implements ActionListener {
                 panel.add(button);
             }
         }
+        JButton button = new JButton("Main Menu");
+        button.addActionListener(this);
+        button.setBackground(Color.black);
+        panel.add(button);
         panel.revalidate();
         panel.repaint();
     }
@@ -84,6 +91,9 @@ public class SavesGooey implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Load")) {
             loadSave();
+        }
+        if (e.getActionCommand().equals("Main Menu")) {
+            frame.dispose();
         }
         if (e.getActionCommand().equals("Delete")) {
             deleteSave();
