@@ -43,7 +43,7 @@ public class MainGooey implements ActionListener {
     // EFFECTS: Constructor for MainGooey
     public MainGooey() {
         jframe = new JFrame();
-
+        
         jframe.add(mainMenuPanel(), BorderLayout.CENTER);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setTitle("Chess");

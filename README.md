@@ -25,7 +25,7 @@ with the features I want.
 ## INSTRUCTIONS FOR GRADER:
 - Run MainGooey under UI 
 - Start new game and move pieces around.
-- Press save game on the right, type name of save into textbox and hit enter to save current game.
+- Press save game on the left, type name of save into text box and hit enter to save current game. Save as many times as you like!
 - Continue playing or return to main menu
 - To load a saved game, go to main menu and press "Saved Games"
 - Choose from the list of saved games and you will be prompted to either load/delete the selected save

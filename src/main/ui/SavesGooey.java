@@ -5,13 +5,15 @@ import persistence.JsonWriter;
 import persistence.Saves;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// Saves menu of GUI
+// Save menu of GUI
 public class SavesGooey implements ActionListener {
     String file;
     JFrame frame = new JFrame();
@@ -45,7 +47,8 @@ public class SavesGooey implements ActionListener {
         }
         JButton button = new JButton("Main Menu");
         button.addActionListener(this);
-        button.setBackground(Color.black);
+        button.setBackground(Color.cyan);
+
         panel.add(button);
         panel.revalidate();
         panel.repaint();

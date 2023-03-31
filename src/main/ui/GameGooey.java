@@ -244,7 +244,7 @@ public class GameGooey implements MouseListener, ActionListener {
     private void typeBar() {
 
         sidebar.removeAll();
-        typebar = new JTextField("New Save");
+        typebar = new JTextField("Enter name of save!");
         typebar.addActionListener(this);
         sidebar.add(typebar);
         sidebar.validate();
@@ -281,6 +281,25 @@ public class GameGooey implements MouseListener, ActionListener {
         }
     }
 
+    // EFFECTS: Handles sidebar buttons
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Quit")) {
+            frame.dispose();
+        }
+        if (e.getActionCommand().equals("Save Game")) {
+            typeBar();
+        } else {
+            try {
+                saveGame(typebar.getText());
+                setupBarPanel();
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found");
+                System.exit(3);
+            }
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -299,24 +318,6 @@ public class GameGooey implements MouseListener, ActionListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    // EFFECTS: Handles sidebar buttons
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Quit")) {
-            frame.dispose();
-        }
-        if (e.getActionCommand().equals("Save Game")) {
-            typeBar();
-        } else {
-            try {
-                saveGame(typebar.getText());
-                setupBarPanel();
-            } catch (FileNotFoundException ex) {
-                System.exit(3);
-            }
-        }
     }
 }
 
