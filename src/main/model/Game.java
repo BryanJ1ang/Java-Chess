@@ -43,7 +43,7 @@ public class Game {
     // MODIFIES: THIS
     //EFFECTS: moves piece to given location and switches turns
     public void movePiece(Piece p, int nextx, int nexty) {
-        if (bd.getPiece(nextx,nexty) != null ) {
+        if (bd.getPiece(nextx,nexty) != null) {
             logCapturesPiece(p, bd.getPiece(nextx,nexty));
         } else {
             logMovedPiece(p, nextx, nexty);
@@ -94,7 +94,7 @@ public class Game {
 
     //EFFECTS: converts to Y index to chess position
     private String indexToChessIndex(int y) {
-        return Integer.toString(8-y);
+        return Integer.toString(8 - y);
     }
 
 

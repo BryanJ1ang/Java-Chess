@@ -49,7 +49,7 @@ public class JsonWriter {
     // MODIFIES: EventLog
     // EFFECT: logs a file has been saved
     private void logSavedFile(String filename) {
-        String message = "Game has been saved as: " + fileNameOnly(filename);
+        String message = "Game saved as: " + fileNameOnly(filename);
         Event event = new Event(message);
         EventLog.getInstance().logEvent(event);
     }

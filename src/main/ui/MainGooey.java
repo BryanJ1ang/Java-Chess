@@ -76,11 +76,10 @@ public class MainGooey implements ActionListener, WindowListener {
             new SavesGooey();
         }
         if (e.getActionCommand().equals("Custom Game")) {
-            System.exit(1);
+            jframe.dispose();
         }
         if (e.getActionCommand().equals("Quit")) {
-            displayLog();
-            System.exit(1);
+            jframe.dispose();
         }
 
     }
