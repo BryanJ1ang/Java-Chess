@@ -20,7 +20,7 @@ import static java.awt.BorderLayout.CENTER;
 // In game component of GUI
 public class GameGooey implements MouseListener, ActionListener {
 
-    private JFrame frame = new JFrame();
+    private JFrame frame = new JFrame("Game");
     private static Game g;
     private JPanel panel = new JPanel();
     private JButton[][] sq = new JButton[8][8];
@@ -28,9 +28,9 @@ public class GameGooey implements MouseListener, ActionListener {
     private JLabel turn = new JLabel("White player's turn");
 
     private JPanel sidebar = new JPanel();
+    JTextField typebar  = new JTextField("Enter name of save");
 
     private Piece movingpiece;
-    JTextField typebar;
 
 
     // EFFECTS: Constructor for GameGooey
@@ -244,7 +244,6 @@ public class GameGooey implements MouseListener, ActionListener {
     private void typeBar() {
 
         sidebar.removeAll();
-        typebar = new JTextField("Enter name of save!");
         typebar.addActionListener(this);
         sidebar.add(typebar);
         sidebar.validate();
@@ -284,11 +283,16 @@ public class GameGooey implements MouseListener, ActionListener {
     // EFFECTS: Handles sidebar buttons
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Quit")) {
-            frame.dispose();
-        }
-        if (e.getActionCommand().equals("Save Game")) {
-            typeBar();
+        if (e.getActionCommand().equals("Save Game")
+                || e.getActionCommand().equals("Quit")) {
+
+            if (e.getActionCommand().equals("Save Game")) {
+                typeBar();
+            }
+
+            if (e.getActionCommand().equals("Quit")) {
+                frame.dispose();
+            }
         } else {
             try {
                 saveGame(typebar.getText());

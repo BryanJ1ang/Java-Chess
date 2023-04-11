@@ -1,14 +1,18 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 // main menu component of gui
-public class MainGooey implements ActionListener {
+public class MainGooey implements ActionListener, WindowListener {
 
     JFrame jframe;
 
@@ -48,6 +52,7 @@ public class MainGooey implements ActionListener {
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setTitle("Chess");
         jframe.pack();
+        jframe.addWindowListener(this);
         jframe.setVisible(true);
     }
 
@@ -74,8 +79,52 @@ public class MainGooey implements ActionListener {
             System.exit(1);
         }
         if (e.getActionCommand().equals("Quit")) {
+            displayLog();
             System.exit(1);
         }
+
+    }
+
+    // EFFECTS: Displays event log
+    public void displayLog() {
+        EventLog log = EventLog.getInstance();
+        for (Event event : log) {
+            System.out.println(event.getDescription());
+        }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        displayLog();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        displayLog();
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
 
     }
 }

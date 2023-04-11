@@ -7,7 +7,6 @@ public class King extends Piece {
     // REQUIRES: colour is one of: "White" "Black"
     // EFFECT: constructor for king at given location
     public  King(String colour) {
-        String type = "King";
 
         moved = false;
         if (colour == "White") {

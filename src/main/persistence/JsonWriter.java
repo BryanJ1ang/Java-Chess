@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Game;
 import org.json.JSONObject;
 
@@ -31,6 +33,25 @@ public class JsonWriter {
     public void write(Game g) {
         JSONObject json = g.toJson();
         saveToFile(json.toString(TAB));
+        logSavedFile(destination);
+    }
+
+
+    // EFFECTS: Extracts only filename from file
+    private String fileNameOnly(String file) {
+        String message;
+        int length = file.length();
+        message = file.substring(7,length - 5);
+        return message;
+    }
+
+
+    // MODIFIES: EventLog
+    // EFFECT: logs a file has been saved
+    private void logSavedFile(String filename) {
+        String message = "Game has been saved as: " + fileNameOnly(filename);
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
     }
 
     // MODIFIES: this

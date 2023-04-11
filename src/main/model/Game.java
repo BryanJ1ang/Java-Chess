@@ -29,6 +29,8 @@ public class Game {
             player1turn = false;
             player2turn = true;
         }
+
+        logNewGameCreated();
     }
 
     // MODIFIES: this
@@ -41,11 +43,79 @@ public class Game {
     // MODIFIES: THIS
     //EFFECTS: moves piece to given location and switches turns
     public void movePiece(Piece p, int nextx, int nexty) {
+        if (bd.getPiece(nextx,nexty) != null ) {
+            logCapturesPiece(p, bd.getPiece(nextx,nexty));
+        } else {
+            logMovedPiece(p, nextx, nexty);
+        }
         bd.movePiece(p, nextx, nexty);
         player1turn = !player1turn;
         player2turn = !player2turn;
     }
 
+
+    // EFFECTS: returns color of piece
+    private String colorOfPiece(Piece p) {
+        if (p.white) {
+            return "White";
+        } else {
+            return "Black";
+        }
+    }
+
+    // MODIFIES: EventLog
+    // EFFECTS: logs new game created
+    private void logNewGameCreated() {
+        String message = "New game created";
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
+    }
+
+    // MODIFIES: EventLog
+    // EFFECTS: logs a piece captured by another
+    private void logCapturesPiece(Piece moving, Piece captured) {
+        String from = indexToChessCoordinate(moving.getXposition(), moving.getYposition());
+        String to = indexToChessCoordinate(captured.getXposition(), captured.getYposition());
+
+        String message = colorOfPiece(moving) + " " + moving.getType().toLowerCase() + " captures "
+                + colorOfPiece(captured).toLowerCase() + " " + captured.getType().toLowerCase() + " from "
+                + from + " to " + to;
+
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
+    }
+
+    // EFFECTS: Converts indexes to corresponding chess coordinate
+    private String indexToChessCoordinate(int x, int y) {
+        char letter = convertNumberToAlphabet(x);
+        String number = indexToChessIndex(y);
+        return String.valueOf(letter) + number;
+    }
+
+    //EFFECTS: converts to Y index to chess position
+    private String indexToChessIndex(int y) {
+        return Integer.toString(8-y);
+    }
+
+
+        // EFFECTS: Converts number to corresponding ordered alphabet character
+    public static char convertNumberToAlphabet(int i) {
+        return (char) (i + 65);
+    }
+
+
+    // MODIFIES: EventLog
+    // EFFECTS: logs the moved piece
+    private void logMovedPiece(Piece piece, int nextx, int nexty) {
+        String from = indexToChessCoordinate(piece.getXposition(), piece.getYposition());
+        String to = indexToChessCoordinate(nextx, nexty);
+
+        String message = colorOfPiece(piece) + " " + piece.getType().toLowerCase()
+                + " moved from " + from + " to " + to;
+
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
+    }
 
    //EFFECTS: returns true if given piece can be moved on current player's turn
     public Boolean isPieceTurnToMove(Piece p) {

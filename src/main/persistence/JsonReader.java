@@ -1,15 +1,13 @@
 package persistence;
 
-import model.Board;
+import model.*;
 
-import model.Game;
-import model.Piecelibrary;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-import model.Piece;
+
 import org.json.*;
 
 // Represents a reader that reads game from JSON data stored in file
@@ -41,6 +39,24 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: Extracts only filename from file
+    private String fileNameOnly(String file) {
+        String message;
+        int length = file.length();
+        message = file.substring(7,length - 5);
+        return message;
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: logs a game has been read
+    private void logReadGame(String filename) {
+        String message = fileNameOnly(filename) + " has been loaded";
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
+    }
+
+
     // EFFECTS: parses Game from JSON object and returns it
     private Game parseGame(JSONObject jsonObject) {
         Boolean b = (Boolean) jsonObject.get("player1turn");
@@ -67,6 +83,7 @@ public class JsonReader {
             }
         }
         g = new Game("empty", bd, b);
+        logReadGame(source);
         return g;
     }
 

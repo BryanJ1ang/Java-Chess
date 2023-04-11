@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -92,6 +94,15 @@ public class Saves {
         saveToFile(json.toString(TAB));
         File file = new File("./data/" + filename + ".json");
         file.delete();
+        logSaveFileDeleted(filename);
+    }
+
+    // MODIFIES: Eventlog
+    //EFFECTS: Logs save file is deleted
+    public void logSaveFileDeleted(String filename) {
+        String message = "Save deleted: " + filename;
+        Event event = new Event(message);
+        EventLog.getInstance().logEvent(event);
     }
 
     // MODIFIES: this
