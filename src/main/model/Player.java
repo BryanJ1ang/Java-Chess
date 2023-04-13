@@ -20,5 +20,4 @@ public class Player {
     public void addPiece(Piece p) {
         pieces.add(p);
     }
-
 }

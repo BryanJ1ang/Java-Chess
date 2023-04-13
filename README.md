@@ -35,3 +35,32 @@ with the features I want.
 ## Citation:
 All chess piece images are the work of Cburnett.
 Retrieved from https://commons.wikimedia.org/wiki/File:Chess_klt45.svg
+
+
+
+## Phase 4: Task 2
+New game created
+White pawn moved from E2 to E4
+Black pawn moved from D7 to D5
+White pawn captures black pawn from E4 to D5
+Black pawn moved from E7 to E6
+White pawn captures black pawn from D5 to E6
+Black queen captures white pawn from D8 to D2
+Game saved as: Save 1
+New game created
+Loaded from saved file: Save 1
+White pawn captures black pawn from E6 to F7
+Black queen captures white pawn from D2 to C2
+White queen captures black queen from D1 to C2
+Game saved as: Save 2
+Save deleted: Save 1
+New game created
+Loaded from saved file: Save 2
+Black knight moved from G8 to F6
+
+## Phase 4: Task 3
+One major area of improvement for my code is coupling. For example, some of my methods in 
+PieceLibrary depend on a very exact set of String to retrieve a Piece. As such, if some of my
+methods have a minor spelling error for a parameter, then bugs would likely occur. As such, there 
+are several areas where my coupling could be improved.
+

@@ -51,7 +51,7 @@ public class JsonReader {
     // MODIFIES: this
     // EFFECTS: logs a game has been read
     private void logReadGame(String filename) {
-        String message = "Saved game loaded: " + fileNameOnly(filename);
+        String message = "Loaded from saved file: " + fileNameOnly(filename);
         Event event = new Event(message);
         EventLog.getInstance().logEvent(event);
     }
