@@ -61,6 +61,9 @@ Black knight moved from G8 to F6
 ## Phase 4: Task 3
 One major area of improvement for my code is coupling. For example, some of my methods in 
 PieceLibrary depend on a very exact set of String to retrieve a Piece. As such, if some of my
-methods have a minor spelling error for a parameter, then bugs would likely occur. As such, there 
-are several areas where my coupling could be improved.
+methods have a minor spelling error for a parameter, then bugs would likely occur.
+
+Another area would be to refactor my Game class as I feel it does not follow 
+the single responsibility principle. Instead, I would move the many methods relating to 
+changing turns to the player class which I feel would improve the cohesion more.
 
