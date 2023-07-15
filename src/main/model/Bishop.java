@@ -6,16 +6,19 @@ import static java.lang.Math.abs;
 public class Bishop extends Piece {
     private final String type = "Bishop";
 
+    // EFFECTS: Constructor for Bishop
+    public Bishop(String colour) {
+        super(colour);
+    }
+
+    // EFFECTS: Constructor for Bishop
+    public Bishop(Boolean colour) {
+        super(colour);
+    }
+
     // REQUIRES: Colour is one of: "White" "Black"
     // EFFECT: Constructor for bishop
-    public Bishop(String colour) {
-        if (colour == "White") {
-            white = true;
-        }
-        if (colour == "Black") {
-            white = false;
-        }
-    }
+
 
     // REQUIRES: parameters are all values between [0,7] inclusive
     // EFFECT: return true if piece can move to specified position

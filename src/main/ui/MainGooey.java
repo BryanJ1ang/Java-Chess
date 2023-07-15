@@ -81,7 +81,6 @@ public class MainGooey implements ActionListener, WindowListener {
         if (e.getActionCommand().equals("Quit")) {
             jframe.dispose();
         }
-
     }
 
     // EFFECTS: Displays event log

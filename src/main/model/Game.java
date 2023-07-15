@@ -3,6 +3,12 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+// NOT checkmate cases
+// threatening piece can be taken
+// threatening piece can be blocked (rook, bishop, queen)
+// king can be moved away
+
+
 // represents a game with players and a board
 public class Game {
     private Board bd = new Board();
@@ -10,8 +16,10 @@ public class Game {
     private Player player2 = new Player(false); //black
     private Boolean player1turn = true;
     private Boolean player2turn = false;
-    private Boolean gamestatus = true;
-
+    private int gamestatus = 0;
+    private Boolean checkmate;
+    private Boolean whiteCheck;
+    private Boolean blackCheck;
 
     //EFFECTS: Constructor for game
     public Game(String str, Board b, Boolean turn) {
@@ -33,26 +41,38 @@ public class Game {
         logNewGameCreated();
     }
 
+    // MODIFIES: Board
+    // EFFECTS: Moves piece to given position
+    public void movePiece(Piece p, int x, int y) {
+        bd.movePiece(p, x, y);
+    }
+
     // MODIFIES: this
-    // EFFECTS: changes turns
-    public void changeTurn() {
+    // EFFECTS: Changes turns
+    public void swapTurns() {
         player1turn = !player1turn;
         player2turn = !player2turn;
     }
 
-    // MODIFIES: THIS
-    //EFFECTS: moves piece to given location and switches turns
-    public void movePiece(Piece p, int nextx, int nexty) {
-        if (bd.getPiece(nextx,nexty) != null) {
-            logCapturesPiece(p, bd.getPiece(nextx,nexty));
-        } else {
-            logMovedPiece(p, nextx, nexty);
+    // EFFECTS: returns true if piece can be moved specified location
+    public Boolean validMove(Piece piece, int nextx, int nexty) {
+        Game temp = this;
+        if (piece instanceof King) {
+            King k = (King) piece;
+            Castle castle = new Castle(this);
+            if (castle.canCastle(k, nextx, nexty)) {
+                castle.castle(nextx, nexty);
+                return true;
+            }
         }
-        bd.movePiece(p, nextx, nexty);
-        player1turn = !player1turn;
-        player2turn = !player2turn;
-    }
 
+        if (!bd.validMove(piece, nextx, nexty)) {
+            return false;
+        } else {
+            Check check = new Check(this);
+            return !check.moveIntoCheck(piece, nextx, nexty);
+        }
+    }
 
     // EFFECTS: returns color of piece
     private String colorOfPiece(Piece p) {
@@ -60,6 +80,21 @@ public class Game {
             return "White";
         } else {
             return "Black";
+        }
+    }
+
+    // EFFECT: normal game conditions gamestatus = 0
+    //         if white checkmate gamestatus = 1,
+    //         if black checkmate gamestatus = 2.
+    //
+    public void updateGameStatus() {
+        Check check = new Check(this);
+        if (check.isCheckMate()) {
+            if (check.whiteCheck()) {
+                gamestatus = 1;
+            } else {
+                gamestatus = 2;
+            }
         }
     }
 
@@ -122,14 +157,10 @@ public class Game {
         return (!p.white && player2turn) || (p.white && player1turn);
     }
 
-    // EFFECTS: returns true if piece can be moved specified location
-    public Boolean canBeMovedThere(Piece piece, int nextx, int nexty) {
-        return bd.validMove(piece, nextx, nexty);
-    }
 
 
     // MODIFIES: this, player
-    // EFFECTS: adds a piece to the board
+    // EFFECTS: adds a piece to the board belonging to respective payer
     public void addPiece(Piece p, int x, int y) {
         bd.addPiece(p, x, y);
         if (p.white) {
@@ -139,6 +170,9 @@ public class Game {
         }
     }
 
+
+
+
     //MODIFIES: this, board
     //EFFECTS: sets up the board with all 32 pieces.
     public void defaultSetUp() {
@@ -147,7 +181,6 @@ public class Game {
         addDefaultBackRowBlack();
         addDefaultBackRowWhite();
     }
-
 
     // MODIFIES: this, board
     // EFFECTS: adds row of pawns for White
@@ -268,6 +301,11 @@ public class Game {
         return jsonarray;
     }
 
+    // EFFECTS:
+    public Boolean inCheck(Piece king) {
+        return false; // stub
+    }
+
     // EFFECTS: Parses game into Json
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -282,10 +320,6 @@ public class Game {
         return json;
     }
 
-    // EFFECTS: Changes the game state to be over
-    public void gameOver() {
-        gamestatus = false;
-    }
 
     public Board getBd() {
         return bd;
@@ -299,9 +333,20 @@ public class Game {
         return player2turn;
     }
 
-    public Boolean getGamestatus() {
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public int getGamestatus() {
         return gamestatus;
     }
+
+
+
 }
 
 

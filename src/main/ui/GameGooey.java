@@ -20,27 +20,24 @@ import static java.awt.BorderLayout.CENTER;
 // In game component of GUI
 public class GameGooey implements MouseListener, ActionListener {
 
-    private JFrame frame = new JFrame("Game");
+    private JFrame mainFrame = new JFrame("Game");
     private static Game g;
     private JPanel panel = new JPanel();
     private JButton[][] sq = new JButton[8][8];
-    private int status = 0;
-    private JLabel turn = new JLabel("White player's turn");
-
+    private JLabel turnLabel = new JLabel("White player's turn");
     private JPanel sidebar = new JPanel();
     JTextField typebar  = new JTextField("Enter name of save");
-
-    private Piece movingpiece;
+    private Piece selectedPiece;
 
 
     // EFFECTS: Constructor for GameGooey
     public GameGooey(Game g) {
         this.g = g;
         panel.setLayout(new GridLayout(8, 8));
-        frame.setLayout(new GridLayout(0, 2));
+        mainFrame.setLayout(new GridLayout(0, 2));
         setupBarPanel();
         sidebar.setLayout(new GridLayout(0,1));
-        frame.add(sidebar);
+        mainFrame.add(sidebar);
         framePieces();
     }
 
@@ -48,7 +45,7 @@ public class GameGooey implements MouseListener, ActionListener {
     // EFFECTS: sets up sidebar panel
     private void setupBarPanel() {
         sidebar.removeAll();
-        sidebar.add(turn, CENTER);
+        sidebar.add(turnLabel, CENTER);
         JButton button = new JButton("Save Game");
         button.addActionListener(this);
         sidebar.add(button);
@@ -64,9 +61,9 @@ public class GameGooey implements MouseListener, ActionListener {
     // EFFECTS: refreshes label with current players turn:
     private void playerTurn() {
         if (g.getPlayer1turn()) {
-            turn = new JLabel("White player's turn!");
+            turnLabel = new JLabel("White player's turn!");
         } else {
-            turn = new JLabel("Black player's turn!");
+            turnLabel = new JLabel("Black player's turn!");
         }
         setupBarPanel();
     }
@@ -194,9 +191,22 @@ public class GameGooey implements MouseListener, ActionListener {
 
         createButtons();
         addButtonsToPanel();
+        if (g.getGamestatus() == 1 || g.getGamestatus() == 2) {
+           JFrame frame = gameOverFrame();
+           frame.setVisible(true);
+        }
 
         panel.revalidate();
         panel.repaint();
+
+    }
+
+    private JFrame gameOverFrame() {
+        JFrame frame = new JFrame();
+        JButton button = new JButton("GAME OVER");
+        button.setSize(new Dimension(500, 500));
+        frame.add(button);
+        return frame;
     }
 
     // MODIFIES: this
@@ -206,37 +216,31 @@ public class GameGooey implements MouseListener, ActionListener {
         createButtons();
         addButtonsToPanel();
 
-        frame.add(panel, CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Chess");
-        frame.pack();
-        frame.setVisible(true);
+        mainFrame.add(panel, CENTER);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setTitle("Chess");
+        mainFrame.pack();
+        mainFrame.setVisible(true);
 
     }
 
     // MODIFIES: this
-    // EFFECTS: Processes the movement of pieces
+    // EFFECTS: Processes user selection/movement of pieces
     //          No effect if invalid move
     private void movePiece(JButton b) {
-        int localstatus = status;
         int x = returnButtonXValue(b);
         int y = returnButtonYValue(b);
         Piece p = g.getBd().getPiece(x, y);
-        if (localstatus == 0) {
-            if (p != null
-                    && g.isPieceTurnToMove(p)) {
-                movingpiece = p;
-                status = 1;
-                b.setBorder(new EtchedBorder());
-            }
-        }
-        if (localstatus == 1) {
-            if (g.canBeMovedThere(movingpiece, x, y)) {
-                g.movePiece(movingpiece, x, y);
-                updateBoard();
-                playerTurn();
-            }
-            status = 0;
+        if (p != null && g.isPieceTurnToMove(p)) {
+            selectedPiece = p;
+            b.setBorder(new EtchedBorder());
+        } else if (selectedPiece != null && g.validMove(selectedPiece, x, y)) {
+            g.movePiece(selectedPiece, x, y);
+            g.swapTurns();
+            g.updateGameStatus();
+            updateBoard();
+            playerTurn();
+            selectedPiece = null;
         }
     }
 
@@ -291,7 +295,7 @@ public class GameGooey implements MouseListener, ActionListener {
             }
 
             if (e.getActionCommand().equals("Quit")) {
-                frame.dispose();
+                mainFrame.dispose();
             }
         } else {
             try {
@@ -304,6 +308,11 @@ public class GameGooey implements MouseListener, ActionListener {
         }
     }
 
+
+
+
+
+    // Unused abstract methods of MouseListener interface
     @Override
     public void mouseClicked(MouseEvent e) {
 

@@ -18,13 +18,6 @@ public class TestGame {
     }
 
     @Test
-    public void testGameOver() {
-        assertTrue(g.getGamestatus());
-        g.gameOver();
-        assertFalse(g.getGamestatus());
-    }
-
-    @Test
     public void testAddPiece(){
         g.addPiece(r1, 3, 3);
         g.addPiece(r2, 5, 5);
@@ -43,6 +36,7 @@ public class TestGame {
         assertFalse(g.getPlayer2turn());
 
         g.movePiece(r1, 3, 5);
+        g.swapTurns();
         assertTrue(g.getPlayer2turn());
         assertFalse(g.getPlayer1turn());
         assertEquals(r1, g.getBd().getPiece(3,5));
@@ -50,6 +44,7 @@ public class TestGame {
         assertTrue(g.isPieceTurnToMove(r2));
 
         g.movePiece(r2, 5, 3);
+        g.swapTurns();
         assertFalse(g.isPieceTurnToMove(r2));
         assertTrue(g.isPieceTurnToMove(r1));
         assertTrue(g.getPlayer1turn());
@@ -119,24 +114,24 @@ public class TestGame {
 
     @Test
     public void testPawnCanBeMovedThere() {
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(4, 6), 4, 4));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 4, 7));
+        assertTrue(g.validMove(g.getBd().getPiece(4, 6), 4, 4));
+        assertFalse(g.validMove(g.getBd().getPiece(4, 6), 4, 7));
     }
 
     @Test
     public void testRookCanBeMovedThere() {
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 6));
+        assertFalse(g.validMove(g.getBd().getPiece(0, 7), 0, 6));
         g.getBd().removePiece(0,6);
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 6));
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 1));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 0));
+        assertTrue(g.validMove(g.getBd().getPiece(0, 7), 0, 6));
+        assertTrue(g.validMove(g.getBd().getPiece(0, 7), 0, 1));
+        assertFalse(g.validMove(g.getBd().getPiece(0, 7), 0, 0));
     }
 
     @Test
     public void testChangeTurn() {
         assertTrue(g.getPlayer1turn());
         assertFalse(g.getPlayer2turn());
-        g.changeTurn();
+        g.swapTurns();
         assertTrue(g.getPlayer2turn());
         assertFalse(g.getPlayer1turn());
     }
@@ -144,47 +139,47 @@ public class TestGame {
     @Test
     public void testKnightCanBeMovedThere() {
         Piece pawn = new Pawn("White");
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(1, 7), 2, 5));
+        assertTrue(g.validMove(g.getBd().getPiece(1, 7), 2, 5));
         g.getBd().addPiece(pawn, 2,5);
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(1, 7), 2, 5));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 0));
+        assertFalse(g.validMove(g.getBd().getPiece(1, 7), 2, 5));
+        assertFalse(g.validMove(g.getBd().getPiece(0, 7), 0, 0));
     }
 
     @Test
     public void testBishopCanBeMovedThere() {
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(2, 7), 3, 6));
+        assertFalse(g.validMove(g.getBd().getPiece(2, 7), 3, 6));
         g.getBd().removePiece(3,6);
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(2, 7), 3, 6));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(1, 7), 7, 7));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(0, 7), 0, 0));
+        assertTrue(g.validMove(g.getBd().getPiece(2, 7), 3, 6));
+        assertFalse(g.validMove(g.getBd().getPiece(1, 7), 7, 7));
+        assertFalse(g.validMove(g.getBd().getPiece(0, 7), 0, 0));
     }
 
     @Test
     public void testQueenCanBeMovedThere() {
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(3, 7), 3, 6));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(3, 7), 3, 3));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(3, 7), 3, 0));
+        assertFalse(g.validMove(g.getBd().getPiece(3, 7), 3, 6));
+        assertFalse(g.validMove(g.getBd().getPiece(3, 7), 3, 3));
+        assertFalse(g.validMove(g.getBd().getPiece(3, 7), 3, 0));
         g.getBd().removePiece(3,6);
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(3, 7), 3, 6));
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(3, 7), 3, 1));
+        assertTrue(g.validMove(g.getBd().getPiece(3, 7), 3, 6));
+        assertTrue(g.validMove(g.getBd().getPiece(3, 7), 3, 1));
         assertTrue(g.getBd().getPiece(3,1) instanceof Pawn);
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(3, 7), 7, 7));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(3, 7), 0, 0));
+        assertFalse(g.validMove(g.getBd().getPiece(3, 7), 7, 7));
+        assertFalse(g.validMove(g.getBd().getPiece(3, 7), 0, 0));
     }
 
     @Test
     public void testKingCanBeMovedThere() {
         Piece king = g.getBd().getPiece(4, 7);
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 7), 4, 6));
+        assertFalse(g.validMove(g.getBd().getPiece(4, 7), 4, 6));
         g.getBd().removePiece(4,6);
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(4, 7), 4, 6));
+        assertTrue(g.validMove(g.getBd().getPiece(4, 7), 4, 6));
         g.getBd().movePiece(king, 4, 6);
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(4, 6), 3, 5));
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(4, 6), 4, 5));
-        assertTrue(g.canBeMovedThere(g.getBd().getPiece(4, 6), 5, 5));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 3, 4));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 4, 4));
-        assertFalse(g.canBeMovedThere(g.getBd().getPiece(4, 6), 5, 4));
+        assertTrue(g.validMove(g.getBd().getPiece(4, 6), 3, 5));
+        assertTrue(g.validMove(g.getBd().getPiece(4, 6), 4, 5));
+        assertTrue(g.validMove(g.getBd().getPiece(4, 6), 5, 5));
+        assertFalse(g.validMove(g.getBd().getPiece(4, 6), 3, 4));
+        assertFalse(g.validMove(g.getBd().getPiece(4, 6), 4, 4));
+        assertFalse(g.validMove(g.getBd().getPiece(4, 6), 5, 4));
 
     }
 

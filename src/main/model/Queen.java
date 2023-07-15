@@ -6,16 +6,14 @@ import static java.lang.Math.abs;
 public class Queen extends Piece {
     private final String type = "Queen";
 
-    // REQUIRES: Color is one of: "White" "Black"
     // EFFECTS: Constructor for Queen
     public Queen(String colour) {
-        moved = false;
-        if (colour == "White") {
-            white = true;
-        }
-        if (colour == "Black") {
-            white = false;
-        }
+        super(colour);
+    }
+
+    // EFFECTS: Constructor for Queen
+    public Queen(Boolean colour) {
+        super(colour);
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive

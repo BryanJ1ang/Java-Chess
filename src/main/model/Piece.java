@@ -1,12 +1,29 @@
 package model;
 
+import java.util.Map;
+
 // Abstract class for the pieces in chess
 public abstract class Piece {
-    int xposition;
-    int yposition;
+    private int xposition;
+    private int yposition;
     protected Boolean white;
     protected Boolean moved = false;
 
+    public Piece(String colour) {
+        moved = false;
+        String x = colour.toLowerCase();
+        if (x.equals("white")) {
+            white = true;
+        }
+        if (x.equals("black")) {
+            white = false;
+        }
+    }
+
+    public Piece(Boolean colour) {
+        white = colour;
+        moved = false;
+    }
 
     // EFFECT: true if piece can move to given location
     public abstract Boolean canMove(int currentx, int curruenty, int x, int y);
@@ -16,6 +33,10 @@ public abstract class Piece {
     public void setPositions(int x, int y) {
         xposition = x;
         yposition = y;
+    }
+
+    public Boolean removed() {
+        return xposition == -1 || yposition == -1;
     }
 
     public abstract String getType();

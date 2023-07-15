@@ -66,7 +66,7 @@ public class JsonReader {
 
         Game g;
         Board bd = new Board();
-
+        g = new Game("empty", bd, b);
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 if (!pieces.get(0).equals("null")) {
@@ -75,14 +75,20 @@ public class JsonReader {
                     String colour = (String) colours.get(0);
 
                     Piece p = library.retrievePieceFromLibrary(type, colour);
+                    if (p.getWhite()) {
+                        g.getPlayer1().addPiece(p);
+                    } else {
+                        g.getPlayer2().addPiece(p);
+                    }
 
                     bd.addPiece(p, x, y);
+
                 }
                 pieces.remove(0);
                 colours.remove(0);
             }
         }
-        g = new Game("empty", bd, b);
+
         logReadGame(source);
         return g;
     }

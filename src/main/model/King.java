@@ -4,18 +4,14 @@ package model;
 public class King extends Piece {
     private final String type = "King";
 
-    // REQUIRES: colour is one of: "White" "Black"
-    // EFFECT: constructor for king at given location
-    public  King(String colour) {
+    // EFFECTS: Constructor for king
+    public King(String colour) {
+        super(colour);
+    }
 
-        moved = false;
-        if (colour == "White") {
-            white = true;
-        }
-        if (colour == "Black") {
-            white = false;
-        }
-
+    // EFFECTS: Constructor for king
+    public King(Boolean colour) {
+        super(colour);
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive

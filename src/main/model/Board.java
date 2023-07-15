@@ -23,7 +23,10 @@ public class Board {
     // MODIFIES: this, Piece
     // EFFECT: Moves a piece to given location. Captures if position already occupied
     public void movePiece(Piece p, int nextx, int nexty) {
-        this.removePiece(p.xposition, p.yposition);
+        if (bd[nextx][nexty] != null) {
+            bd[nextx][nexty].setPositions(-1,-1);
+        }
+        this.removePiece(p.getXposition(), p.getYposition());
         bd[nextx][nexty] = p;
         p.setPositions(nextx, nexty);
     }
@@ -42,9 +45,14 @@ public class Board {
     }
 
 
+
+
     //EFFECT: determines if a move is valid. Piece can move in such direction
     public Boolean validMove(Piece p, int nextx, int nexty) {
         Boolean b = false;
+        if (p.removed()) {
+            return false;
+        }
         if (this.getPiece(nextx, nexty) != null && p.white == this.getPiece(nextx, nexty).white) {
             return false;
         }
@@ -64,27 +72,27 @@ public class Board {
             b = canMovePawn(p, nextx, nexty);
         }
         if (p instanceof King) {
-            b = p.canMove(p.xposition, p.yposition, nextx, nexty);
+            b = p.canMove(p.getXposition(), p.getYposition(), nextx, nexty);
         }
         return b;
     }
 
     //EFFECTS: if given bishop can move to next position
     private Boolean canMoveBishop(Piece b, int nextx, int nexty) {
-        return b.canMove(b.xposition, b.yposition, nextx, nexty)
+        return b.canMove(b.getXposition(), b.getYposition(), nextx, nexty)
                 && visionDiagonal(b, nextx, nexty);
     }
 
     //EFFECTS: if given queen can move to next position
     private Boolean canMoveQueen(Piece q, int nextx, int nexty) {
         Boolean b = false;
-        if (q.canMove(q.xposition, q.yposition, nextx, nexty)) {
-            if ((nextx == q.xposition || nexty == q.yposition)
+        if (q.canMove(q.getXposition(), q.getYposition(), nextx, nexty)) {
+            if ((nextx == q.getXposition() || nexty == q.getYposition())
                     && this.visionStraight(q, nextx, nexty)) {
                 b = true;
             }
             if (this.visionDiagonal(q, nextx, nexty)
-                    && (abs(nextx - q.xposition) == abs((nexty - q.yposition)))) {
+                    && (abs(nextx - q.getXposition()) == abs((nexty - q.getYposition())))) {
                 b = true;
             }
         }
@@ -94,32 +102,32 @@ public class Board {
 
     //EFFECTS: if given rook can move to next position
     private Boolean canMoveRook(Piece r, int nextx, int nexty) {
-        return r.canMove(r.xposition, r.yposition, nextx, nexty)
+        return r.canMove(r.getXposition(), r.getYposition(), nextx, nexty)
                 && visionStraight(r, nextx, nexty);
     }
 
     //EFFECTS: if given knight can move to next position
     private Boolean canMoveKnight(Piece k, int nextx, int nexty) {
-        return k.canMove(k.xposition, k.yposition, nextx, nexty);
+        return k.canMove(k.getXposition(), k.getYposition(), nextx, nexty);
     }
 
     //EFFECTS: if given pawn can move to next position
     private Boolean canMovePawn(Piece p, int nextx, int nexty) {
         Boolean b = false;
-        if (p.canMove(p.xposition, p.yposition, nextx, nexty)
+        if (p.canMove(p.getXposition(), p.getYposition(), nextx, nexty)
                 && this.getPiece(nextx, nexty) == null) {
             b = true;
         }
         if (p.white) {
-            if (abs(nextx - p.xposition) == 1
-                    && nexty == p.yposition - 1
+            if (abs(nextx - p.getXposition()) == 1
+                    && nexty == p.getYposition() - 1
                     && this.getPiece(nextx, nexty) != null) {
                 b = true;
             }
         }
         if (!p.white) {
-            if (abs(nextx - p.xposition) == 1
-                    && nexty == p.yposition + 1
+            if (abs(nextx - p.getXposition()) == 1
+                    && nexty == p.getYposition() + 1
                     && this.getPiece(nextx, nexty) != null) {
                 b = true;
             }

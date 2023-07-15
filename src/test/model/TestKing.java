@@ -20,6 +20,13 @@ public class TestKing {
         assertEquals("King", x.getType());
     }
 
+
+    @Test
+    public void testConstructior() {
+        King k = new King("whitE");
+        assertTrue(k.white);
+    }
+
     @Test
     public void testGetMoved() {
         assertFalse(x.getMoved());

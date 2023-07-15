@@ -3,20 +3,25 @@ package model;
 // Represents pawn piece
 public class Pawn extends Piece {
     private final String type = "Pawn";
+    private Boolean enPassant = false;
 
     // REQUIRES: Colour is one of: "White" "Black"
     // EFFECTS: Constructor for pawn
-    public Pawn(String x) {
-        moved = false;
-        white = (x.equals("White"));
+
+
+    public Pawn(String colour) {
+        super(colour);
     }
 
+    public Pawn(Boolean colour) {
+        super(colour);
+    }
 
     // REQUIRES: parameters are all values between [0,7] inclusive
     // EFFECT: return true if piece can move to specified position
     public Boolean canMove(int currentx, int currenty, int nextx, int nexty) {
         if (white == false) {
-            if ((moved == false) && (currenty == 1)) {
+            if (((currenty == 1))) {
                 moved = true;
                 return ((currentx == nextx) && ((nexty == currenty + 1) || (nexty == currenty + 2)));
             } else {
@@ -24,7 +29,7 @@ public class Pawn extends Piece {
             }
 
         } else {
-            if ((moved == false) && (currenty == 6)) {
+            if (((currenty == 6))) {
                 moved = true;
                 return (currentx == nextx) && ((nexty == currenty - 1) || (nexty == currenty - 2));
             } else {
@@ -36,4 +41,9 @@ public class Pawn extends Piece {
     public String getType() {
         return type;
     }
+
+    public Boolean getEnPassant() {
+        return enPassant;
+    }
+
 }

@@ -1,1 +1,8 @@
-{"list": []}
+{
+    "Enter name of save": "Enter name of save",
+    "list": [
+        "TEST 3",
+        "Enter name of save"
+    ],
+    "TEST 3": "TEST 3"
+}

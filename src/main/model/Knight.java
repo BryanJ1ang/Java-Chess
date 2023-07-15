@@ -7,15 +7,12 @@ public class Knight extends Piece {
     // REQUIRES: Colour is one of: "White" "Black"
     // EFFECTS: Constructor for knight
     public Knight(String colour) {
-        String type = "Knight";
-        if (colour == "White") {
-            white = true;
-            moved = false;
-        }
-        if (colour == "Black") {
-            white = false;
-            moved = false;
-        }
+        super(colour);
+    }
+
+    // EFFECTS: Constructor for knight
+    public Knight(Boolean colour) {
+        super(colour);
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive
