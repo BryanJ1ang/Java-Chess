@@ -54,9 +54,20 @@ public class Game {
         player2turn = !player2turn;
     }
 
-    // EFFECTS: returns true if piece can be moved specified location
+    // EFFECTS: returns true if piece can be moved to specified location
     public Boolean validMove(Piece piece, int nextx, int nexty) {
         Game temp = this;
+        if (piece instanceof  Pawn) {
+            Pawn pawn = (Pawn) piece;
+            if (((Pawn) piece).canEnPassant(this, nextx, nexty)) {
+                Check check = new Check(this);
+                if (!check.moveIntoCheck(piece, nextx, nexty)) {
+                    pawn.EnPassant(nextx, nexty);
+                }
+
+                return true;
+            }
+        }
         if (piece instanceof King) {
             King k = (King) piece;
             Castle castle = new Castle(this);
@@ -104,6 +115,24 @@ public class Game {
         String message = "New game created";
         Event event = new Event(message);
         EventLog.getInstance().logEvent(event);
+    }
+
+    // EFFECTS: Promotes pawn to new piece
+    public void promotePawn(Piece piece, String type) {
+        int x = piece.getXposition();
+        if (piece.white) {
+            Piecelibrary library = new Piecelibrary();
+            Piece p = library.retrievePieceFromLibrary(type, "WHITE");
+            bd.removePiece(piece.getXposition(), piece.getYposition());
+            bd.addPiece(p, x, 0);
+            p.setPositions(x, 0);
+        } else {
+            Piecelibrary library = new Piecelibrary();
+            Piece p = library.retrievePieceFromLibrary(type, "BLACK");
+            bd.removePiece(piece.getXposition(), piece.getYposition());
+            bd.addPiece(p, x, 7);
+            p.setPositions(x, 7);
+        }
     }
 
     // MODIFIES: EventLog

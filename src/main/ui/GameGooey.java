@@ -1,6 +1,7 @@
 package ui;
 
 import model.Game;
+import model.Pawn;
 import model.Piece;
 import persistence.JsonWriter;
 import persistence.Saves;
@@ -48,9 +49,11 @@ public class GameGooey implements MouseListener, ActionListener {
         sidebar.add(turnLabel, CENTER);
         JButton button = new JButton("Save Game");
         button.addActionListener(this);
+        button.setSize(new Dimension(50, 50));
         sidebar.add(button);
         button = new JButton("Quit");
         button.addActionListener(this);
+        button.setSize(new Dimension(50, 50));
         sidebar.add(button);
 
         sidebar.validate();
@@ -236,12 +239,90 @@ public class GameGooey implements MouseListener, ActionListener {
             b.setBorder(new EtchedBorder());
         } else if (selectedPiece != null && g.validMove(selectedPiece, x, y)) {
             g.movePiece(selectedPiece, x, y);
-            g.swapTurns();
-            g.updateGameStatus();
-            updateBoard();
-            playerTurn();
-            selectedPiece = null;
+            if (selectedPiece instanceof Pawn && ((Pawn) selectedPiece).canPromote()) {
+                Pawn pawn = (Pawn) selectedPiece;
+                g.promotePawn(pawn, "QUEEN");
+                g.swapTurns();
+                g.updateGameStatus();
+                updateBoard();
+                playerTurn();
+                selectedPiece = null;
+            } else {
+                g.swapTurns();
+                g.updateGameStatus();
+                updateBoard();
+                playerTurn();
+                selectedPiece = null;
+            }
         }
+    }
+
+    // EFFECT: returns promotion panel
+    private JPanel displayPromotion(Boolean colour) {
+        JPanel panel = new JPanel();
+        ImageIcon icon;
+        JButton button;
+        if (colour) {
+            return displayWhitePromotion();
+        } else {
+            return displayBlackPromotion();
+        }
+    }
+
+    private JPanel displayBlackPromotion() {
+        JPanel panel = new JPanel();
+        ImageIcon icon;
+        JButton button;
+
+        button = new JButton("QUEEN");
+        icon = new ImageIcon("./data/BlackPieceImages/QUEEN.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("ROOK");
+        icon = new ImageIcon("./data/BlackPieceImages/ROOK.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("BISHOP");
+        icon = new ImageIcon("./data/BlackPieceImages/BISHOP.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("KNIGHT");
+        icon = new ImageIcon("./data/BlackPieceImages/KNIGHT.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        return panel;
+    }
+
+    private JPanel displayWhitePromotion() {
+        JPanel panel = new JPanel();
+        ImageIcon icon;
+        JButton button;
+
+        button = new JButton("QUEEN");
+        icon = new ImageIcon("./data/WhitePieceImages/QUEEN.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("ROOK");
+        icon = new ImageIcon("./data/WhitePieceImages/ROOK.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("BISHOP");
+        icon = new ImageIcon("./data/WhitePieceImages/BISHOP.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        button = new JButton("KNIGHT");
+        icon = new ImageIcon("./data/WhitePieceImages/KNIGHT.png");
+        button.setIcon(icon);
+        panel.add(button);
+
+        return panel;
     }
 
     // EFFECTS: Displays a type bar

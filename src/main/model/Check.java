@@ -40,10 +40,10 @@ public class Check {
             piece = game.getBd().getPiece(x,y);
         }
 
-        game.movePiece(p, x, y);
+        game.getBd().movePiece(p, x, y);
         if (p.white) {
             Boolean b = whiteCheck();
-            game.movePiece(p, x1,y1);
+            game.getBd().movePiece(p, x1, y1);
             if (piece != null) {
                 piece.setPositions(x,y);
                 game.getBd().addPiece(piece,x,y);
@@ -51,7 +51,7 @@ public class Check {
             return b;
         } else {
             Boolean b = blackCheck();
-            game.movePiece(p, x1,y1);
+            game.getBd().movePiece(p, x1, y1);
             if (piece != null) {
                 piece.setPositions(x,y);
                 game.getBd().addPiece(piece,x,y);

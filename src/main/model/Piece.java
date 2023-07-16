@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Map;
-
 // Abstract class for the pieces in chess
 public abstract class Piece {
     private int xposition;
@@ -23,6 +21,10 @@ public abstract class Piece {
     public Piece(Boolean colour) {
         white = colour;
         moved = false;
+    }
+
+    public void setMoved() {
+        moved = true;
     }
 
     // EFFECT: true if piece can move to given location
