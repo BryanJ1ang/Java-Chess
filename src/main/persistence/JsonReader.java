@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import model.Pieces.Piece;
 import org.json.*;
 
 // Represents a reader that reads game from JSON data stored in file

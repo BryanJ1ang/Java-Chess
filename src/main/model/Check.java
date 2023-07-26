@@ -1,5 +1,8 @@
 package model;
 
+import model.Pieces.King;
+import model.Pieces.Piece;
+
 import java.util.List;
 
 // Class representing check/mate
@@ -41,7 +44,7 @@ public class Check {
         }
 
         game.getBd().movePiece(p, x, y);
-        if (p.white) {
+        if (p.getWhite()) {
             Boolean b = whiteCheck();
             game.getBd().movePiece(p, x1, y1);
             if (piece != null) {

@@ -1,6 +1,8 @@
 package model;
 
 
+import model.Pieces.*;
+
 import static java.lang.Math.abs;
 
 // represents chess board with squares and pieces
@@ -26,7 +28,6 @@ public class Board {
         if (bd[nextx][nexty] != null) {
             bd[nextx][nexty].setPositions(-1,-1);
         }
-        p.setMoved();
         this.removePiece(p.getXposition(), p.getYposition());
         bd[nextx][nexty] = null;
         bd[nextx][nexty] = p;
@@ -55,7 +56,7 @@ public class Board {
         if (p.removed()) {
             return false;
         }
-        if (this.getPiece(nextx, nexty) != null && p.white == this.getPiece(nextx, nexty).white) {
+        if (this.getPiece(nextx, nexty) != null && p.getWhite() == this.getPiece(nextx, nexty).getWhite()) {
             return false;
         }
         if (p instanceof Bishop) {
@@ -120,14 +121,14 @@ public class Board {
                 && this.getPiece(nextx, nexty) == null) {
             b = true;
         }
-        if (p.white) {
+        if (p.getWhite()) {
             if (abs(nextx - p.getXposition()) == 1
                     && nexty == p.getYposition() - 1
                     && this.getPiece(nextx, nexty) != null) {
                 b = true;
             }
         }
-        if (!p.white) {
+        if (!p.getWhite()) {
             if (abs(nextx - p.getXposition()) == 1
                     && nexty == p.getYposition() + 1
                     && this.getPiece(nextx, nexty) != null) {

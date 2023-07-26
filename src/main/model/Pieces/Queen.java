@@ -1,4 +1,4 @@
-package model;
+package model.Pieces;
 
 import static java.lang.Math.abs;
 

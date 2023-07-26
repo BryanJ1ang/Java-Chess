@@ -1,5 +1,6 @@
 package model;
 
+import model.Pieces.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -42,9 +43,15 @@ public class Game {
     }
 
     // MODIFIES: Board
-    // EFFECTS: Moves piece to given position
+    // EFFECTS: Moves piece to given position, sets piece as moved
     public void movePiece(Piece p, int x, int y) {
         bd.movePiece(p, x, y);
+        if (p instanceof Pawn && !p.getMoved()) {
+            Pawn pawn = (Pawn) p;
+            pawn.markEnPassant();
+            pawn.setMoved();
+        }
+        p.setMoved();
     }
 
     // MODIFIES: this
@@ -57,7 +64,7 @@ public class Game {
     // EFFECTS: returns true if piece can be moved to specified location
     public Boolean validMove(Piece piece, int nextx, int nexty) {
         Game temp = this;
-        if (piece instanceof  Pawn) {
+        if (piece instanceof Pawn) {
             Pawn pawn = (Pawn) piece;
             if (((Pawn) piece).canEnPassant(this, nextx, nexty)) {
                 Check check = new Check(this);
@@ -87,7 +94,7 @@ public class Game {
 
     // EFFECTS: returns color of piece
     private String colorOfPiece(Piece p) {
-        if (p.white) {
+        if (p.getWhite()) {
             return "White";
         } else {
             return "Black";
@@ -120,17 +127,17 @@ public class Game {
     // EFFECTS: Promotes pawn to new piece
     public void promotePawn(Piece piece, String type) {
         int x = piece.getXposition();
-        if (piece.white) {
+        if (piece.getWhite()) {
             Piecelibrary library = new Piecelibrary();
             Piece p = library.retrievePieceFromLibrary(type, "WHITE");
             bd.removePiece(piece.getXposition(), piece.getYposition());
-            bd.addPiece(p, x, 0);
+            addPiece(p, x, 0);
             p.setPositions(x, 0);
         } else {
             Piecelibrary library = new Piecelibrary();
             Piece p = library.retrievePieceFromLibrary(type, "BLACK");
             bd.removePiece(piece.getXposition(), piece.getYposition());
-            bd.addPiece(p, x, 7);
+            addPiece(p, x, 7);
             p.setPositions(x, 7);
         }
     }
@@ -183,7 +190,7 @@ public class Game {
 
    //EFFECTS: returns true if given piece can be moved on current player's turn
     public Boolean isPieceTurnToMove(Piece p) {
-        return (!p.white && player2turn) || (p.white && player1turn);
+        return (!p.getWhite() && player2turn) || (p.getWhite() && player1turn);
     }
 
 
@@ -192,7 +199,7 @@ public class Game {
     // EFFECTS: adds a piece to the board belonging to respective payer
     public void addPiece(Piece p, int x, int y) {
         bd.addPiece(p, x, y);
-        if (p.white) {
+        if (p.getWhite()) {
             player1.addPiece(p);
         } else {
             player2.addPiece(p);

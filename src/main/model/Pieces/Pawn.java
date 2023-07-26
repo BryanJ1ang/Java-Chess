@@ -1,4 +1,6 @@
-package model;
+package model.Pieces;
+
+import model.Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,6 @@ public class Pawn extends Piece {
         if (white == false) {
             if (((currenty == 1))) {
                 if ((currentx == nextx) && nexty == currenty + 2) {
-                    enPassant = true;
-                    addPiece();
                     return true;
                 }
                 return ((currentx == nextx) && ((nexty == currenty + 1)));
@@ -40,14 +40,26 @@ public class Pawn extends Piece {
         } else {
             if (((currenty == 6))) {
                 if ((currentx == nextx) && nexty == currenty - 2) {
-                    enPassant = true;
-                    addPiece();
                     return true;
                 }
                 return (currentx == nextx) && ((nexty == currenty - 1) || (nexty == currenty - 2));
             } else {
                 return (currentx == nextx) && ((nexty == currenty - 1));
             }
+        }
+    }
+
+    @Override
+    // EFFECTS: Changes position of this Pawn
+    public void setPositions(int x, int y) {
+        xposition = x;
+        yposition = y;
+        if (this.getWhite()) {
+            if (y == 4 && !getMoved()) {
+                markEnPassant();
+            }
+        } else if (y == 3 && !getMoved()) {
+            markEnPassant();
         }
     }
 
@@ -137,6 +149,11 @@ public class Pawn extends Piece {
     // EFFECTS: Adds
     public void addPiece() {
         pieces.add(this);
+    }
+
+    public void markEnPassant() {
+        pieces.add(this);
+        enPassant = true;
     }
 
     public Boolean getEnPassant() {

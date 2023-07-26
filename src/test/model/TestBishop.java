@@ -1,6 +1,6 @@
 package model;
 
-import model.Bishop;
+import model.Pieces.Bishop;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

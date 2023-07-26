@@ -1,4 +1,4 @@
-package model;
+package model.Pieces;
 
 // Represents rook piece
 public class Rook extends Piece {

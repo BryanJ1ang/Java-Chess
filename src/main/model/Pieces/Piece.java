@@ -1,9 +1,9 @@
-package model;
+package model.Pieces;
 
 // Abstract class for the pieces in chess
 public abstract class Piece {
-    private int xposition;
-    private int yposition;
+    protected int xposition;
+    protected int yposition;
     protected Boolean white;
     protected Boolean moved = false;
 

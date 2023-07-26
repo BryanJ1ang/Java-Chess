@@ -1,5 +1,9 @@
 package model;
 
+import model.Pieces.King;
+import model.Pieces.Piece;
+import model.Pieces.Rook;
+
 // Class handling castle movement
 public class Castle {
     Game game;
@@ -31,7 +35,7 @@ public class Castle {
     //                                   No pieces in between them
     //                                   King does not leave/cross/finish a threatened square
     public Boolean canCastle(King k, int x, int y) {
-        if (k.white && !k.moved) {
+        if (k.getWhite() && !k.getMoved()) {
             Check check = new Check(game);
             if (check.whiteCheck()) {
                 return false;
@@ -40,7 +44,7 @@ public class Castle {
             } else if (x == 6 && y == 7) {
                 return whiteKingRightCastle();
             }
-        } else if (!k.white && !k.moved) {
+        } else if (!k.getWhite() && !k.getMoved()) {
             Check check = new Check(game);
             if (check.blackCheck()) {
                 return false;
@@ -163,7 +167,7 @@ public class Castle {
             return false;
         }
 
-        return p instanceof Rook && !p.moved && p.white;
+        return p instanceof Rook && !p.getMoved() && p.getWhite();
     }
 
 
@@ -174,7 +178,7 @@ public class Castle {
             return false;
         }
 
-        return p instanceof Rook && !p.moved && !p.white;
+        return p instanceof Rook && !p.getMoved() && !p.getWhite();
     }
 }
 

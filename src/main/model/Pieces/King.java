@@ -1,4 +1,4 @@
-package model;
+package model.Pieces;
 
 // Represents king piece
 public class King extends Piece {

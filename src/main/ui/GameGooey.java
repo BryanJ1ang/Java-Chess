@@ -1,8 +1,8 @@
 package ui;
 
 import model.Game;
-import model.Pawn;
-import model.Piece;
+import model.Pieces.Pawn;
+import model.Pieces.Piece;
 import persistence.JsonWriter;
 import persistence.Saves;
 
@@ -23,7 +23,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
     private JFrame mainFrame = new JFrame("Game");
     private static Game g;
-    private JPanel panel = new JPanel();
+    private JPanel buttonPanel = new JPanel();
     private JButton[][] sq = new JButton[8][8];
     private JLabel turnLabel = new JLabel("White player's turn");
     private JPanel sidebar = new JPanel();
@@ -34,7 +34,7 @@ public class GameGooey implements MouseListener, ActionListener {
     // EFFECTS: Constructor for GameGooey
     public GameGooey(Game g) {
         this.g = g;
-        panel.setLayout(new GridLayout(8, 8));
+        buttonPanel.setLayout(new GridLayout(8, 8));
         mainFrame.setLayout(new GridLayout(0, 2));
         setupBarPanel();
         sidebar.setLayout(new GridLayout(0,1));
@@ -181,7 +181,7 @@ public class GameGooey implements MouseListener, ActionListener {
 
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                panel.add(sq[x][y]);
+                buttonPanel.add(sq[x][y]);
             }
         }
 
@@ -190,7 +190,7 @@ public class GameGooey implements MouseListener, ActionListener {
     // MODIFIES: this
     // EFFECTS: Updates board reflecting current game state
     private void updateBoard() {
-        panel.removeAll();
+        buttonPanel.removeAll();
 
         createButtons();
         addButtonsToPanel();
@@ -199,8 +199,8 @@ public class GameGooey implements MouseListener, ActionListener {
            frame.setVisible(true);
         }
 
-        panel.revalidate();
-        panel.repaint();
+        buttonPanel.revalidate();
+        buttonPanel.repaint();
 
     }
 
@@ -219,12 +219,11 @@ public class GameGooey implements MouseListener, ActionListener {
         createButtons();
         addButtonsToPanel();
 
-        mainFrame.add(panel, CENTER);
+        mainFrame.add(buttonPanel, CENTER);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("Chess");
         mainFrame.pack();
         mainFrame.setVisible(true);
-
     }
 
     // MODIFIES: this
@@ -238,24 +237,28 @@ public class GameGooey implements MouseListener, ActionListener {
             selectedPiece = p;
             b.setBorder(new EtchedBorder());
         } else if (selectedPiece != null && g.validMove(selectedPiece, x, y)) {
+            Pawn.updatePiece();
             g.movePiece(selectedPiece, x, y);
-            if (selectedPiece instanceof Pawn && ((Pawn) selectedPiece).canPromote()) {
+            if (selectedPiece instanceof Pawn) {
                 Pawn pawn = (Pawn) selectedPiece;
-                g.promotePawn(pawn, "QUEEN");
-                g.swapTurns();
-                g.updateGameStatus();
-                updateBoard();
-                playerTurn();
-                selectedPiece = null;
-            } else {
-                g.swapTurns();
-                g.updateGameStatus();
-                updateBoard();
-                playerTurn();
-                selectedPiece = null;
+                if (pawn.canPromote()) {
+                    pawnPromotion(pawn);
+                }
             }
+            g.swapTurns();
+            g.updateGameStatus();
+            updateBoard();
+            playerTurn();
+            selectedPiece = null;
+
         }
     }
+
+    // EFFECTS: Promotes pawn
+    private void pawnPromotion(Pawn pawn) {
+        g.promotePawn(pawn, "QUEEN");
+    }
+
 
     // EFFECT: returns promotion panel
     private JPanel displayPromotion(Boolean colour) {

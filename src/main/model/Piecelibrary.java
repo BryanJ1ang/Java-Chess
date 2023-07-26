@@ -1,5 +1,7 @@
 package model;
 
+import model.Pieces.*;
+
 import java.util.ArrayList;
 
 // represents library of pieces available to add to chess board

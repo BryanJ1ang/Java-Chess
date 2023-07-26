@@ -1,4 +1,4 @@
-package model;
+package model.Pieces;
 
 // Represents knight piece
 public class Knight extends Piece {
