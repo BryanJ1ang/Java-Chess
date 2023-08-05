@@ -13,7 +13,6 @@ import java.awt.event.WindowListener;
 
 // main menu component of gui
 public class MainGooey implements ActionListener, WindowListener {
-
     JFrame jframe;
 
     public static void main(String[] args) {

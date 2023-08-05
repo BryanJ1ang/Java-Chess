@@ -28,6 +28,7 @@ public class Board {
         if (bd[nextx][nexty] != null) {
             bd[nextx][nexty].setPositions(-1,-1);
         }
+
         this.removePiece(p.getXposition(), p.getYposition());
         bd[nextx][nexty] = null;
         bd[nextx][nexty] = p;

@@ -4,11 +4,6 @@ import model.Pieces.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-// NOT checkmate cases
-// threatening piece can be taken
-// threatening piece can be blocked (rook, bishop, queen)
-// king can be moved away
-
 
 // represents a game with players and a board
 public class Game {

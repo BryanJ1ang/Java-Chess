@@ -27,18 +27,21 @@ public class GameGooey implements MouseListener, ActionListener {
     private JButton[][] sq = new JButton[8][8];
     private JLabel turnLabel = new JLabel("White player's turn");
     private JPanel sidebar = new JPanel();
-    JTextField typebar  = new JTextField("Enter name of save");
+    private JTextField typebar  = new JTextField("Enter name of save");
     private Piece selectedPiece;
-
 
     // EFFECTS: Constructor for GameGooey
     public GameGooey(Game g) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 50;
+        c.gridy = 0;
+        c.gridheight = 50;
         this.g = g;
         buttonPanel.setLayout(new GridLayout(8, 8));
-        mainFrame.setLayout(new GridLayout(0, 2));
+        mainFrame.setLayout(new GridBagLayout());
         setupBarPanel();
         sidebar.setLayout(new GridLayout(0,1));
-        mainFrame.add(sidebar);
+        mainFrame.add(sidebar, c);
         framePieces();
     }
 
@@ -70,7 +73,6 @@ public class GameGooey implements MouseListener, ActionListener {
         }
         setupBarPanel();
     }
-
 
     // EFFECTS: Returns type of piece is on square or empty if empty
     private String pieceType(int x, int y) {
@@ -174,7 +176,6 @@ public class GameGooey implements MouseListener, ActionListener {
 
     }
 
-
     // MODIFIES: this
     // EFFECTS: Adds buttons to panel
     private void addButtonsToPanel() {
@@ -215,11 +216,16 @@ public class GameGooey implements MouseListener, ActionListener {
     // MODIFIES: this
     // EFFECTS: Adds pieces to the frame
     public void framePieces() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 50;
+        c.gridwidth = 50;
 
         createButtons();
         addButtonsToPanel();
 
-        mainFrame.add(buttonPanel, CENTER);
+        mainFrame.add(buttonPanel, c);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("Chess");
         mainFrame.pack();
