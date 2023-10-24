@@ -6,6 +6,7 @@ and save them for future reference.
 
 Chess is a game featuring two players, both starting off 16 pieces on opposite sides of the board. The objective of the game is to checkmate your opponent's king, that is, when one of your pieces threatens to capture your opponent's
 King on your next term AND, the opponent has no legal moves to:
+
 * move their king out of the way
 * block your threatening piece with another piece 
 * capture the piece threatening the king.
