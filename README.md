@@ -17,7 +17,7 @@ A more detailed overview of the rules of the game can be found [here](https://ww
 
 
 ## Why I chose this project 
-I have always been an avid player Chess and frequently lost against my father when we played together. As such,
+Growing up, I have always been an avid player Chess and frequently lost against my father when we played together. As such,
 it seemed fitting to create this project as it is of personal interest as well as offering a good amount
 of challenge for me to hone my technical skills.
 
