@@ -28,13 +28,14 @@ involves checking if any pieces are between the current square and the desired d
 if either player's King is in check. Likewise, if a King is indeed in check, another algorithm must determine whether that player has any legal moves available. 
 
 
-## Future Improvements and Potential Updates
+## Future Improvements 
 ![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/f822eb9c-4b28-472b-915c-8c55d3ba849c)
 
 The above is one of the search algorithms for my game logic. This method returns True if white is Checkmated and determined that by indexing through a list of White pieces. If any of these piece's can make a legal move then White is not in check mate and the method returns False. Instead of searching through the entire board for a valid move for each piece, this method could be better optimized by simply searching through the possible moves each piece could make. For example, since a rook can only go up, down, left, or right, it would be better to only search in these directions for a legal move instead of including diagonal squares. Although this is mostly negligible for a desktop app since a Chess board only has 64 squares, it would definitely be an area for improvement.
 
-In the future, I definitely think it would be interesting to develop a AI Chess engine using a MinMax algorithm.
 
+## Whats next?
+- Potential Updates
 
 ## Citations
 parts of the persistence package, including JSONWriter and JSONReader is based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
