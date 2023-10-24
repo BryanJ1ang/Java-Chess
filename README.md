@@ -31,10 +31,7 @@ if either player's King is in check. Likewise, if a King is indeed in check, ano
 ## Future Improvements and Potential Updates
 ![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/f822eb9c-4b28-472b-915c-8c55d3ba849c)
 
-The above is one of the search algorithms for my game logic. This method returns True if white is Checkmated and determined that by indexing through a list of White pieces. If any of these piece's can make a legal move then  
-White is not in check mate and the method returns False. Instead of searching through the entire board for a valid move for each piece, this method could be better optimized by simply searching through the possible moves 
-each piece could make. For example, since a rook can only go up, down, left, or right, it would be better to only search in these directions for a legal move instead of including diagonal squares. Although this is mostly 
-negligible for a desktop app since a Chess board only has 64 squares.
+The above is one of the search algorithms for my game logic. This method returns True if white is Checkmated and determined that by indexing through a list of White pieces. If any of these piece's can make a legal move then White is not in check mate and the method returns False. Instead of searching through the entire board for a valid move for each piece, this method could be better optimized by simply searching through the possible moves each piece could make. For example, since a rook can only go up, down, left, or right, it would be better to only search in these directions for a legal move instead of including diagonal squares. Although this is mostly negligible for a desktop app since a Chess board only has 64 squares, it would definitely be an area for improvement.
 
 In the future, I definitely think it would be interesting to develop a AI Chess engine using a MinMax algorithm.
 
