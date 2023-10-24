@@ -1,6 +1,6 @@
 # Java Chess 
 
-## Game
+## The Game
 This is a desktop Chess application that supports pass-and-play multiplayer between two players. The app also includes a save game feature, as such, it could be useful for players to practice Chess openings (strategies)
 and save them for future reference.
 
