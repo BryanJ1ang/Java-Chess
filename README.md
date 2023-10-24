@@ -21,6 +21,11 @@ it seemed fitting to create this project as it is of personal interest as well a
 of challenge for me to hone my technical skills.
 
 ## The Process
+#### Languages and Libraries
+*Java
+*Java Swing 
+*JUnit 
+
 Since this was my first programming project, much of the initial stages involved figuring out how to represent the different parts of Chess using classes. Then, the challenging part was the game logic 
 and implementing the legal movements for each type of Chess piece. One big aspect of chess is that most pieces, such as the Queen, cannot "jump" over another piece. As such, determining if a move is legal 
 involves checking if any pieces are between the current square and the desired destination square. Determining the game state was also challenging because it required creating search algorithms to check 
