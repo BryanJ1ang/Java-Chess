@@ -40,8 +40,9 @@ There are definitely several sections that could use reformatting to reduce coup
 Aside from that, one major feature I would like to implement is an AI Chess engine using a MinMax algorithm. This is a feature that I think would not only be really interesting but also would be great  experience for me to apply my knowledge of time complexity of algorithms.
 
 ## Citations
-parts of the persistence package, including JSONWriter and JSONReader is based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+Parts of the persistence package, including JSONWriter and JSONReader are based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
+Chess piece images used in this project are were retrieved from [Wikimedia](https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent). They are licensed under [Creative Commons Attribution-Share Alike 3.0 Uported](https://creativecommons.org/licenses/by-sa/3.0/deed.en).
 
 
 
