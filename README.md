@@ -42,7 +42,7 @@ Aside from that, one major feature I would like to implement is an AI Chess engi
 ## Citations
 Parts of the persistence package, including JSONWriter and JSONReader are based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
-Chess piece images used in this project are were retrieved from [Wikimedia](https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent). They are licensed under [Creative Commons Attribution-Share Alike 3.0 Uported](https://creativecommons.org/licenses/by-sa/3.0/deed.en).
+Chess piece images used in this project are were retrieved from [Wikimedia](https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent) and licensed under [Creative Commons Attribution-Share Alike 3.0 Uported](https://creativecommons.org/licenses/by-sa/3.0/deed.en).
 
 
 
