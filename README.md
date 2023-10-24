@@ -6,9 +6,9 @@ and save them for future reference.
 
 Chess is a game featuring two players, both starting off 16 pieces on opposite sides of the board. The objective of the game is to checkmate your opponent's king, that is, when one of your pieces threatens to capture your opponent's
 King on your next term AND, the opponent has no legal moves to:
-    *move their king out of the way
-    *block your threatening piece with another piece 
-    *capture the piece threatening the king.
+* move their king out of the way
+* block your threatening piece with another piece 
+* capture the piece threatening the king.
 A more detailed overview of the rules of the game can be found [here](https://www.chess.com/learn-how-to-play-chess).
 
 ![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/c04d40ca-72f8-4ebb-90da-1f2cf086127f)
