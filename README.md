@@ -13,7 +13,7 @@ King on your next term AND, the opponent has no legal moves to:
   
 A more detailed overview of the rules of the game can be found [here](https://www.chess.com/learn-how-to-play-chess).
 
-![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/c04d40ca-72f8-4ebb-90da-1f2cf086127f)
+![image](!https://github.com/BryanJ1ang/Java-Chess/assets/134325602/c04d40ca-72f8-4ebb-90da-1f2cf086127f)
 
 
 ## Why I chose this project 
