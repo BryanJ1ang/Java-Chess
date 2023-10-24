@@ -35,10 +35,14 @@ The above is one of the search algorithms for my game logic. This method returns
 
 
 ## Whats next?
-- Potential Updates
+There are definitely several sections that could use reformatting to reduce coupling and increase readability such as the Game class which could be reformatted into smaller, more cohesive classes.
+
+Aside from that, one major feature I would like to implement is an AI Chess engine using a MinMax algorithm. This is a feature that I think would not only be really interesting but also would be great  experience for me to apply my knowledge of time complexity of algorithms.
 
 ## Citations
 parts of the persistence package, including JSONWriter and JSONReader is based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+
 
 
 
