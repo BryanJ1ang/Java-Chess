@@ -29,7 +29,7 @@ if either player's King is in check. Likewise, if a King is indeed in check, ano
 
 
 ### Future Improvements 
-![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/f822eb9c-4b28-472b-915c-8c55d3ba849c)
+![image](![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/c5548a74-564b-49f1-b2ec-930733a054fd))
 
 The above shows  one of the search algorithms used in my game logic. This method returns True if White is checkmated, which is determined by iterating through a list of White pieces. If any of these pieces can make a legal move, then White is not checkmated, and the method returns False. Rather than searching the entire board for a valid move for each piece, this method could be optimized by examining only the possible moves each piece can make. For instance, since a rook can move only vertically or horizontally, it would be more efficient to search only in these directions for a legal move, rather than the entire board. While this might be negligible for a desktop app, given that a chess board has only 64 squares, it is certainly an area for improvement.
 
