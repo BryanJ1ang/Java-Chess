@@ -23,6 +23,9 @@ public class Player {
         pieces.add(p);
     }
 
+    public void removePiece(Piece p) {
+        pieces.remove(p);
+    }
     public List<Piece> getPieces() {
         return pieces;
     }

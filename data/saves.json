@@ -1,8 +1,10 @@
 {
+    "TEST": "TEST",
     "Enter name of save": "Enter name of save",
     "Test 2": "Test 2",
     "list": [
         "Test 2",
-        "Enter name of save"
+        "Enter name of save",
+        "TEST"
     ]
 }

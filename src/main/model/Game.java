@@ -38,10 +38,33 @@ public class Game {
     }
 
     // MODIFIES: Board
-    // EFFECTS: Moves piece to given position, sets piece as moved
+    // EFFECTS: Moves piece to given position
     public void movePiece(Piece p, int x, int y) {
+        if (p instanceof Pawn) { // En_Passant Move
+            int originalX = p.getXposition();
+            if ((originalX == x + 1 || originalX == x - 1) && bd.getPiece(x,y) == null) {
+                enPassant((Pawn) p, x, y);
+            }
+        }
+
+        if (bd.getPiece(x,y) != null) { // Captures if there's a piece
+            Piece capturedPiece = bd.getPiece(x,y);
+            if (capturedPiece.getWhite()) {
+                player1.removePiece(capturedPiece);
+            } else {
+                player2.removePiece(capturedPiece);
+            }
+        }
+
+        if (p instanceof King) { // Castles if able to
+            Castle castle = new Castle(this);
+            if (castle.canCastle((King) p, x, y)) {
+                castle.castle(x,y);
+            }
+        }
+
         bd.movePiece(p, x, y);
-        if (p instanceof Pawn && !p.getMoved()) {
+        if (p instanceof Pawn && !p.getMoved()) { // Unmark all pawns for EnPassant
             Pawn pawn = (Pawn) p;
             pawn.markEnPassant();
             pawn.setMoved();
@@ -56,25 +79,41 @@ public class Game {
         player2turn = !player2turn;
     }
 
+    // EFFECTS: Returns true if it is a legal en-passant move
+    public Boolean canEnPassant(Pawn pawn, int nextx, int nexty) {
+        if (pawn.canEnPassant(this, nextx, nexty)) {
+            Check check = new Check(this);
+            if (!check.moveIntoCheck(pawn, nextx, nexty)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void enPassant(Pawn pawn, int nextx, int nexty) {
+        if (pawn.getWhite()) {
+            player2.removePiece(this.getBd().getPiece(nextx, nexty + 1));
+
+        } else {
+            player1.removePiece(this.getBd().getPiece(nextx, nexty - 1));
+        }
+        pawn.EnPassant(nextx, nexty);
+    }
+
     // EFFECTS: returns true if piece can be moved to specified location
     public Boolean validMove(Piece piece, int nextx, int nexty) {
         Game temp = this;
         if (piece instanceof Pawn) {
             Pawn pawn = (Pawn) piece;
-            if (((Pawn) piece).canEnPassant(this, nextx, nexty)) {
-                Check check = new Check(this);
-                if (!check.moveIntoCheck(piece, nextx, nexty)) {
-                    pawn.EnPassant(nextx, nexty);
-                }
-
+            if (canEnPassant(pawn, nextx, nexty)) {
                 return true;
             }
         }
+
         if (piece instanceof King) {
             King k = (King) piece;
             Castle castle = new Castle(this);
             if (castle.canCastle(k, nextx, nexty)) {
-                castle.castle(nextx, nexty);
                 return true;
             }
         }
@@ -96,7 +135,7 @@ public class Game {
         }
     }
 
-    // EFFECT: normal game conditions gamestatus = 0
+    // EFFECT: continuegame then gamestatus = 0
     //         if white checkmate gamestatus = 1,
     //         if black checkmate gamestatus = 2.
     //
@@ -158,13 +197,13 @@ public class Game {
         return String.valueOf(letter) + number;
     }
 
-    //EFFECTS: converts to Y index to chess position
+    //EFFECTS: converts Y index to chess position
     private String indexToChessIndex(int y) {
         return Integer.toString(8 - y);
     }
 
 
-        // EFFECTS: Converts number to corresponding ordered alphabet character
+        // EFFECTS: Converts number to corresponding ordered alphabet character A-H
     public static char convertNumberToAlphabet(int i) {
         return (char) (i + 65);
     }
@@ -200,9 +239,6 @@ public class Game {
             player2.addPiece(p);
         }
     }
-
-
-
 
     //MODIFIES: this, board
     //EFFECTS: sets up the board with all 32 pieces.
@@ -330,11 +366,6 @@ public class Game {
             }
         }
         return jsonarray;
-    }
-
-    // EFFECTS:
-    public Boolean inCheck(Piece king) {
-        return false; // stub
     }
 
     // EFFECTS: Parses game into Json

@@ -12,7 +12,6 @@ import model.Pieces.Piece;
 import org.json.*;
 
 // Represents a reader that reads game from JSON data stored in file
-// CITATION: JsonSerializationDemo
 public class JsonReader {
     private final String source;
 

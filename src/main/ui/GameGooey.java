@@ -195,14 +195,25 @@ public class GameGooey implements MouseListener, ActionListener {
 
         createButtons();
         addButtonsToPanel();
+        g.updateGameStatus();
         if (g.getGamestatus() == 1 || g.getGamestatus() == 2) {
-           JFrame frame = gameOverFrame();
-           frame.setVisible(true);
+            sidebar.removeAll();
+            sidebar = gameOverPanel();
+            sidebar.revalidate();
+            sidebar.repaint();
         }
-
         buttonPanel.revalidate();
         buttonPanel.repaint();
+        mainFrame.revalidate();
+        mainFrame.repaint();
+    }
 
+    private JPanel gameOverPanel() {
+        JPanel panel = new JPanel();
+        JButton button = new JButton("GAME OVER!");
+        button.setBackground(new Color(150, 130, 100));
+        panel.add(button);
+        return panel;
     }
 
     private JFrame gameOverFrame() {
@@ -397,9 +408,6 @@ public class GameGooey implements MouseListener, ActionListener {
             }
         }
     }
-
-
-
 
 
     // Unused abstract methods of MouseListener interface

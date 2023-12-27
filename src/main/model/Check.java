@@ -1,13 +1,13 @@
 package model;
 
 import model.Pieces.King;
+import model.Pieces.Pawn;
 import model.Pieces.Piece;
 
 import java.util.List;
 
 // Class representing check/mate
 public class Check {
-    private static Check check;
     Game game;
     King king1; // white king
     King king2; // black king
@@ -35,44 +35,47 @@ public class Check {
     }
 
     // EFFECTS: true if moving player of given piece is in check after moving to (x,y)
-    public Boolean moveIntoCheck(Piece p, int x, int y) {
-        Piece piece = null;
-        int x1 = p.getXposition();
-        int y1 = p.getYposition();
-        if (game.getBd().getPiece(x,y) != null) {
-            piece = game.getBd().getPiece(x,y);
+    public Boolean moveIntoCheck(Piece piece, int nextX, int nextY) {
+        Piece capturedPiece = null;
+        int originalX = piece.getXposition();
+        int originalY = piece.getYposition();
+        boolean check;
+        boolean enpassant = false;
+
+        if (game.getBd().getPiece(nextX,nextY) != null) {
+            capturedPiece = game.getBd().getPiece(nextX, nextY);
+            if (!(capturedPiece instanceof King)) {
+                capturedPiece.setPositions(-1,-1);
+            }
+        } else if (piece instanceof Pawn) {
+            //stub for retrieving enpassant
         }
 
-        game.getBd().movePiece(p, x, y);
-        if (p.getWhite()) {
-            Boolean b = whiteCheck();
-            game.getBd().movePiece(p, x1, y1);
-            if (piece != null) {
-                piece.setPositions(x,y);
-                game.getBd().addPiece(piece,x,y);
-            }
-            return b;
+        game.getBd().movePiece(piece, nextX, nextY);
+        if (piece.getWhite()) {
+            check = whiteCheck();
         } else {
-            Boolean b = blackCheck();
-            game.getBd().movePiece(p, x1, y1);
-            if (piece != null) {
-                piece.setPositions(x,y);
-                game.getBd().addPiece(piece,x,y);
-            }
-            return b;
+            check = blackCheck();
         }
+        game.getBd().movePiece(piece, originalX, originalY);
+        if (capturedPiece != null) {
+            game.getBd().addPiece(capturedPiece, nextX, nextY);
+            if (!(capturedPiece instanceof King)) {
+                capturedPiece.setPositions(nextX, nextY);
+            }
+        }
+        return check;
     }
 
     // REQUIRES: White is in check
     // EFFECTS: return true if no valid moves for white/player1
     private Boolean whiteCheckMate() {
         List<Piece> pieces = game.getPlayer1().getPieces();
-        Game temp = game;
         for (Piece p : pieces) {
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
                     System.out.println(p.getType());
-                    if (temp.validMove(p, x, y)
+                    if (game.validMove(p, x, y)
                             && !(game.getBd().getPiece(x,y) == p)) {
                         return false;
                     }
@@ -85,7 +88,7 @@ public class Check {
     // REQUIRES: Black is in check
     // EFFECTS: return true if no valid moves for black/player2
     private Boolean blackCheckMate() {
-        List<Piece> pieces = game.getPlayer2().getPieces();
+            List<Piece> pieces = game.getPlayer2().getPieces();
         for (Piece p : pieces) {
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
@@ -97,6 +100,7 @@ public class Check {
             }
         }
         return true;
+
     }
 
     // EFFECTS: Returns true if white king is in check
@@ -123,7 +127,6 @@ public class Check {
             if (p instanceof King) {
                 continue;
             }
-
             int x = p.getXposition();
             int y = p.getYposition();
             if (game.validMove(p, king2.getXposition(), king2.getYposition())) {

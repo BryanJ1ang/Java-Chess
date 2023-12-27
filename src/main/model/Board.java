@@ -23,11 +23,8 @@ public class Board {
     }
 
     // MODIFIES: this, Piece
-    // EFFECT: Moves a piece to given location. Captures if position already occupied
+    // EFFECT: Moves a piece to given square. Removes original piece if square already occupied
     public void movePiece(Piece p, int nextx, int nexty) {
-        if (bd[nextx][nexty] != null) {
-            bd[nextx][nexty].setPositions(-1,-1);
-        }
 
         this.removePiece(p.getXposition(), p.getYposition());
         bd[nextx][nexty] = null;
@@ -37,13 +34,13 @@ public class Board {
 
 
     // REQUIRE: X and Y are between 0 and 7
-    // EFFECT: gets piece from given a square
+    // EFFECT: returns piece from given a square
     public Piece getPiece(int x, int y) {
         return bd[x][y];
     }
 
     // METHOD: this
-    // EFFECT: removes a piece from a given position
+    // EFFECT: removes a piece from a given square
     public void removePiece(int x, int y) {
         bd[x][y] = null;
     }
@@ -51,7 +48,8 @@ public class Board {
 
 
 
-    //EFFECT: determines if a move is valid. Piece can move in such direction
+    //EFFECT: determines if piece can move to selected square
+    //        (piece is not blocked, square is not already occupied)
     public Boolean validMove(Piece p, int nextx, int nexty) {
         Boolean b = false;
         if (p.removed()) {
