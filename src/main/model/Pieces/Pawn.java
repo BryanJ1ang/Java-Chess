@@ -27,6 +27,9 @@ public class Pawn extends Piece {
     // REQUIRES: parameters are all values between [0,7] inclusive
     // EFFECT: return true if piece can move to specified position
     public Boolean canMove(int currentx, int currenty, int nextx, int nexty) {
+        if (nextx < 0 || nextx > 7 || nexty < 0 || nexty > 7) {
+            return false;
+        }
         if (white == false) {
             if (((currenty == 1))) {
                 if ((currentx == nextx) && nexty == currenty + 2) {
