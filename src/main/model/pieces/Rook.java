@@ -1,4 +1,6 @@
-package model.Pieces;
+package model.pieces;
+
+import model.chessmoves.RookMoves;
 
 // Represents rook piece
 public class Rook extends Piece {
@@ -7,6 +9,7 @@ public class Rook extends Piece {
     // EFFECTS: Constructor for Rook
     public Rook(String colour) {
         super(colour);
+        legalmoves = new RookMoves();
     }
 
     // EFFECTS: Constructor for Rook

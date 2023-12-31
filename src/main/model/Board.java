@@ -1,7 +1,7 @@
 package model;
 
 
-import model.Pieces.*;
+import model.pieces.*;
 
 import static java.lang.Math.abs;
 

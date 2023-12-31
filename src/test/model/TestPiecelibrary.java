@@ -1,6 +1,6 @@
 package model;
 
-import model.Pieces.*;
+import model.pieces.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

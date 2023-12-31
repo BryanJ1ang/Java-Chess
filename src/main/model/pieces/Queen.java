@@ -1,4 +1,6 @@
-package model.Pieces;
+package model.pieces;
+
+import model.chessmoves.QueenMoves;
 
 import static java.lang.Math.abs;
 
@@ -9,6 +11,7 @@ public class Queen extends Piece {
     // EFFECTS: Constructor for Queen
     public Queen(String colour) {
         super(colour);
+        legalmoves = new QueenMoves();
     }
 
     // EFFECTS: Constructor for Queen

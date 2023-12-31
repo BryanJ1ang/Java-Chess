@@ -1,4 +1,6 @@
-package model.Pieces;
+package model.pieces;
+
+import model.chessmoves.KnightMoves;
 
 // Represents knight piece
 public class Knight extends Piece {
@@ -8,6 +10,7 @@ public class Knight extends Piece {
     // EFFECTS: Constructor for knight
     public Knight(String colour) {
         super(colour);
+        legalmoves = new KnightMoves();
     }
 
     // EFFECTS: Constructor for knight

@@ -1,6 +1,7 @@
-package model.Pieces;
+package model.pieces;
 
 import model.Game;
+import model.chessmoves.PawnMoves;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Pawn extends Piece {
 
     public Pawn(String colour) {
         super(colour);
+        legalmoves = new PawnMoves();
     }
 
     public Pawn(Boolean colour) {

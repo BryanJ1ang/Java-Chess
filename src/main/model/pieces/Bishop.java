@@ -1,4 +1,6 @@
-package model.Pieces;
+package model.pieces;
+
+import model.chessmoves.BishopMoves;
 
 import static java.lang.Math.abs;
 
@@ -9,6 +11,7 @@ public class Bishop extends Piece {
     // EFFECTS: Constructor for Bishop
     public Bishop(String colour) {
         super(colour);
+        legalmoves = new BishopMoves();
     }
 
     // EFFECTS: Constructor for Bishop

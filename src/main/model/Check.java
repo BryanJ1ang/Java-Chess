@@ -1,8 +1,8 @@
 package model;
 
-import model.Pieces.King;
-import model.Pieces.Pawn;
-import model.Pieces.Piece;
+import model.pieces.King;
+import model.pieces.Pawn;
+import model.pieces.Piece;
 
 import java.util.List;
 

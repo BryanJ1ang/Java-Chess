@@ -1,6 +1,6 @@
 package model;
 
-import model.Pieces.Rook;
+import model.pieces.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

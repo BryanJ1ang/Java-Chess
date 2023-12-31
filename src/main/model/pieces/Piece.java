@@ -1,4 +1,6 @@
-package model.Pieces;
+package model.pieces;
+
+import model.chessmoves.LegalMoves;
 
 // Abstract class for the pieces in chess
 public abstract class Piece {
@@ -6,6 +8,7 @@ public abstract class Piece {
     protected int yposition;
     protected Boolean white;
     protected Boolean moved = false;
+    protected LegalMoves legalmoves;
 
     public Piece(String colour) {
         moved = false;
@@ -21,6 +24,10 @@ public abstract class Piece {
     public Piece(Boolean colour) {
         white = colour;
         moved = false;
+    }
+
+    public LegalMoves getLegalMoves() {
+        return legalmoves;
     }
 
     public void setMoved() {

@@ -1,8 +1,8 @@
 package model;
 
-import model.Pieces.King;
-import model.Pieces.Pawn;
-import model.Pieces.Queen;
+import model.pieces.King;
+import model.pieces.Pawn;
+import model.pieces.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

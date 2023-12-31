@@ -1,8 +1,8 @@
 package model;
 
-import model.Pieces.King;
-import model.Pieces.Piece;
-import model.Pieces.Rook;
+import model.pieces.King;
+import model.pieces.Piece;
+import model.pieces.Rook;
 
 // Class handling castle movement
 public class Castle {

@@ -2,10 +2,9 @@ package engine;
 
 import Tuple.Triplet;
 import model.Game;
-import model.Pieces.*;
+import model.pieces.*;
 import model.Player;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,23 +109,10 @@ public class Engine {
             player = game.getPlayer2();
         }
         for (Piece piece: player.getPieces()) {
-            legalMoves(game, (piece.getClass()) piece, validMoves);
+            piece.
+            legalMoves(game, piece, validMoves);
         }
         return validMoves;
-    }
-
-    public void legalMoves(Game game, King king, List<Triplet<Piece, Integer, Integer>> list) {
-        int posX = king.getXposition();
-        int posY = king.getYposition();
-        for (int x = posX - 1; x < posX + 2; x++) {
-            for (int y = posY - 1; y < posY + 2; y++) {
-                if (x == posX && y == posY) {
-                    continue;
-                } else if (game.validMove(king, x, y)) {
-                    list.add(new Triplet<>((Piece) king, x, y));
-                }
-            }
-        }
     }
 
     // REQUIRES: piece is actual type Queen or Bishop
@@ -242,7 +228,7 @@ public class Engine {
     }
 
     public void legalMoves(Game game, Queen queen, List<Triplet<Piece, Integer, Integer>> list) {
-        diagonalMoves(game, queen list);
+        diagonalMoves(game, queen, list);
         perpendicularMoves(game, queen, list);
     }
 
@@ -278,7 +264,7 @@ public class Engine {
         } else if (piece instanceof Queen) {
             return 9;
         } else if (piece instanceof Bishop) {
-            return 3;
+            return 3;   
         } else if (piece instanceof Knight) {
             return 3;
         } else if (piece instanceof Rook) {

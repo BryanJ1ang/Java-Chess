@@ -1,7 +1,7 @@
 package engine;
 
 import Tuple.Triplet;
-import model.Pieces.Piece;
+import model.pieces.Piece;
 
 import java.util.List;
 

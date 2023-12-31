@@ -1,8 +1,8 @@
 package ui;
 
 import model.Game;
-import model.Pieces.Pawn;
-import model.Pieces.Piece;
+import model.pieces.Pawn;
+import model.pieces.Piece;
 import persistence.JsonWriter;
 import persistence.Saves;
 
