@@ -16,9 +16,7 @@ A more detailed overview of the rules of the game can be found [here](https://ww
 ![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/e7c7e1ff-d127-477f-9a29-9d25fb792fb3)
 
 ## Why I chose this project 
-Growing up, I have always been an avid player Chess and frequently lost against my father when we played together. As such,
-it seemed fitting to create this project as it is of personal interest as well as offering a good amount
-of challenge for me to hone my technical skills.
+Growing up, I have always been an avid player Chess but always lost against my father when we played together. Sadly, I still continue to lose against him even to this day, but hopefully, my Chess engine can beat him. 
 
 ## The Process
 #### Languages and Libraries
@@ -33,16 +31,16 @@ if either player's King is in check. Likewise, if a King is indeed in check, ano
 
 
 ## Whats Next?
-Currently, I am developing an AI Chess engine by optimizing a miniMax algorithm to search through the game tree. Future
-plans involve porting the game logic and AI engine to Springboot to deploy a multiplayer Chess server and connecting it 
-to a JavaScript front-end.
+Currently, I am in the process of implementing an AI Chess engine by optimizing a miniMax algorithm to search through the game tree.Testing it has been tiresome with the engine revealing multiple bugs within my code base. Currently have an engine that is capable of solving several Chess puzzles and  I will likely be able to finish an engine that's  competitive against the average person within the next few days. 
+
+Once my engine is completed, I likely won't integrate it into my Java Swing GUI, instead, I plan on porting my app with Springboot to deploy a online Chess server with the capacity to play 1 vs 1 against another person 
+or simply against my Chess engine. Naturally, this will be complemented with a front-end web app with the typical HTML, CSS, JavaScript.
 
 
 ## Citations
-Parts of the persistence package, including JSONWriter and JSONReader are based on code from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-
 Chess piece images used in this project are were retrieved from [Wikimedia](https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent) and licensed under [Creative Commons Attribution-Share Alike 3.0 Uported](https://creativecommons.org/licenses/by-sa/3.0/deed.en).
 
+Credit goes to Daniel Fern for his Java Tuples library ([JavaTuples](https://www.javatuples.org/index.html)).
 
 
 
