@@ -42,27 +42,25 @@ public class Game {
     public void movePiece(Piece p, int x, int y) {
         if (p instanceof Pawn) { // En_Passant Move
             int originalX = p.getXposition();
-            if ((originalX == x + 1 || originalX == x - 1) && bd.getPiece(x,y) == null) {
+            if ((((originalX + 1) == x) && (bd.getPiece(x + 1, y) != null && bd.getPiece(x + 1, y).isWhite() != p.isWhite()))
+                    || (((originalX - 1) == x) && (bd.getPiece(x - 1, y) != null && bd.getPiece(x - 1, y).isWhite() != p.isWhite()))) {
                 enPassant((Pawn) p, x, y);
             }
         }
-
         if (bd.getPiece(x,y) != null) { // Captures if there's a piece
             Piece capturedPiece = bd.getPiece(x,y);
-            if (capturedPiece.getWhite()) {
+            if (capturedPiece.isWhite()) {
                 player1.removePiece(capturedPiece);
             } else {
                 player2.removePiece(capturedPiece);
             }
         }
-
         if (p instanceof King) { // Castles if able to
             Castle castle = new Castle(this);
             if (castle.canCastle((King) p, x, y)) {
                 castle.castle(x,y);
             }
         }
-
         bd.movePiece(p, x, y);
         if (p instanceof Pawn && !p.getMoved()) { // Unmark all pawns for EnPassant
             Pawn pawn = (Pawn) p;
@@ -91,7 +89,7 @@ public class Game {
     }
 
     public void enPassant(Pawn pawn, int nextx, int nexty) {
-        if (pawn.getWhite()) {
+        if (pawn.isWhite()) {
             player2.removePiece(this.getBd().getPiece(nextx, nexty + 1));
 
         } else {
@@ -102,7 +100,11 @@ public class Game {
 
     // EFFECTS: returns true if piece can be moved to specified location
     public Boolean validMove(Piece piece, int nextx, int nexty) {
-        Game temp = this;
+        if (nextx < 0 || nextx > 7 || nexty < 0 || nexty > 7) {
+            return false;
+        } else if (bd.getPiece(nextx, nexty) != null && bd.getPiece(nextx, nexty).isWhite() == piece.isWhite()) {
+            return false;
+        }
         if (piece instanceof Pawn) {
             Pawn pawn = (Pawn) piece;
             if (canEnPassant(pawn, nextx, nexty)) {
@@ -117,8 +119,8 @@ public class Game {
                 return true;
             }
         }
-
-        if (!bd.validMove(piece, nextx, nexty)) {
+        //if (!this.bd.validMove(piece, nextx, nexty)) {
+            if (!piece.getMoveStrategy().canMove(this, piece, nextx, nexty)) {
             return false;
         } else {
             Check check = new Check(this);
@@ -128,7 +130,7 @@ public class Game {
 
     // EFFECTS: returns color of piece
     private String colorOfPiece(Piece p) {
-        if (p.getWhite()) {
+        if (p.isWhite()) {
             return "White";
         } else {
             return "Black";
@@ -161,7 +163,7 @@ public class Game {
     // EFFECTS: Promotes pawn to new piece
     public void promotePawn(Piece piece, String type) {
         int x = piece.getXposition();
-        if (piece.getWhite()) {
+        if (piece.isWhite()) {
             Piecelibrary library = new Piecelibrary();
             Piece p = library.retrievePieceFromLibrary(type, "WHITE");
             bd.removePiece(piece.getXposition(), piece.getYposition());
@@ -224,7 +226,7 @@ public class Game {
 
    //EFFECTS: returns true if given piece can be moved on current player's turn
     public Boolean isPieceTurnToMove(Piece p) {
-        return (!p.getWhite() && player2turn) || (p.getWhite() && player1turn);
+        return (!p.isWhite() && player2turn) || (p.isWhite() && player1turn);
     }
 
 
@@ -233,7 +235,7 @@ public class Game {
     // EFFECTS: adds a piece to the board belonging to respective payer
     public void addPiece(Piece p, int x, int y) {
         bd.addPiece(p, x, y);
-        if (p.getWhite()) {
+        if (p.isWhite()) {
             player1.addPiece(p);
         } else {
             player2.addPiece(p);
@@ -357,7 +359,7 @@ public class Game {
                 if (null == bd.getPiece(x,y)) {
                     jsonarray.put("null");
                 } else {
-                    if (bd.getPiece(x,y).getWhite()) {
+                    if (bd.getPiece(x,y).isWhite()) {
                         jsonarray.put("WHITE");
                     } else {
                         jsonarray.put("BLACK");

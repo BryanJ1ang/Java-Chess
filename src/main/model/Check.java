@@ -18,12 +18,14 @@ public class Check {
         for (Piece p : g.getPlayer1().getPieces()) {
             if (p instanceof King) {
                 king1 = (King) p;
+                break;
             }
         }
 
         for (Piece p : g.getPlayer2().getPieces()) {
             if (p instanceof King) {
                 king2 = (King) p;
+                break;
             }
         }
     }
@@ -52,7 +54,7 @@ public class Check {
         }
 
         game.getBd().movePiece(piece, nextX, nextY);
-        if (piece.getWhite()) {
+        if (piece.isWhite()) {
             check = whiteCheck();
         } else {
             check = blackCheck();
@@ -107,10 +109,9 @@ public class Check {
     public Boolean whiteCheck() {
         List<Piece> pieces = game.getPlayer2().getPieces();
         for (Piece p : pieces) {
-            if (p instanceof King) {
+            if (p instanceof King || p.removed()) {
                 continue;
             }
-
             int x = p.getXposition();
             int y = p.getYposition();
             if (game.validMove(p, king1.getXposition(), king1.getYposition())) {
@@ -124,7 +125,7 @@ public class Check {
     public Boolean blackCheck() {
         List<Piece> pieces = game.getPlayer1().getPieces();
         for (Piece p : pieces) {
-            if (p instanceof King) {
+            if (p instanceof King || p.removed()) {
                 continue;
             }
             int x = p.getXposition();

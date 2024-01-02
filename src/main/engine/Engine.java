@@ -1,6 +1,6 @@
 package engine;
 
-import Tuple.Triplet;
+import javatuples.Triplet;
 import model.Game;
 import model.pieces.*;
 import model.Player;
@@ -54,12 +54,11 @@ public class Engine {
         Piece capturedPiece = movePiece(game, piece, nextX, nextY);
         int minimax;
 
-        if (depth == 0) {
+        if (depth == 0 || capturedPiece instanceof King) { // base cases need to include checkmates, run out of depth,
             minimax = evaluateGameState(game);
-        } else if (piece.getWhite()) {
+        } else if (piece.isWhite()) {
             minimax = -10000;
-            game.swapTurns();
-            for (Triplet<Piece, Integer, Integer> move: validMoves(game)) {
+            for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result > minimax) {
                     minimax = result;
@@ -67,7 +66,6 @@ public class Engine {
             }
         } else {
             minimax = 10000;
-            game.swapTurns();
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result < minimax) {
@@ -78,8 +76,6 @@ public class Engine {
         returnPiece(game, capturedPiece, originalX, originalY, nextX, nextY);
         return minimax;
     }
-
-
 
     // EFFECTS: Moves piece to specific location and returns captured piece if there is one
     public Piece movePiece(Game game, Piece piece, int nextX, int nextY) {
@@ -109,135 +105,9 @@ public class Engine {
             player = game.getPlayer2();
         }
         for (Piece piece: player.getPieces()) {
-            piece.
-            legalMoves(game, piece, validMoves);
+            piece.getMoveStrategy().legalMoves(game, piece, validMoves);
         }
         return validMoves;
-    }
-
-    // REQUIRES: piece is actual type Queen or Bishop
-    // EFFECTS: Adds legal diagonal moves to list
-    public void diagonalMoves(Game game, Piece piece, List<Triplet<Piece, Integer, Integer>> list) {
-        int posX = piece.getXposition();
-        int posY = piece.getYposition();
-        int y = posY;
-        for (int x = posX + 1; x < 8; x++) {
-            y += 1;
-            if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>((piece,x,y));
-            } else {
-                break;
-            }
-        }
-         y = posY;
-        for (int x = posX + 1; x < 8; x++) {
-            y -= 1;
-            if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>( piece,x,y));
-            } else {
-                break;
-            }
-        }
-         y = posY;
-        for (int x = posX - 1; x > -1; x--) {
-            y += 1;
-            if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>( piece,x,y));
-            } else {
-                break;
-            }
-        }
-         y = posY;
-        for (int x = posX - 1; x > -1; x--) {
-            y -= 1;
-            if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>( piece,x,y));
-            } else {
-                break;
-            }
-        }
-    }
-
-
-    // REQUIRES: Piece is actual type Queen or Rook
-    // EFFECTS: Adds legal up/down/left/right moves to list
-    public void perpendicularMoves(Game game, Piece piece, List<Triplet<Piece, Integer, Integer>> list) {
-        int posX = piece.getXposition();
-        int posY = piece.getYposition();
-        for (int x = posX; x < 8; x++) {
-            if (game.validMove(piece, x, posY)) {
-                list.add(new Triplet<>((Piece) piece, x, posY));
-            } else {
-                break;
-            }
-        }
-        for (int y = posY; y < 8; y++) {
-            if (game.validMove(piece, posX, y)) {
-                list.add(new Triplet<>((Piece) piece, posX, y));
-            } else {
-                break;
-            }
-        }
-        for (int x = posX; x > -1; x--) {
-            if (game.validMove(piece, x, posY)) {
-                list.add(new Triplet<>((Piece) piece, x, posY));
-            } else {
-                break;
-            }
-        }
-        for (int y = posY; y > -1; y--) {
-            if (game.validMove(piece, posX, y)) {
-                list.add(new Triplet<>((Piece) piece, posX, y));
-            } else {
-                break;
-            }
-        }
-    }
-
-    public void legalMoves(Game game, Bishop bishop, List<Triplet<Piece, Integer, Integer>> list) {
-        diagonalMoves(game, bishop, list);
-    }
-
-    public void legalMoves(Game game, Knight knight, List<Triplet<Piece, Integer, Integer>> list) {
-        int posX = knight.getXposition();
-        int posY = knight.getYposition();
-        if (game.validMove(knight, posX + 2, posY + 1)) {
-            list.add(new Triplet<>((Piece) knight, posX + 2, posY + 1));
-        }
-        if (game.validMove(knight, posX + 2, posY - 1)) {
-            list.add(new Triplet<>((Piece) knight, posX + 2, posY - 1));
-        }
-        if (game.validMove(knight, posX - 2, posY + 1)) {
-            list.add(new Triplet<>((Piece) knight, posX - 2, posY + 1));
-        }
-        if (game.validMove(knight, posX - 2, posY - 1)) {
-            list.add(new Triplet<>((Piece) knight, posX - 2, posY - 1));
-        }
-        if (game.validMove(knight, posX + 1, posY + 2)) {
-            list.add(new Triplet<>((Piece) knight, posX + 1, posY + 2));
-        }
-        if (game.validMove(knight, posX + 1, posY - 2)) {
-            list.add(new Triplet<>((Piece) knight, posX + 1, posY - 2));
-        }
-        if (game.validMove(knight, posX - 1, posY + 2)) {
-            list.add(new Triplet<>((Piece) knight, posX - 1, posY + 2));
-        }
-        if (game.validMove(knight, posX - 1, posY - 2)) {
-            list.add(new Triplet<>((Piece) knight, posX - 1, posY - 2));
-        }
-    }
-
-    public void legalMoves(Game game, Queen queen, List<Triplet<Piece, Integer, Integer>> list) {
-        diagonalMoves(game, queen, list);
-        perpendicularMoves(game, queen, list);
-    }
-
-    public void legalMoves(Game game, Pawn pawn, List<Triplet<Piece, Integer, Integer>> list) {
-
-    }
-
-    public void legalMoves(Game game, Rook rook, List<Triplet<Piece, Integer, Integer>> list) {
-        perpendicularMoves(game, rook, list);
     }
 
 
@@ -260,7 +130,7 @@ public class Engine {
     // EFFECTS: Converts a piece to its relative value
     public int pieceToValue(Piece piece) {
         if (piece instanceof King) {
-            return 39;
+            return 150;
         } else if (piece instanceof Queen) {
             return 9;
         } else if (piece instanceof Bishop) {

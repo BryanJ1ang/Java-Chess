@@ -27,7 +27,7 @@ public class TestPawn {
 
     @Test
     public void testColorWhite(){
-        assertEquals(false, x.getWhite());
+        assertEquals(false, x.isWhite());
     }
 
     @Test

@@ -1,6 +1,6 @@
 package model.pieces;
 
-import model.chessmoves.QueenMoves;
+import model.movestrategy.QueenMoves;
 
 import static java.lang.Math.abs;
 
@@ -11,12 +11,13 @@ public class Queen extends Piece {
     // EFFECTS: Constructor for Queen
     public Queen(String colour) {
         super(colour);
-        legalmoves = new QueenMoves();
+        moveStrategy = new QueenMoves();
     }
 
     // EFFECTS: Constructor for Queen
     public Queen(Boolean colour) {
         super(colour);
+        moveStrategy = new QueenMoves();
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive

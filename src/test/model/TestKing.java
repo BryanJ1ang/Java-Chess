@@ -24,7 +24,7 @@ public class TestKing {
     @Test
     public void testConstructior() {
         King k = new King("whitE");
-        assertTrue(k.white);
+        assertTrue(k.isWhite());
     }
 
     @Test

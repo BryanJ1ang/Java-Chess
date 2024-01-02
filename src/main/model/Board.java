@@ -54,8 +54,7 @@ public class Board {
         Boolean b = false;
         if (p.removed()) {
             return false;
-        }
-        if (this.getPiece(nextx, nexty) != null && p.getWhite() == this.getPiece(nextx, nexty).getWhite()) {
+        } else if (this.getPiece(nextx, nexty) != null && p.isWhite() == this.getPiece(nextx, nexty).isWhite()) {
             return false;
         }
         if (p instanceof Bishop) {
@@ -110,6 +109,10 @@ public class Board {
 
     //EFFECTS: if given knight can move to next position
     private Boolean canMoveKnight(Piece k, int nextx, int nexty) {
+        Piece piece = this.getPiece(nextx, nexty);
+        if (this.getPiece(nextx, nexty) != null && piece.isWhite() == k.isWhite()) {
+            return false;
+        }
         return k.canMove(k.getXposition(), k.getYposition(), nextx, nexty);
     }
 
@@ -120,14 +123,14 @@ public class Board {
                 && this.getPiece(nextx, nexty) == null) {
             b = true;
         }
-        if (p.getWhite()) {
+        if (p.isWhite()) {
             if (abs(nextx - p.getXposition()) == 1
                     && nexty == p.getYposition() - 1
                     && this.getPiece(nextx, nexty) != null) {
                 b = true;
             }
         }
-        if (!p.getWhite()) {
+        if (!p.isWhite()) {
             if (abs(nextx - p.getXposition()) == 1
                     && nexty == p.getYposition() + 1
                     && this.getPiece(nextx, nexty) != null) {

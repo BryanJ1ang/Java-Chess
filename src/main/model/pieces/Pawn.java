@@ -1,7 +1,7 @@
 package model.pieces;
 
 import model.Game;
-import model.chessmoves.PawnMoves;
+import model.movestrategy.PawnMoves;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,12 @@ public class Pawn extends Piece {
 
     public Pawn(String colour) {
         super(colour);
-        legalmoves = new PawnMoves();
+        moveStrategy = new PawnMoves();
     }
 
     public Pawn(Boolean colour) {
         super(colour);
+        moveStrategy = new PawnMoves();
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive
@@ -59,7 +60,7 @@ public class Pawn extends Piece {
     public void setPositions(int x, int y) {
         xposition = x;
         yposition = y;
-        if (this.getWhite()) {
+        if (this.isWhite()) {
             if (y == 4 && !getMoved()) {
                 markEnPassant();
             }

@@ -75,7 +75,7 @@ public class JsonReader {
                     String colour = (String) colours.get(0);
 
                     Piece p = library.retrievePieceFromLibrary(type, colour);
-                    if (p.getWhite()) {
+                    if (p.isWhite()) {
                         g.getPlayer1().addPiece(p);
                     } else {
                         g.getPlayer2().addPiece(p);

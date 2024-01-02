@@ -86,7 +86,7 @@ public class GameGooey implements MouseListener, ActionListener {
     // EFFECTS: Returns string to either white or black directory of Piece images
     private String whiteOrBlackImages(int x, int y) {
         if (g.getBd().getPiece(x, y) != null
-                && g.getBd().getPiece(x, y).getWhite()) {
+                && g.getBd().getPiece(x, y).isWhite()) {
             return "./data/WhitePieceImages/";
         } else {
             return "./data/BlackPieceImages/";

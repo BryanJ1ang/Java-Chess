@@ -1,6 +1,6 @@
 package model.pieces;
 
-import model.chessmoves.RookMoves;
+import model.movestrategy.RookMoves;
 
 // Represents rook piece
 public class Rook extends Piece {
@@ -9,12 +9,13 @@ public class Rook extends Piece {
     // EFFECTS: Constructor for Rook
     public Rook(String colour) {
         super(colour);
-        legalmoves = new RookMoves();
+        moveStrategy = new RookMoves();
     }
 
     // EFFECTS: Constructor for Rook
     public Rook(Boolean colour) {
         super(colour);
+        moveStrategy = new RookMoves();
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive

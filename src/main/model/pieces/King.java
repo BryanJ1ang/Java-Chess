@@ -1,6 +1,6 @@
 package model.pieces;
 
-import model.chessmoves.KingMoves;
+import model.movestrategy.KingMoves;
 
 // Represents king piece
 public class King extends Piece {
@@ -9,12 +9,13 @@ public class King extends Piece {
     // EFFECTS: Constructor for king
     public King(String colour) {
         super(colour);
-        legalmoves = new KingMoves();
+        moveStrategy = new KingMoves();
     }
 
     // EFFECTS: Constructor for king
     public King(Boolean colour) {
         super(colour);
+        moveStrategy = new KingMoves();
     }
 
     // REQUIRES: parameters are all values between [0,7] inclusive

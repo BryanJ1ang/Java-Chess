@@ -27,7 +27,7 @@ public class CheckTest {
         g.movePiece(g.getBd().getPiece(4,1),4,3 );
 
         assertTrue(g.getBd().getPiece(6,6) instanceof Pawn);
-        g.movePiece(g.getBd().getPiece(6,6), 5,4 );
+        g.movePiece(g.getBd().getPiece(6,6), 5,4);
 
         assertTrue(g.getBd().getPiece(3,0) instanceof Queen);
         g.movePiece(g.getBd().getPiece(3,0),7,4 );
@@ -94,7 +94,7 @@ public class CheckTest {
         Queen q1 = new Queen(true);
         Queen q11 = new Queen(true);
         Queen q2 = new Queen(false);
-
+        assertTrue(q2.getMoveStrategy() != null);
         g2.addPiece(k, 0, 0);
         g2.addPiece(k2, 7, 7);
 
