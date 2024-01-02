@@ -31,7 +31,7 @@ if either player's King is in check. Likewise, if a King is indeed in check, ano
 
 
 ## Whats Next?
-Currently, I am in the process of implementing an AI Chess engine by optimizing a miniMax algorithm to search through the game tree.Testing it has been tiresome with the engine revealing multiple bugs within my code base. Currently have an engine that is capable of solving several Chess puzzles and  I will likely be able to finish an engine that's  competitive against the average person within the next few days. 
+Currently, I am in the process of implementing an AI Chess engine by optimizing a miniMax algorithm with alpha-beta pruning to search through the game tree.Testing it has been tiresome with the engine revealing multiple bugs within my code base. Currently have an engine that is capable of solving several beginner-intermediate Chess puzzles and  I will likely be able to finish an engine that's  competitive against the average person within the next few days. 
 
 Once my engine is completed, I likely won't integrate it into my Java Swing GUI, instead, I plan on porting my app with Springboot to deploy a online Chess server with the capacity to play 1 vs 1 against another person 
 or simply against my Chess engine. Naturally, this will be complemented with a front-end web app with the typical HTML, CSS, JavaScript.
