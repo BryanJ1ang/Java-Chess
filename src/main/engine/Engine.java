@@ -21,11 +21,11 @@ public class Engine {
         List<Triplet<Piece, Integer, Integer>> legalMoves = validMoves((game));
         Triplet<Piece, Integer, Integer> optimalMove = null;
 
-
         if (game.getPlayer1turn()) { //WHITE
             int max = -10000;
             for (Triplet<Piece, Integer, Integer> move: legalMoves) {
-                int result = miniMax(game, depth, move);
+                //int result = miniMax(game, depth, move);
+                int result = alphaBetaMiniMax(game, depth, move, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if (result > max) {
                     max = result;
                     optimalMove = move;
@@ -34,7 +34,8 @@ public class Engine {
         } else { // BLACK
             int min = 10000;
             for (Triplet<Piece, Integer, Integer> move: legalMoves) {
-                int result = miniMax(game, depth, move);
+                //int result = miniMax(game, depth, move);
+                int result = alphaBetaMiniMax(game, depth, move, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if (result < min) {
                     min = result;
                     optimalMove = move;
@@ -42,6 +43,51 @@ public class Engine {
             }
         }
         return optimalMove;
+    }
+
+
+    // EFFECTS: Return highest/lowest integer for given nextMove
+    // alpha begins at -inf, White attempts to maximize it
+    // beta begins at inf, Black attempts to minimize it
+    // refer to README for explanation of alpha-beta pruning
+    public int alphaBetaMiniMax(Game game, int depth, Triplet<Piece, Integer, Integer> nextMove, int alpha, int beta) {
+        Piece piece = nextMove.getValue0();
+        int originalX = piece.getXposition();
+        int originalY = piece.getYposition();
+        int nextX = nextMove.getValue1();
+        int nextY = nextMove.getValue2();
+        Piece capturedPiece = movePiece(game, piece, nextX, nextY);
+        int minimax;
+
+        if (depth == 0 || capturedPiece instanceof King) { // base cases need to include checkmates, run out of depth,
+            minimax = evaluateGameState(game);
+        } else if (piece.isWhite()) {
+            minimax = alpha;
+            System.out.println("WHITE");
+            for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
+                int result = alphaBetaMiniMax(game, depth - 1, move, minimax, beta);
+                if (result >= beta) {
+                    minimax = result;
+                    break;
+                } else if (result > minimax) {
+                    minimax = result;
+                }
+            }
+        } else {
+            minimax = beta;
+            System.out.println("BLACK");
+            for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
+                int result = alphaBetaMiniMax(game, depth - 1, move, alpha, minimax);
+                if (result <= alpha) {
+                    minimax = result;
+                    break;
+                } else if (result < minimax) {
+                    minimax = result;
+                }
+            }
+        }
+        returnPiece(game, piece, capturedPiece, originalX, originalY, nextX, nextY);
+        return minimax;
     }
 
     // EFFECTS: Return highest/lowest integer for given nextMove
@@ -58,6 +104,7 @@ public class Engine {
             minimax = evaluateGameState(game);
         } else if (piece.isWhite()) {
             minimax = -10000;
+            System.out.println("WHITE");
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result > minimax) {
@@ -66,6 +113,7 @@ public class Engine {
             }
         } else {
             minimax = 10000;
+            System.out.println("BLACK");
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result < minimax) {
@@ -73,23 +121,36 @@ public class Engine {
                 }
             }
         }
-        returnPiece(game, capturedPiece, originalX, originalY, nextX, nextY);
+        returnPiece(game, piece, capturedPiece, originalX, originalY, nextX, nextY);
         return minimax;
     }
 
     // EFFECTS: Moves piece to specific location and returns captured piece if there is one
     public Piece movePiece(Game game, Piece piece, int nextX, int nextY) {
-        Piece capturedPiece = game.getBd().getPiece(nextX, nextY);
+        Piece capturedPiece;
+        if (piece instanceof Pawn && piece.getXposition() != nextX && game.getBd().getPiece(nextX, nextY) == null) { //requirements for en-passant
+            if (piece.isWhite()) {
+                capturedPiece = game.getBd().getPiece(nextX, nextY + 1);
+            } else {
+                capturedPiece = game.getBd().getPiece(nextX, nextY - 1);
+            }
+        } else {
+            capturedPiece = game.getBd().getPiece(nextX, nextY);
+        }
         game.movePiece(piece, nextX, nextY);
         game.swapTurns();
         return capturedPiece;
     }
 
-    public void returnPiece(Game game, Piece capturedPiece, int originalX, int originalY, int nextX, int nextY) {
-        Piece piece = game.getBd().getPiece(nextX, nextY);
-        game.movePiece(piece, originalX, originalY);
+    // EFFECTS: Returns piece to its original position and restores capturedPiece if not null
+    public void returnPiece(Game game, Piece movedPiece, Piece capturedPiece, int originalX, int originalY, int nextX, int nextY) {
+        game.movePiece(movedPiece, originalX, originalY);
         if (capturedPiece != null) {
-            game.addPiece(capturedPiece, nextX, nextY);
+            if (capturedPiece instanceof Pawn) {
+                game.addPiece(capturedPiece, capturedPiece.getXposition(), capturedPiece.getYposition());
+            } else {
+                game.addPiece(capturedPiece, nextX, nextY);
+            }
         }
         game.swapTurns();
     }
