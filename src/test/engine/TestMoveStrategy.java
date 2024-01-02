@@ -29,6 +29,18 @@ public class TestMoveStrategy {
     }
 
     @Test
+    public void testEnPassant() {
+        Piece piece, piece2;
+        piece = game.getBd().getPiece(4, 6);
+        game.movePiece(piece, 4, 3);
+        piece2 = game.getBd().getPiece(3, 1);
+        game.movePiece(piece2, 3, 3);
+        assertTrue(game.validMove(piece, 3,2));
+        piece.getMoveStrategy().legalMoves(game, piece, legalMovesList);
+        assertEquals(2, legalMovesList.size());
+    }
+
+    @Test
     public void testLegalMovesPawn() {
         Piece piece;
         for (int x = 0; x < 8; x++) {

@@ -42,8 +42,7 @@ public class Game {
     public void movePiece(Piece p, int x, int y) {
         if (p instanceof Pawn) { // En_Passant Move
             int originalX = p.getXposition();
-            if ((((originalX + 1) == x) && (bd.getPiece(x + 1, y) != null && bd.getPiece(x + 1, y).isWhite() != p.isWhite()))
-                    || (((originalX - 1) == x) && (bd.getPiece(x - 1, y) != null && bd.getPiece(x - 1, y).isWhite() != p.isWhite()))) {
+            if (canEnPassant((Pawn) p, x, y)) {
                 enPassant((Pawn) p, x, y);
             }
         }
@@ -91,9 +90,10 @@ public class Game {
     public void enPassant(Pawn pawn, int nextx, int nexty) {
         if (pawn.isWhite()) {
             player2.removePiece(this.getBd().getPiece(nextx, nexty + 1));
-
+            this.getBd().removePiece(nextx, nexty + 1);
         } else {
             player1.removePiece(this.getBd().getPiece(nextx, nexty - 1));
+            this.getBd().removePiece(nextx, nexty - 1);
         }
         pawn.EnPassant(nextx, nexty);
     }
@@ -110,9 +110,7 @@ public class Game {
             if (canEnPassant(pawn, nextx, nexty)) {
                 return true;
             }
-        }
-
-        if (piece instanceof King) {
+        } else if (piece instanceof King) {
             King k = (King) piece;
             Castle castle = new Castle(this);
             if (castle.canCastle(k, nextx, nexty)) {
@@ -120,7 +118,7 @@ public class Game {
             }
         }
         //if (!this.bd.validMove(piece, nextx, nexty)) {
-            if (!piece.getMoveStrategy().canMove(this, piece, nextx, nexty)) {
+        if (!piece.getMoveStrategy().canMove(this, piece, nextx, nexty)) {
             return false;
         } else {
             Check check = new Check(this);
@@ -245,10 +243,10 @@ public class Game {
     //MODIFIES: this, board
     //EFFECTS: sets up the board with all 32 pieces.
     public void defaultSetUp() {
-        addWhitePawns();
-        addBlackPawns();
         addDefaultBackRowBlack();
         addDefaultBackRowWhite();
+        addWhitePawns();
+        addBlackPawns();
     }
 
     // MODIFIES: this, board

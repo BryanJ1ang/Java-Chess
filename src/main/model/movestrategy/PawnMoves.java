@@ -9,25 +9,41 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class PawnMoves implements MoveStrategy {
-
     @Override
     public void legalMoves(Game game, Piece pawn, List<Triplet<Piece, Integer, Integer>> list) {
+        int pawnX = pawn.getXposition();
+        int pawnY = pawn.getYposition();
         if (pawn.isWhite()) {
-            if (game.getBd().getPiece(pawn.getXposition(), pawn.getYposition() - 1) == null) {
-                list.add(new Triplet<>(pawn, pawn.getXposition(), pawn.getYposition() - 1));
-                if (pawn.getYposition() == 6 && game.getBd().getPiece(pawn.getXposition(), 4) == null) {
-                    list.add(new Triplet<>(pawn, pawn.getXposition(), 4));
+            if (game.validMove(pawn, pawnX - 1, pawnY - 1)) {
+                list.add(new Triplet<>(pawn, pawnX - 1, pawnY - 1));
+            }
+            if (game.validMove(pawn, pawnX + 1, pawnY - 1)) {
+                list.add(new Triplet<>(pawn, pawnX + 1, pawnY - 1));
+            }
+            if (game.validMove(pawn, pawnX, pawnY - 1)) {
+                list.add(new Triplet<>(pawn, pawnX, pawnY - 1));
+                if (pawnY == 6 && game.validMove(pawn, pawnX, 4)) { // 2 square move
+                    list.add(new Triplet<>(pawn, pawnX, 4));
                 }
             }
-            } else {
-            if (game.getBd().getPiece(pawn.getXposition(), pawn.getYposition() + 1) == null) {
-                list.add(new Triplet<>(pawn, pawn.getXposition(), pawn.getYposition() + 1));
-                if (pawn.getYposition() == 1 && game.getBd().getPiece(pawn.getXposition(), 3) == null) {
-                    list.add(new Triplet<>(pawn, pawn.getXposition(), 3));
+
+        } else {
+            if (game.validMove(pawn, pawnX,pawnY + 1)) {
+                list.add(new Triplet<>(pawn, pawnX, pawnY + 1));
+
+                if (pawnY == 1 && game.validMove(pawn, pawnX, 3)) {  // 2 square move
+                    list.add(new Triplet<>(pawn, pawnX, 3));
                 }
             }
+                if (game.validMove(pawn, pawnX - 1, pawnY + 1)) {
+                    list.add(new Triplet<>(pawn, pawnX - 1, pawnY + 1));
+                }
+                if (game.validMove(pawn, pawnX + 1, pawnY + 1)) {
+                    list.add(new Triplet<>(pawn, pawnX + 1, pawnY + 1));
+                }
         }
     }
+
 
     @Override
     public Boolean canMove(Game game, Piece p, int nextX, int nextY) {

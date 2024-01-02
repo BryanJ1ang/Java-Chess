@@ -40,6 +40,22 @@ public class TestEngine {
     }
 
     @Test
+    public void testEnPassanAddRemoval() {
+        Piece piece, piece2;
+        piece = game.getBd().getPiece(4, 6);
+        game.movePiece(piece, 4, 3);
+        piece2 = game.getBd().getPiece(3, 1);
+        game.movePiece(piece2, 3, 3);
+
+        engine.movePiece(game,piece, 3,2);
+        engine.returnPiece(game, piece,piece2, 4,3,3,2);
+        assertTrue(game.getBd().getPiece(4,3) == piece);
+        assertFalse(game.getBd().getPiece(3,2) == piece2);
+        assertEquals(game.getBd().getPiece(3,3), piece2);
+    }
+
+
+    @Test
     public void testMovePiece2() {
         Piece pawn2 = game2.getBd().getPiece(4,4);
         Piece pawn3 = game2.getBd().getPiece(3,3);
@@ -55,7 +71,7 @@ public class TestEngine {
         assertTrue(game2.getPlayer2().getPieces().contains(pawn3));
         assertEquals(engine.movePiece(game2, pawn2, 3, 3), pawn3);
         assertFalse(game2.getPlayer2().getPieces().contains(pawn3));
-        engine.returnPiece(game2, pawn3, 4,4,3,3);
+        engine.returnPiece(game2, pawn2, pawn3, 4,4,3,3);
         assertTrue(game2.getPlayer2().getPieces().contains(pawn3));
 
         assertEquals(3, pawn3.getXposition() );
