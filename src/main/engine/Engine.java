@@ -18,25 +18,30 @@ public class Engine {
     // EFFECTS: Returns the best move for the given player's turn
     public Triplet<Piece, Integer, Integer> returnBestMove(Game game, int depth) {
 
-        List<Triplet<Piece, Integer, Integer>> legalMoves = validMoves((game));
+        List<Triplet<Piece, Integer, Integer>> legalMoves = validMoves(game);
         Triplet<Piece, Integer, Integer> optimalMove = null;
 
         if (game.getPlayer1turn()) { //WHITE
-            int max = -10000;
+            int max = Integer.MIN_VALUE;
             for (Triplet<Piece, Integer, Integer> move: legalMoves) {
+                if (move.getValue1() == 6 && move.getValue2() == 3) {
+                    int y = 3;
+                }
                 //int result = miniMax(game, depth, move);
                 int result = alphaBetaMiniMax(game, depth, move, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if (result > max) {
+                    System.out.println("Current best move white: " + move.getValue0().getType() + " " + move.getValue1() + move.getValue2() + " with value: " + result);
                     max = result;
                     optimalMove = move;
                 }
             }
         } else { // BLACK
-            int min = 10000;
+            int min = Integer.MAX_VALUE;
             for (Triplet<Piece, Integer, Integer> move: legalMoves) {
                 //int result = miniMax(game, depth, move);
                 int result = alphaBetaMiniMax(game, depth, move, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if (result < min) {
+                    System.out.println("Current best move black: " + move.getValue0().getType() + " " + move.getValue1() + move.getValue2() + " with value: " + result);
                     min = result;
                     optimalMove = move;
                 }
@@ -56,14 +61,33 @@ public class Engine {
         int originalY = piece.getYposition();
         int nextX = nextMove.getValue1();
         int nextY = nextMove.getValue2();
+        Boolean promotion = false;
+
+        if (piece instanceof Pawn && ((nextY == 0 && piece.isWhite()) || (nextY == 7 && !piece.isWhite()))) {
+            if (piece.isWhite()) {
+                game.getPlayer1().getPieces().remove(piece);
+            } else {
+                game.getPlayer2().getPieces().remove(piece);
+            }
+            piece = new Queen(piece.isWhite());
+            game.addPiece(piece, originalX, originalY);
+            promotion = true;
+        }
+
         Piece capturedPiece = movePiece(game, piece, nextX, nextY);
+
         int minimax;
 
-        if (depth == 0 || capturedPiece instanceof King) { // base cases need to include checkmates, run out of depth,
+        if (depth == 0) { // base cases need to include checkmates, run out of depth,
             minimax = evaluateGameState(game);
-        } else if (piece.isWhite()) {
-            minimax = alpha;
-            System.out.println("WHITE");
+        } else if (capturedPiece instanceof King) {
+            if (capturedPiece.isWhite()) {
+                minimax = Integer.MIN_VALUE;
+            } else {
+                minimax = Integer.MAX_VALUE;
+            }
+        } else if (!piece.isWhite()) {
+            minimax = alpha; // initially -inf
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = alphaBetaMiniMax(game, depth - 1, move, minimax, beta);
                 if (result >= beta) {
@@ -74,8 +98,7 @@ public class Engine {
                 }
             }
         } else {
-            minimax = beta;
-            System.out.println("BLACK");
+            minimax = beta; // initially inf
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = alphaBetaMiniMax(game, depth - 1, move, alpha, minimax);
                 if (result <= alpha) {
@@ -85,6 +108,15 @@ public class Engine {
                     minimax = result;
                 }
             }
+        }
+        if (promotion) {
+            if (piece.isWhite()) {
+                game.getPlayer1().getPieces().remove(piece);
+            } else {
+                game.getPlayer2().getPieces().remove(piece);
+            }
+            piece = new Pawn(piece.isWhite());
+            game.addPiece(piece, nextX, nextY);
         }
         returnPiece(game, piece, capturedPiece, originalX, originalY, nextX, nextY);
         return minimax;
@@ -100,11 +132,10 @@ public class Engine {
         Piece capturedPiece = movePiece(game, piece, nextX, nextY);
         int minimax;
 
-        if (depth == 0 || capturedPiece instanceof King) { // base cases need to include checkmates, run out of depth,
+        if (depth == 0 ) { // base cases need to include checkmates, run out of depth,
             minimax = evaluateGameState(game);
-        } else if (piece.isWhite()) {
-            minimax = -10000;
-            System.out.println("WHITE");
+        } else if (!piece.isWhite()) {
+            minimax = -Integer.MIN_VALUE;
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result > minimax) {
@@ -112,8 +143,7 @@ public class Engine {
                 }
             }
         } else {
-            minimax = 10000;
-            System.out.println("BLACK");
+            minimax = Integer.MAX_VALUE;
             for (Triplet<Piece, Integer, Integer> move : validMoves(game)) {
                 int result = miniMax(game, depth - 1, move);
                 if (result < minimax) {
@@ -177,31 +207,34 @@ public class Engine {
     //          More negative = Black greater advantage
     //          Zero = Both sides balanced
     public int evaluateGameState(Game game) {
-        int minimax = 0;
+        int gameValue = 0;
         for (Piece piece :game.getPlayer1().getPieces()) {
-            minimax += pieceToValue(piece);
+            gameValue += pieceToValue(piece);
         }
         for (Piece piece :game.getPlayer2().getPieces()) {
-            minimax -= pieceToValue(piece);
+            gameValue -= pieceToValue(piece);
         }
-        return minimax;
+        return gameValue;
     }
 
 
     // EFFECTS: Converts a piece to its relative value
     public int pieceToValue(Piece piece) {
         if (piece instanceof King) {
-            return 150;
+            return 10000;
         } else if (piece instanceof Queen) {
             return 9;
         } else if (piece instanceof Bishop) {
-            return 3;   
+            return 3;
         } else if (piece instanceof Knight) {
             return 3;
         } else if (piece instanceof Rook) {
             return 5;
-        } else {
+        } else if (piece instanceof Pawn) {
             return 1;
+        } else {
+            assert (false);
+            return 0;
         }
     }
 }
