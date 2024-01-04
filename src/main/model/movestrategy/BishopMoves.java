@@ -28,8 +28,12 @@ public class BishopMoves implements MoveStrategy {
         for (int x = posX + 1; x < 8; x++) {
             y += 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x,y) != null) {
+                    list.add(0,new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -37,8 +41,12 @@ public class BishopMoves implements MoveStrategy {
         for (int x = posX + 1; x < 8; x++) {
             y -= 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -46,8 +54,12 @@ public class BishopMoves implements MoveStrategy {
         for (int x = posX - 1; x > -1; x--) {
             y += 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -55,8 +67,12 @@ public class BishopMoves implements MoveStrategy {
         for (int x = posX - 1; x > -1; x--) {
             y -= 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }

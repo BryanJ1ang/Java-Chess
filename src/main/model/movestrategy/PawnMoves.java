@@ -3,6 +3,7 @@ package model.movestrategy;
 import javatuples.Triplet;
 import model.Game;
 import model.pieces.Piece;
+import model.pieces.Queen;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PawnMoves implements MoveStrategy {
         int pawnX = pawn.getXposition();
         int pawnY = pawn.getYposition();
         if (pawn.isWhite()) {
+
             if (game.validMove(pawn, pawnX - 1, pawnY - 1)) {
                 list.add(new Triplet<>(pawn, pawnX - 1, pawnY - 1));
             }
@@ -26,6 +28,7 @@ public class PawnMoves implements MoveStrategy {
                     list.add(new Triplet<>(pawn, pawnX, 4));
                 }
             }
+
 
         } else {
             if (game.validMove(pawn, pawnX,pawnY + 1)) {

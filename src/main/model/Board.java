@@ -25,7 +25,6 @@ public class Board {
     // MODIFIES: this, Piece
     // EFFECT: Moves a piece to given square. Removes original piece if square already occupied
     public void movePiece(Piece p, int nextx, int nexty) {
-
         this.removePiece(p.getXposition(), p.getYposition());
         bd[nextx][nexty] = null;
         bd[nextx][nexty] = p;

@@ -13,15 +13,19 @@ public class QueenMoves implements MoveStrategy {
 
     // REQUIRES: piece is actual type Queen or Bishop
     // EFFECTS: Adds legal diagonal moves to list
-    public void diagonalMoves(Game game, Piece piece, List<Triplet<Piece, Integer, Integer>> list) {
+    private void diagonalMoves(Game game, Piece piece, List<Triplet<Piece, Integer, Integer>> list) {
         int posX = piece.getXposition();
         int posY = piece.getYposition();
         int y = posY;
         for (int x = posX + 1; x < 8; x++) {
             y += 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x,y) != null) {
+                    list.add(0,new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -29,8 +33,12 @@ public class QueenMoves implements MoveStrategy {
         for (int x = posX + 1; x < 8; x++) {
             y -= 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -38,8 +46,12 @@ public class QueenMoves implements MoveStrategy {
         for (int x = posX - 1; x > -1; x--) {
             y += 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
@@ -47,13 +59,16 @@ public class QueenMoves implements MoveStrategy {
         for (int x = posX - 1; x > -1; x--) {
             y -= 1;
             if (game.validMove(piece, x, y)) {
-                list.add(new Triplet<>(piece, x, y));
-            } else {
+                if (game.getBd().getPiece(x, y) != null) {
+                    list.add(0, new Triplet<>(piece, x, y));
+                } else {
+                    list.add(new Triplet<>(piece, x, y));
+                }
+            } else if (x < 8 && x > -1 && y < 7 && y > -1 && game.getBd().getPiece(x,y) != null) {
                 break;
             }
         }
     }
-
 
     // REQUIRES: Piece is actual type Queen or Rook
     // EFFECTS: Adds legal up/down/left/right moves to list
@@ -62,29 +77,45 @@ public class QueenMoves implements MoveStrategy {
         int posY = piece.getYposition();
         for (int x = posX + 1; x < 8; x++) {
             if (game.validMove(piece, x, posY)) {
-                list.add(new Triplet<>((Piece) piece, x, posY));
-            } else {
+                if (game.getBd().getPiece(x, posY) != null) {
+                    list.add(0, new Triplet<>(piece, x, posY));
+                } else {
+                    list.add(new Triplet<>(piece, x, posY));
+                }
+            } else if (game.getBd().getPiece(x,posY) != null) {
                 break;
             }
         }
         for (int y = posY + 1; y < 8; y++) {
             if (game.validMove(piece, posX, y)) {
-                list.add(new Triplet<>((Piece) piece, posX, y));
-            } else {
+                if (game.getBd().getPiece(posX, y) != null) {
+                    list.add(0, new Triplet<>(piece, posX, y));
+                } else {
+                    list.add(new Triplet<>(piece, posX, y));
+                }
+            } else if (game.getBd().getPiece(posX,y) != null) {
                 break;
             }
         }
         for (int x = posX - 1; x > -1; x--) {
             if (game.validMove(piece, x, posY)) {
-                list.add(new Triplet<>((Piece) piece, x, posY));
-            } else {
+                if (game.getBd().getPiece(x, posY) != null) {
+                    list.add(0, new Triplet<>(piece, x, posY));
+                } else {
+                    list.add(new Triplet<>(piece, x, posY));
+                }
+            } else if (game.getBd().getPiece(x,posY) != null) {
                 break;
             }
         }
         for (int y = posY - 1; y > -1; y--) {
             if (game.validMove(piece, posX, y)) {
-                list.add(new Triplet<>((Piece) piece, posX, y));
-            } else {
+                if (game.getBd().getPiece(posX, y) != null) {
+                    list.add(0, new Triplet<>(piece, posX, y));
+                } else {
+                    list.add(new Triplet<>(piece, posX, y));
+                }
+            } else if (game.getBd().getPiece(posX,y) != null) {
                 break;
             }
         }

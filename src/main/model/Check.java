@@ -6,6 +6,8 @@ import model.pieces.Piece;
 
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 // Class representing check/mate
 public class Check {
     Game game;
@@ -43,7 +45,15 @@ public class Check {
         int originalY = piece.getYposition();
         boolean check;
         boolean enpassant = false;
-
+        if (piece instanceof King) {
+            if (piece.isWhite() && (0 == abs(nextX - king2.getXposition()) || abs(nextX - king2.getXposition()) == 1)
+                    && (0 == abs(nextY - king2.getYposition()) || abs(nextY - king2.getYposition()) == 1)) {
+                return true;
+            } else if (!piece.isWhite() && (0 == abs(nextX - king1.getXposition()) || abs(nextX - king1.getXposition()) == 1)
+                    && (0 == abs(nextY - king1.getYposition()) || abs(nextY - king1.getYposition()) == 1)) {
+                return true;
+            }
+        }
         if (game.getBd().getPiece(nextX,nextY) != null) {
             capturedPiece = game.getBd().getPiece(nextX, nextY);
             if (!(capturedPiece instanceof King)) {
