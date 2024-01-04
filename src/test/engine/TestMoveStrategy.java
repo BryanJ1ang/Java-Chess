@@ -2,10 +2,7 @@ package engine;
 
 import javatuples.Triplet;
 import model.Game;
-import model.pieces.Bishop;
-import model.pieces.King;
-import model.pieces.Pawn;
-import model.pieces.Piece;
+import model.pieces.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -121,6 +118,43 @@ public class TestMoveStrategy {
         piece = game.getBd().getPiece(6, 7);
         piece.getMoveStrategy().legalMoves(game,piece,legalMovesList);
         assertEquals(4, legalMovesList.size());
+    }
+
+    @Test
+    public void testLegalMovesKing() {
+        Piece piece = game.getBd().getPiece(4, 7);
+        piece.getMoveStrategy().legalMoves(game,piece,legalMovesList);
+        assertEquals(0, legalMovesList.size());
+
+        game.movePiece(game.getBd().getPiece(4,6),4,4 );
+        game.movePiece(game.getBd().getPiece(3,6),3,4 );
+        game.movePiece(game.getBd().getPiece(5,6),5,4 );
+        piece.getMoveStrategy().legalMoves(game,piece,legalMovesList);
+        assertEquals(3, legalMovesList.size());
+    }
+
+    @Test
+    public void testLegalMovesCheck() {
+        game = new Game("empty", null, false);
+        Queen queen = new Queen(true);
+        King king = new King(true);
+        game.addPiece(king, 6,6);
+        king = new King(false);
+        game.addPiece(king, 5,4);
+        game.addPiece(queen, 5,3);
+        Pawn pawn = new Pawn(true);
+        game.addPiece(pawn, 5,5);
+        Rook rook = new Rook(false);
+        game.addPiece(rook, 5,0);
+        Engine engine = new Engine();
+        legalMovesList = engine.validMoves(game);
+        assertEquals(4, legalMovesList.size());
+    }
+
+    @Test
+    public void testLegalMovesRook() {
+        Game gameEmpty = new Game("empty", null, true);
+        Rook rook = new Rook(true);
     }
 
     @Test
