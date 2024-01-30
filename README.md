@@ -1,4 +1,6 @@
 # Java Chess 
+### Updated webapp
+Game has been ported to a webapp. You can find the repo [here](https://github.com/BryanJ1ang/chess-spring)
 
 ## The Game
 This is a desktop Chess application that supports pass-and-play multiplayer between two players. The app also includes a save game feature, as such, it could be useful for players to practice Chess openings (strategies)
