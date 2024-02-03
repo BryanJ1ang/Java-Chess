@@ -15,7 +15,7 @@ King on your next term AND, the opponent has no legal moves to:
   
 A more detailed overview of the rules of the game can be found [here](https://www.chess.com/learn-how-to-play-chess).
 
-![image](https://github.com/BryanJ1ang/Java-Chess/assets/134325602/e7c7e1ff-d127-477f-9a29-9d25fb792fb3)
+![image](https://github.com/BryanJ1ang/Java-Chess/blob/main/Demo%20GIF.gif)
 
 ## Why I chose this project 
 Growing up, I have always been an avid player Chess but always lost against my father when we played together. Sadly, I still continue to lose against him even to this day, but hopefully, my Chess engine can beat him. 
